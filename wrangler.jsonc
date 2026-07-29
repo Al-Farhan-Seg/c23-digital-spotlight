@@ -1,0 +1,22 @@
+{
+  "name": "c23-digital-spotlight",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-07-29",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Required: the Worker must run before static-asset matching so it can
+    // read the request hostname and rewrite the path to dist/<slug>/ before
+    // ASSETS.fetch() looks anything up. With the default (false), Cloudflare
+    // would try to serve a static match first and hostname routing would
+    // never run.
+    "run_worker_first": true
+  },
+  "routes": [
+    // Wildcard covers every campaign subdomain. jarah/roadmapsh are safe
+    // (Cloudflare Pages custom domains take precedence over Worker routes).
+    // www is on GitHub Pages via DNS — verify its proxy status / add a
+    // protective route BEFORE this goes live. See CLAUDE.md.
+    { "pattern": "*.farhansegujja.com/*", "zone_name": "farhansegujja.com" }
+  ]
+}

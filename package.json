@@ -1,0 +1,15 @@
+{
+  "name": "c23-digital-spotlight",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build-all.mjs",
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "wrangler": "^4.0.0"
+  }
+}
