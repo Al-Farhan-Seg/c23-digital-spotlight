@@ -1,6 +1,6 @@
 import { build, mergeConfig } from 'vite';
 import { readdirSync, existsSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { resolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { baseConfig } from '../vite.config.base.mjs';
 
@@ -30,11 +30,22 @@ for (const slug of slugs) {
     ? (await import(localConfigPath)).default
     : {};
 
+  // Any *.html file directly in the site root becomes its own build entry
+  // (e.g. index.html + apply.html) — flat files only, no subfolders, so
+  // Cloudflare's html_handling never needs a directory-redirect for them.
+  const htmlFiles = readdirSync(siteRoot, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
+    .map((entry) => entry.name);
+  const input = Object.fromEntries(
+    htmlFiles.map((file) => [basename(file, '.html'), resolve(siteRoot, file)])
+  );
+
   const config = mergeConfig(mergeConfig(baseConfig, localConfig), {
     root: siteRoot,
     build: {
       outDir: resolve(rootDir, 'dist', slug),
       emptyOutDir: true,
+      rollupOptions: { input },
     },
   });
 

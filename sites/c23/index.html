@@ -4,69 +4,167 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>C23 Digital Spotlight</title>
-  <meta name="description" content="One free starter website every week for the alumni community — built by Farhan Segujja." />
-  <link rel="stylesheet" href="./style.css" />
+  <meta name="description" content="One free starter website every week for the alumni community, built by Farhan Segujja." />
+  <link rel="icon" type="image/png" href="./src/assets/c23-digi-logo.png" />
+  <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
+  <svg aria-hidden="true" style="display:none">
+    <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21.801 10A10 10 0 1 1 17 3.335"/>
+      <path d="m9 11 3 3L22 4"/>
+    </symbol>
+    <symbol id="icon-ban" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M4.929 4.929 19.07 19.071"/>
+    </symbol>
+    <symbol id="icon-circle-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M8 12h8"/>
+      <path d="M12 8v8"/>
+    </symbol>
+  </svg>
+
   <header class="site-header">
     <div class="wrap header-inner">
-      <span class="wordmark">C23 Digital Spotlight</span>
+      <a class="brand" href="#top" aria-label="C23 Digital Spotlight, back to top">
+        <img class="brand-logo" src="./src/assets/c23-digi-logo.png" alt="" width="34" height="36" />
+        <span class="brand-name">C23 Digital Spotlight</span>
+      </a>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
       <nav class="primary-nav" id="primaryNav">
-        <a href="#promise">What you get</a>
-        <a href="#process">How it works</a>
-        <a href="#eligibility">Eligibility</a>
-        <a href="#launches">Launches</a>
-        <a href="#apply" class="nav-cta">Apply / Nominate</a>
+        <div class="nav-links">
+          <a href="#promise">What you get</a>
+          <a href="#process">How it works</a>
+          <a href="#eligibility">Eligibility</a>
+          <a href="#launches">Launches</a>
+        </div>
+        <a href="./apply.html" class="btn btn-primary nav-cta">Apply / Nominate</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="wrap">
-        <h1>One free starter website, every week, for the C23 alumni community.</h1>
-        <p class="hero-sub">Four weeks. Four launches. One practical, working website for a business, personal brand, or community project — alternating between an alumna and an alumnus each week.</p>
-        <a href="#apply" class="btn btn-primary">Apply or nominate someone</a>
+    <section class="hero" id="top">
+      <img class="hero-bg" src="./src/assets/s6-jump-original-optimized.jpeg" alt="" aria-hidden="true" />
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <div class="hero-content">
+          <h1>A Digital Presence Effort for C23 Alumni Community</h1>
+          <p class="hero-sub">One alumna/alumnus. One week. One stronger online presence.</p>
+          <a href="./apply.html" class="btn btn-primary hero-cta">Apply or nominate someone</a>
+        </div>
       </div>
     </section>
 
-    <section id="promise" class="section">
+    <section id="why" class="section section-alt why-exists">
       <div class="wrap">
-        <h2>What every participant gets</h2>
-        <ul class="check-list">
-          <li>One custom one-page website</li>
-          <li>Maximum of six sections</li>
-          <li>One primary conversion action</li>
-          <li>Mobile-responsive design</li>
-          <li>One consolidated revision round</li>
-          <li>Launch on a Farhan-branded subdomain</li>
-          <li>Twelve months of campaign hosting</li>
-          <li>Seven days of post-launch defect correction</li>
-        </ul>
+        <div class="why-grid">
+          <div class="why-lead">
+            <p class="eyebrow">Why C23 Digital Spotlight Exists</p>
+            <h2 class="why-heading">Good work is happening in our alumni network, but too much of it is difficult to discover, understand and share.</h2>
+            <div class="why-copy">
+              <p>Many alumni are building businesses, offering professional services and running meaningful community projects. Yet their entire online presence may be scattered across WhatsApp statuses, social-media pages or messages that disappear after a few hours.</p>
+              <p>C23 Digital Spotlight helps selected alumni and their networks turn what they already do into a clear, credible and easily shareable web presence, so potential customers, employers, collaborators and supporters can understand their work and take the next step.</p>
+            </div>
+          </div>
+          <ol class="why-problems">
+            <li>
+              <span class="why-num" aria-hidden="true">01</span>
+              <h3>Hard to discover</h3>
+              <p>Potential customers and collaborators may never know that the right person already exists within their alumni network.</p>
+            </li>
+            <li>
+              <span class="why-num" aria-hidden="true">02</span>
+              <h3>Hard to trust quickly</h3>
+              <p>Scattered posts and forwarded messages rarely communicate services, experience and contact information as clearly as a focused website.</p>
+            </li>
+            <li>
+              <span class="why-num" aria-hidden="true">03</span>
+              <h3>Hard to share professionally</h3>
+              <p>A single website link is easier to remember, revisit and recommend than multiple screenshots, phone messages and social-media profiles.</p>
+            </li>
+          </ol>
+        </div>
+        <div class="why-closing-row">
+          <p class="why-closing">The initiative is not simply about giving away websites. It is about making alumni skills, businesses and opportunities easier to find, trust and support.</p>
+          <a href="#process" class="link-back">See how the Spotlight works →</a>
+        </div>
       </div>
     </section>
 
-    <section id="excluded" class="section section-alt">
+    <section id="promise" class="section scope-section">
       <div class="wrap">
-        <h2>What's not included</h2>
-        <p class="section-note">Kept out of the free package on purpose, so every site ships in a week. Available only as optional paid upgrades — never assumed, never invented.</p>
-        <ul class="plain-list">
-          <li>E-commerce and payments</li>
-          <li>User accounts and authentication</li>
-          <li>Databases</li>
-          <li>Dashboards</li>
-          <li>Complex booking systems</li>
-          <li>Custom CMS development</li>
-          <li>Unlimited revisions</li>
-          <li>Ongoing content management</li>
-        </ul>
+        <p class="eyebrow">Clear scope. Better delivery.</p>
+        <h2 class="scope-heading">What the winner receives</h2>
+        <p class="scope-intro">Every selected participant receives a focused, professional website that can realistically be designed, reviewed and launched within seven days. Larger requirements are not ignored. They are simply handled separately as optional paid upgrades.</p>
+
+        <div class="scope-grid">
+          <article class="scope-card scope-card--included">
+            <h3>Your Free Starter Website</h3>
+            <p class="scope-card-desc">Everything needed to establish a clear, credible and shareable online presence.</p>
+            <ul class="scope-list">
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>One custom one-page website</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>Up to six meaningful sections</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>Mobile, tablet and desktop layouts</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>One primary conversion action</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>Social and contact links</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>WhatsApp or enquiry path</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>Basic metadata and social-sharing information</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>One consolidated revision round</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>Launch on a farhansegujja.com subdomain (e.g. maria-cakes.farhansegujja.com)</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>Twelve months of campaign hosting</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>Seven days of post-launch defect correction</li>
+            </ul>
+            <a href="./apply.html" class="btn btn-primary scope-cta">Apply for a Spotlight Slot</a>
+          </article>
+
+          <article class="scope-card scope-card--excluded">
+            <h3>Not Included in the Pilot</h3>
+            <p class="scope-card-desc">These features require more time, infrastructure, specialist work or ongoing responsibility.</p>
+            <ul class="scope-list">
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Online payments and shopping carts</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>User accounts and authentication</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Databases and dashboards</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Complex booking systems</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Marketplaces</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>School or operations-management systems</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Custom CMS development</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Unlimited product or catalogue entry</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Logo creation</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Professional photography</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Unlimited revisions</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Ongoing content management</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-ban"></use></svg>Guaranteed SEO results</li>
+            </ul>
+          </article>
+
+          <article class="scope-card scope-card--upgrade">
+            <h3>Possible Paid Upgrades</h3>
+            <p class="scope-card-desc">These are never assumed or required. They may be discussed only when the participant needs more than the free campaign package.</p>
+            <ul class="scope-list">
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Custom domain connection</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Additional pages</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Expanded catalogue or gallery</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Copy refinement</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Brand support through a specialist</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Analytics setup</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Local SEO setup</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>CMS or blog integration</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Booking or quotation workflow</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>E-commerce development</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Monthly maintenance</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Future redesign</li>
+              <li><svg class="scope-icon" aria-hidden="true"><use href="#icon-circle-plus"></use></svg>Full application discovery</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section id="process" class="section">
+    <section id="process" class="section section-alt">
       <div class="wrap">
         <h2>How a launch week works</h2>
         <ol class="timeline">
@@ -81,25 +179,17 @@
       </div>
     </section>
 
-    <section id="eligibility" class="section section-alt">
+    <section id="eligibility" class="section">
       <div class="wrap">
         <h2>Eligibility, readiness and impact criteria</h2>
-        <p class="placeholder-note">Full published criteria going here — pending final content from Farhan. Applications stay open throughout the pilot regardless; you do not need to reapply weekly.</p>
+        <p class="placeholder-note">Full published criteria going here, pending final content from Farhan. Applications stay open throughout the pilot regardless; you do not need to reapply weekly.</p>
       </div>
     </section>
 
-    <section id="launches" class="section">
+    <section id="launches" class="section section-alt">
       <div class="wrap">
         <h2>Launches so far</h2>
         <p class="placeholder-note">Week 1 launches soon. Every site built during this campaign will be listed here, in order, and stays live for its full twelve months of hosting.</p>
-      </div>
-    </section>
-
-    <section id="apply" class="section section-cta">
-      <div class="wrap">
-        <h2>Apply, or nominate someone qualified</h2>
-        <p class="placeholder-note">Application link goes live once finalized.</p>
-        <a href="#apply" class="btn btn-primary btn-disabled" aria-disabled="true">Apply or nominate someone</a>
       </div>
     </section>
   </main>
@@ -110,6 +200,6 @@
     </div>
   </footer>
 
-  <script type="module" src="./main.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>

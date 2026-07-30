@@ -1,0 +1,480 @@
+/* Signature palette, descending priority: white > green > blue > orange.
+   Green is reserved exclusively for primary CTAs (the one "do this" color).
+   Blue covers secondary/interactive accents (hover, checkmarks, timeline).
+   Orange appears exactly once, as a decorative flourish, to stay rare. */
+:root {
+  --paper: hsl(220, 16%, 96%);
+  --paper-alt: hsl(220, 16%, 91%);
+  --green: hsl(69, 96%, 43%);
+  --blue: hsl(210, 50%, 60%);
+  --orange: hsl(18, 90%, 56%);
+
+  --ink: hsl(220, 20%, 14%);
+  --muted: hsl(220, 10%, 40%);
+  --line: hsl(220, 14%, 86%);
+
+  --accent: var(--green);
+  --accent-ink: hsl(220, 20%, 12%); /* dark text on green — green is too light for white text */
+  --radius: 10px;
+  --gutter: clamp(20px, 5vw, 72px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* full-bleed sections must never cause horizontal scroll */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+/* offset anchored scroll targets so the sticky header never covers the heading */
+section[id] { scroll-margin-top: 76px; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+}
+
+/* Full width everywhere — no centered "blog column". .wrap only adds
+   breathing-room padding, it never narrows the section itself. */
+.wrap {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+h1, h2 { line-height: 1.15; margin: 0 0 16px; }
+h1 { font-size: clamp(2.4rem, 2.6vw + 2rem, 4.5rem); }
+h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 10;
+}
+
+.header-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  height: 76px;
+  position: relative;
+}
+
+.brand {
+  grid-column: 1;
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-logo { width: 34px; height: auto; display: block; }
+.brand-name { font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--ink);
+  width: 100%;
+}
+
+.primary-nav { display: contents; }
+
+.nav-links {
+  grid-column: 2;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.5vw, 40px);
+}
+.nav-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible { color: var(--blue); }
+
+.nav-cta {
+  grid-column: 3;
+  justify-self: end;
+  padding: 10px 18px !important;
+  font-size: 1.05rem;
+}
+.nav-cta-current {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  cursor: default;
+}
+
+/* Hero — full-bleed background photo, centered text on top */
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 96px var(--gutter) 56px;
+  text-align: center;
+  isolation: isolate;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -2;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: hsl(220, 30%, 8%);
+  opacity: 0.55;
+  z-index: -1;
+}
+.hero-inner { padding: 0; }
+.hero-content {
+  max-width: 46rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+.hero-content h1 {
+  margin: 0;
+  color: hsl(220, 20%, 98%);
+}
+.hero-sub {
+  margin: 0;
+  color: hsl(220, 14%, 88%);
+  font-size: 1.2rem;
+  max-width: 42ch;
+  position: relative;
+  padding-bottom: 14px;
+}
+/* single rare orange flourish — the one decorative, non-functional accent on the page */
+.hero-sub::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--orange);
+}
+
+/* Why C23 Exists — asymmetric editorial grid: one dominant statement
+   (left) supported by three numbered challenges (right), not three
+   identical cards. Numerals + rules reuse the timeline's border-top
+   convention instead of introducing a new card style. */
+.eyebrow {
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin: 0 0 16px;
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.why-heading {
+  font-size: clamp(1.8rem, 2vw + 1.4rem, 2.6rem);
+  max-width: 18ch;
+  margin: 0 0 24px;
+}
+.why-copy p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  max-width: 60ch;
+  font-size: 1.05rem;
+}
+.why-copy p:last-child { margin-bottom: 0; }
+
+.why-problems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.why-problems li {
+  border-top: 3px solid var(--blue);
+  padding-top: 16px;
+}
+.why-num {
+  display: block;
+  font-weight: 700;
+  color: var(--blue);
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+.why-problems h3 { margin: 0 0 8px; font-size: 1.15rem; }
+.why-problems p { margin: 0; color: var(--muted); }
+
+.why-closing-row {
+  margin-top: clamp(32px, 5vw, 56px);
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.why-closing {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.15rem;
+  max-width: 52ch;
+}
+
+@media (max-width: 900px) {
+  .why-grid { grid-template-columns: 1fr; }
+  .why-heading { max-width: none; }
+}
+
+/* Buttons — every primary CTA site-wide gets the same hover: it lifts
+   slightly and reveals two stacked offset layers in the other two brand
+   colours behind it (a deliberate, restrained brand motif, only on hover). */
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.btn-primary {
+  background: var(--green);
+  color: var(--accent-ink);
+}
+.btn-primary:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 4px 4px 0 var(--blue), 8px 8px 0 var(--orange);
+}
+.btn-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn-primary:hover { transform: none; }
+}
+
+/* Sections */
+.section { padding: clamp(48px, 7vw, 96px) 0; }
+.section-alt { background: var(--paper-alt); }
+.placeholder-note {
+  color: var(--muted);
+  font-style: italic;
+  max-width: 60ch;
+}
+
+/* Scope comparison — three cards, restrained (no pricing-template clichés:
+   no shadows, no "Most Popular", no fake prices, no label-chip dressing).
+   Each card's category reads from its full border colour and its icon
+   (repeated as every list marker), not from a text badge. Included is
+   visually primary via a pale tint + the only CTA; Excluded and Upgrade
+   stay equal-weight neutral cards so neither reads as lesser. */
+.scope-heading { font-size: clamp(2rem, 2.2vw + 1.6rem, 3.1rem); }
+.scope-intro {
+  color: var(--muted);
+  max-width: 60ch;
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+}
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 32px);
+  align-items: stretch;
+  margin-top: clamp(32px, 4vw, 48px);
+}
+.scope-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: hsl(220, 16%, 99%);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(22px, 2.5vw, 30px);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.scope-card--included {
+  background: hsl(75, 45%, 97%);
+  border-color: var(--green);
+}
+.scope-card--excluded { border-color: var(--orange); }
+.scope-card--upgrade { border-color: var(--blue); }
+
+/* Hover: card fills with its own accent colour; text/icons switch to a
+   dark ink that clears WCAG AA (4.5:1+) against all three accents. */
+.scope-card--included:hover { background: var(--green); }
+.scope-card--excluded:hover { background: var(--orange); }
+.scope-card--upgrade:hover { background: var(--blue); }
+.scope-card:hover h3,
+.scope-card:hover .scope-card-desc,
+.scope-card:hover .scope-list li {
+  color: var(--accent-ink);
+}
+.scope-card:hover .scope-icon { color: var(--accent-ink); }
+/* the Included CTA is green-on-dark by default; once its card turns
+   solid green on hover it would blend in, so it inverts to stay visible */
+.scope-card--included:hover .scope-cta {
+  background: var(--accent-ink);
+  color: var(--green);
+}
+
+.scope-card h3 { margin: 0; font-size: 1.3rem; transition: color 0.2s ease; }
+.scope-card-desc { margin: 0; color: var(--muted); font-size: 0.96rem; transition: color 0.2s ease; }
+
+.scope-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.scope-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+.scope-icon {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+.scope-card--included .scope-icon { color: var(--green); }
+.scope-card--excluded .scope-icon { color: var(--orange); }
+.scope-card--upgrade .scope-icon { color: var(--blue); }
+
+.scope-cta { align-self: center; margin-top: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scope-card,
+  .scope-card h3,
+  .scope-card-desc,
+  .scope-list li,
+  .scope-icon {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .scope-grid { grid-template-columns: 1fr 1fr; }
+  .scope-card--included { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .scope-grid { grid-template-columns: 1fr; }
+  .scope-card--included { grid-column: auto; }
+}
+
+/* Timeline — spreads across the full width on wide screens instead of
+   sitting as a narrow vertical list. */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+}
+.timeline li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 3px solid var(--blue);
+  padding-top: 14px;
+}
+.day {
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* Apply page */
+.apply-hero { text-align: left; }
+.apply-hero .btn { margin-top: 20px; }
+.link-back {
+  display: inline-block;
+  margin: 12px 0 4px;
+  color: var(--blue);
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Mobile nav — 880px, not 720px: at the larger nav font size, the four
+   links + CTA start clipping against the header edge below ~865px, so
+   the breakpoint was moved up with margin to stay clear of that zone. */
+@media (max-width: 880px) {
+  .header-inner { grid-template-columns: 1fr auto; }
+  .nav-toggle { display: flex; grid-column: 2; }
+  .primary-nav {
+    display: none;
+    position: absolute;
+    top: 76px;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 16px var(--gutter) 20px;
+  }
+  .primary-nav.open { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .nav-links { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .nav-cta { justify-self: auto; }
+}
