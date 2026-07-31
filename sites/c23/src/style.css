@@ -419,26 +419,92 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   .scope-card--included { grid-column: auto; }
 }
 
-/* Timeline — spreads across the full width on wide screens instead of
-   sitting as a narrow vertical list. */
-.timeline {
+/* How a launch week works — 7 expanding photo cards. Classic flexbox
+   trick: every card is flex:1 at rest; the hovered/focused one grows to
+   flex:5, and the rest compress automatically since total flex units
+   increase, no JS needed. Blue is reused here as the process accent
+   (already its role via timeline/eyebrow elsewhere), applied only to
+   the interactive ring/underline, never tinting the real photos. */
+.week-stack {
   list-style: none;
-  margin: 0;
+  margin: clamp(24px, 4vw, 40px) 0 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 20px;
-}
-.timeline li {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border-top: 3px solid var(--blue);
-  padding-top: 14px;
+  gap: 10px;
+  height: min(58vh, 480px);
 }
-.day {
+.week-card {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  cursor: pointer;
+  outline: none;
+  transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+}
+.week-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.week-card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, hsl(220, 30%, 8%) 100%);
+  opacity: 0.85;
+}
+.week-card-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px;
+}
+.week-card-day {
+  display: inline-block;
+  margin: 0;
+  color: hsl(220, 20%, 98%);
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--blue);
+  white-space: nowrap;
+  border-bottom: 3px solid var(--blue);
+  padding-bottom: 6px;
+}
+.week-card-desc {
+  margin: 10px 0 0;
+  color: hsl(220, 14%, 90%);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+.week-card:hover,
+.week-card:focus-visible {
+  flex: 5;
+  box-shadow: 0 0 0 3px var(--blue);
+}
+.week-card:hover .week-card-desc,
+.week-card:focus-visible .week-card-desc {
+  opacity: 1;
+  max-height: 100px;
+  transition-delay: 0.15s;
+}
+
+@media (max-width: 760px) {
+  .week-stack { flex-direction: column; height: auto; gap: 12px; }
+  .week-card { flex: none; height: 150px; }
+  .week-card-desc { opacity: 1; max-height: none; }
+  .week-card:hover, .week-card:focus-visible { flex: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .week-card { transition: none; }
+  .week-card-desc { transition: none; }
 }
 
 /* Apply page */
