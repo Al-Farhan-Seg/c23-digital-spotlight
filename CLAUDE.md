@@ -1,5 +1,9 @@
 # C23 Digital Spotlight
 
+## Commit authorship
+
+Never add `Co-Authored-By: Claude` (or any AI attribution) to commit messages or PR descriptions in this repo. Commits must show only the human author. This overrides the default git-commit workflow's usual co-author trailer.
+
 One repository, many independent static one-page websites, one Cloudflare Worker. A new site launches roughly every 7 days for a 4-week pilot, alternating between an alumna and an alumnus of Farhan Segujja's secondary-school alumni community. `c23.farhansegujja.com` (`sites/c23/`) is the campaign hub itself — the public source of truth — not a participant site.
 
 ## Repo layout
@@ -91,7 +95,7 @@ AI output is a draft, never the finished design. Do not ship until the audience,
 5. Confirm one obvious primary CTA and a brand-specific visual direction.
 6. Check accessibility, console errors, broken assets, overflow, metadata, and performance.
 7. Document at least four meaningful differences from previous campaign sites.
-8. State exactly what was tested; never claim verification that did not occur.
+8. Before finishing, verify that changes work as intended — run the relevant tests, then state exactly what was tested; never claim verification that did not occur. Fix any problems found before calling the work done.
 
 A successful build is not proof of a finished website.
 

@@ -66,3 +66,28 @@ if (faqTriggers.length) {
   if (location.hash) openFaqFromHash();
   window.addEventListener('hashchange', openFaqFromHash);
 }
+
+// Nav active-link tracking: marks whichever nav link's section is currently
+// in view. Visual only — no destinations or click behaviour change. Only
+// wires up when both sides exist, so it's a no-op on apply.html (its nav
+// links point to ./index.html#..., not #...).
+const spySections = document.querySelectorAll('main section[id]');
+const spyLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+if (spySections.length && spyLinks.length) {
+  const linkFor = (id) => document.querySelector(`.nav-links a[href="#${id}"]`);
+  const setActive = (id) => {
+    const link = linkFor(id);
+    if (!link) return;
+    spyLinks.forEach((l) => l.classList.remove('is-active'));
+    link.classList.add('is-active');
+  };
+  const spyObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    },
+    { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+  );
+  spySections.forEach((section) => spyObserver.observe(section));
+}

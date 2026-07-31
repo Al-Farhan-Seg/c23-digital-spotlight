@@ -24,7 +24,11 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* full-bleed sections must never cause horizontal scroll */
+  /* clip, not hidden: `overflow-x: hidden` turns html/body into a scroll
+     container, which silently breaks the header's `position: sticky` (it
+     scrolls away instead of pinning). `clip` blocks horizontal overflow
+     the same way without creating that container. */
+  overflow-x: clip;
 }
 
 html {
@@ -55,9 +59,12 @@ h1, h2 { line-height: 1.15; margin: 0 0 16px; }
 h1 { font-size: clamp(2.4rem, 2.6vw + 2rem, 4.5rem); }
 h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 
-/* Header */
+/* Header — hover reads in blue, keyboard focus in orange, and the active
+   in-view section gets blue text plus a small orange underline mark. Kept
+   to that one mapping throughout so no two links read as differently
+   "themed" — only default/hover/active/focus differ, never the link itself. */
 .site-header {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--paper-alt);
   position: sticky;
   top: 0;
   background: var(--paper);
@@ -102,6 +109,16 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   height: 2px;
   background: var(--ink);
   width: 100%;
+  transition: background-color 0.15s ease;
+}
+.nav-toggle:hover span { background: var(--blue); }
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle span { transition: none; }
 }
 
 .primary-nav { display: contents; }
@@ -114,15 +131,38 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   gap: clamp(20px, 2.5vw, 40px);
 }
 .nav-links a {
+  position: relative;
   color: var(--ink);
   text-decoration: none;
   font-size: 1.05rem;
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  padding-bottom: 4px;
+  transition: color 0.15s ease;
 }
-.nav-links a:hover,
-.nav-links a:focus-visible { color: var(--blue); }
+.nav-links a:hover { color: var(--blue); }
+.nav-links a:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+/* Active = the section currently in view (set by a small scroll-spy in
+   main.js — visual only, changes no destination or click behaviour). */
+.nav-links a.is-active { color: var(--blue); }
+.nav-links a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--orange);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-links a { transition: none; }
+}
 
 .nav-cta {
   grid-column: 3;
@@ -188,7 +228,9 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   position: relative;
   padding-bottom: 14px;
 }
-/* single rare orange flourish — the one decorative, non-functional accent on the page */
+/* decorative orange flourish under the hero subhead — orange has since picked
+   up functional roles elsewhere (FAQ close icon/policy markers, nav focus
+   rings and active-link mark), so this is no longer the page's only orange */
 .hero-sub::after {
   content: "";
   position: absolute;
@@ -234,12 +276,16 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 .why-cards-col {
   min-width: 0; /* this, not .why-frame, is the actual grid item now that the
     title sits above it — see the min-width note on .why-frame below */
+  align-self: center; /* centers this column within the row's height,
+    which .why-lead (the taller column) still determines — .why-lead keeps
+    its own top alignment via .why-grid's align-items: start */
 }
 .why-cards-title {
   margin: 0 0 12px;
-  font-size: 0.95rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--ink);
+  text-align: center;
 }
 
 /* Bordered housing for the three challenge cards, like a dedicated
@@ -410,6 +456,17 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   transform: translate(-4px, -4px);
   box-shadow: 4px 4px 0 var(--blue), 8px 8px 0 var(--orange);
 }
+/* Pressed: compresses back down and darkens, reading as "landing" rather
+   than "lifting" — the opposite motion of :hover. */
+.btn-primary:active {
+  background: hsl(69, 96%, 36%);
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
 .btn-disabled {
   opacity: 0.55;
   cursor: not-allowed;
@@ -417,7 +474,7 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 }
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; }
-  .btn-primary:hover { transform: none; }
+  .btn-primary:hover, .btn-primary:active { transform: none; }
 }
 
 /* Sections */
@@ -624,6 +681,416 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   .week-card-desc { transition: none; }
 }
 
+/* Eligibility, Readiness and Criteria — matches the Scope section's card
+   language exactly (same border weight, same tinted-background-for-the-
+   first-card pattern, same "hover fills solid with the accent colour and
+   swaps text to accent-ink" behaviour), in the same colour order: green,
+   orange, blue. Card 1 (Eligibility) = green like Scope's Included card,
+   card 2 (Readiness) = orange like Excluded, card 3 (Criteria) = blue like
+   Upgrade. Panels differ in *content* rather than layout — Eligibility's
+   distinguishing feature is a bordered verification callout, Readiness's
+   is its checklist, Criteria's is the week-by-week rotation timeline —
+   so colour is never the only thing telling them apart. */
+.elig-heading { margin-bottom: 12px; }
+.elig-intro {
+  color: var(--muted);
+  max-width: 62ch;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.elig-grid {
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 28px);
+  align-items: stretch;
+}
+.elig-panel {
+  --panel-accent: var(--line);
+  --panel-tint: hsl(220, 16%, 93%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(22px, 2.5vw, 28px);
+  background: hsl(220, 16%, 99%);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.elig-panel--eligibility {
+  --panel-accent: var(--green);
+  --panel-tint: hsl(75, 45%, 93%);
+  background: hsl(75, 45%, 97%);
+  border-color: var(--panel-accent);
+}
+.elig-panel--readiness {
+  --panel-accent: var(--orange);
+  --panel-tint: hsl(18, 85%, 93%);
+  border-color: var(--panel-accent);
+}
+.elig-panel--criteria {
+  --panel-accent: var(--blue);
+  --panel-tint: hsl(210, 45%, 93%);
+  border-color: var(--panel-accent);
+}
+
+/* Hover: solid accent fill + accent-ink text, identical mechanism to
+   .scope-card:hover. Nested elements that carry their own background
+   (chips, the verification note) swap to paper instead of accent-ink text,
+   so they still read as distinct boxes rather than disappearing into the
+   fill. */
+.elig-panel:hover { background: var(--panel-accent); border-color: var(--panel-accent); }
+.elig-panel:hover .elig-panel-head h3,
+.elig-panel:hover .elig-panel-core,
+.elig-panel:hover .elig-panel-footnote,
+.elig-panel:hover .elig-check-list li,
+.elig-panel:hover .elig-dash-list li,
+.elig-panel:hover .elig-timeline li {
+  color: var(--accent-ink);
+}
+.elig-panel:hover .elig-panel-icon { background: var(--accent-ink); color: var(--panel-accent); }
+.elig-panel:hover .elig-check-list li::before,
+.elig-panel:hover .elig-timeline-mark--a,
+.elig-panel:hover .elig-timeline li:not(:first-child)::before {
+  background: var(--accent-ink);
+}
+.elig-panel:hover .elig-dash-list li::before { color: var(--accent-ink); }
+.elig-panel:hover .elig-timeline-mark--b { border-color: var(--accent-ink); }
+.elig-panel:hover .elig-chip-list li,
+.elig-panel:hover .elig-note { background: var(--paper); }
+
+@media (prefers-reduced-motion: reduce) {
+  .elig-panel { transition: none; }
+}
+
+.elig-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.elig-panel-head h3 { margin: 0; font-size: 1.2rem; transition: color 0.2s ease; }
+.elig-panel-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  padding: 7px;
+  background: var(--panel-tint);
+  color: var(--panel-accent);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.elig-panel-core {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+.elig-panel-footnote {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  transition: color 0.2s ease;
+}
+
+/* Eligibility: the four "still counts" cases as wrapped chips, not bullets —
+   reads as a set of equal, interchangeable qualifying cases rather than a
+   sequence. */
+.elig-chip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.elig-chip-list li {
+  background: var(--paper-alt);
+  color: var(--ink);
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+.elig-note {
+  background: hsl(75, 45%, 93%);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background-color 0.2s ease;
+}
+.elig-note-label {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: hsl(85, 55%, 24%);
+}
+.elig-note p:not(.elig-note-label) {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.elig-check-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.elig-check-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+.elig-check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--panel-accent);
+  transition: background-color 0.2s ease;
+}
+
+/* Criteria: dash markers (a distinct list treatment from Readiness's dot
+   list), then the timeline as the panel's standout element. */
+.elig-dash-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.elig-dash-list li {
+  padding-left: 16px;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.elig-dash-list li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  color: var(--panel-accent);
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.elig-timeline {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.elig-timeline li {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  transition: color 0.2s ease;
+}
+.elig-timeline-mark {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  z-index: 1;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.elig-timeline-mark--a { background: var(--panel-accent); }
+.elig-timeline-mark--b { background: var(--paper); border: 2px solid var(--panel-accent); }
+.elig-timeline li:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: -50%;
+  width: 100%;
+  height: 1.5px;
+  background: var(--line);
+  transition: background-color 0.2s ease;
+}
+
+.elig-closing {
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  padding-top: clamp(20px, 3vw, 28px);
+  border-top: 1px solid var(--line);
+  max-width: 70ch;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .elig-grid { grid-template-columns: 1fr 1fr; }
+  .elig-panel--criteria { grid-column: 1 / -1; }
+  .elig-timeline { max-width: 420px; }
+}
+
+@media (max-width: 640px) {
+  .elig-grid { grid-template-columns: 1fr; }
+  .elig-panel--criteria { grid-column: auto; }
+}
+
+/* Launch Archive — an empty state dressed as the first real card in a grid,
+   not a grey placeholder box. A dashed blue-tinted border reads as "slot
+   reserved" rather than "broken"; the four-stage progress list is shown
+   neutrally (no stage marked reached) since no participant is picked yet —
+   asserting a stage would be an invented status. Real launch cards will be
+   solid-bordered `.launch-card` items prepended ahead of this one. */
+.launches-intro {
+  color: var(--muted);
+  max-width: 60ch;
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+}
+.launch-grid {
+  list-style: none;
+  margin: clamp(28px, 4vw, 40px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(18px, 2.5vw, 28px);
+}
+.launch-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: clamp(20px, 2.5vw, 26px);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+.launch-card--placeholder {
+  border: 1.5px dashed hsl(210, 35%, 72%);
+}
+.launch-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: hsl(210, 45%, 93%);
+  color: hsl(210, 55%, 30%);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.launch-card-title { margin: 0; font-size: 1.15rem; }
+.launch-card-date {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.launch-card-date-label {
+  font-weight: 600;
+  color: var(--ink);
+  margin-right: 4px;
+}
+
+/* Neutral 4-stage roadmap — a connecting line behind evenly-muted dots.
+   No stage reads as "reached", since none genuinely is yet. */
+.launch-progress {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.launch-progress li {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  padding-top: 18px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.launch-progress li::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  z-index: 1;
+}
+.launch-progress li::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: -50%;
+  width: 100%;
+  height: 1.5px;
+  background: var(--line);
+}
+.launch-progress li:first-child::after { content: none; }
+
+.launch-card-cta {
+  margin-top: auto;
+  padding-top: 4px;
+  /* var(--blue) is ~2.7:1 on paper — fine for icons/borders, not enough for
+     link text (WCAG AA needs 4.5:1). Same darker blue as .launch-badge's
+     text, which does pass. */
+  color: hsl(210, 55%, 30%);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.launch-card-cta:hover { color: var(--ink); }
+.launch-card-cta:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (max-width: 480px) {
+  /* Horizontal stepper gets cramped under ~4 short labels at narrow
+     widths; a vertical list stays readable without shrinking type. */
+  .launch-progress { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .launch-progress li {
+    width: 100%;
+    text-align: left;
+    padding-top: 0;
+    padding-left: 22px;
+  }
+  .launch-progress li::before { top: 50%; left: 4px; transform: translate(0, -50%); }
+  .launch-progress li::after {
+    top: 100%;
+    left: 8px;
+    width: 1.5px;
+    height: 10px;
+  }
+  .launch-progress li:first-child::after { content: ""; }
+  .launch-progress li:last-child::after { content: none; }
+}
+
 /* Apply page */
 .apply-hero { text-align: left; }
 .apply-hero .btn { margin-top: 20px; }
@@ -691,8 +1158,33 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   max-width: 46rem;
   text-align: center;
 }
-.faq-eyebrow { text-align: center; }
-.faq-heading { margin-bottom: 12px; }
+/* Eyebrow reads as a small badge in green (this section's accent),
+   overriding the shared blue `.eyebrow` used everywhere else on the page. */
+.faq-eyebrow {
+  display: inline-block;
+  text-align: center;
+  color: hsl(85, 45%, 26%);
+  background: hsl(75, 45%, 93%);
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.faq-heading {
+  position: relative;
+  margin-bottom: 12px;
+  padding-bottom: 16px;
+}
+/* small heading accent, echoing the hero's single-flourish underline motif */
+.faq-heading::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--green);
+}
 .faq-intro {
   color: var(--muted);
   max-width: 52ch;
@@ -709,11 +1201,26 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   flex-direction: column;
   gap: 10px;
 }
+/* Closed rows sit on paper-alt (one step darker than the section bg) so
+   the open row — back on a near-white surface — reads as lifted without
+   needing a heavy shadow. State is never color-only: the icon's shape
+   (+ vs x) and the row's own presence carry it; color just reinforces. */
 .faq-item {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: hsl(220, 16%, 99%);
+  background: var(--paper-alt);
   overflow: hidden;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.faq-item:not(:has(.faq-answer.is-open)):hover {
+  border-color: hsl(210, 50%, 78%);
+  background: hsl(210, 30%, 93%);
+}
+.faq-item:has(.faq-answer.is-open) {
+  background: hsl(220, 16%, 99%);
+  border-color: var(--blue);
+  border-top-width: 3px;
+  box-shadow: 0 2px 10px hsla(220, 30%, 15%, 0.07);
 }
 .faq-q { margin: 0; }
 .faq-trigger {
@@ -733,9 +1240,9 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   font-size: 1rem;
   color: var(--ink);
 }
-.faq-trigger:hover { color: var(--blue); }
+.faq-item:has(.faq-answer.is-open) .faq-trigger { padding-top: 16px; }
 .faq-trigger:focus-visible {
-  outline: 2px solid var(--blue);
+  outline: 2px solid var(--green);
   outline-offset: -2px;
   border-radius: calc(var(--radius) - 2px);
 }
@@ -744,14 +1251,14 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  color: var(--muted);
+  color: var(--blue);
   transition: transform 0.25s ease, color 0.15s ease;
 }
-.faq-trigger:hover .faq-icon { color: var(--blue); }
 /* plus -> close: <use>-cloned instances live in a shadow tree the light-DOM
    can't select into (targeting the inner path class doesn't work), so the
-   whole icon rotates 45deg instead, turning the + into a x. */
-.faq-trigger[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+   whole icon rotates 45deg instead, turning the + into a x — the close
+   state also switches the icon to orange, distinct from the plus's blue. */
+.faq-trigger[aria-expanded="true"] .faq-icon { color: var(--orange); transform: rotate(45deg); }
 
 .faq-answer {
   display: grid;
@@ -766,19 +1273,32 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   font-size: 0.96rem;
   line-height: 1.6;
 }
+/* Marks the handful of answers directly referenced by the apply-page terms
+   checkbox (deadlines, hosting, revisions, referrals, upgrades) — a marker,
+   not a fill, so long text never sits on a bright orange background. */
+.faq-policy {
+  border-left: 3px solid var(--orange);
+  padding-left: 13px;
+}
 .faq-scope-link {
   display: inline-block;
   margin: 0 20px 18px;
   color: var(--blue);
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
-.faq-scope-link:hover,
-.faq-scope-link:focus-visible { text-decoration: underline; }
+.faq-scope-link:hover { color: var(--ink); }
+.faq-scope-link:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .faq-answer,
-  .faq-icon-vert { transition: none; }
+  .faq-icon,
+  .faq-item { transition: none; }
 }
 
 @media (max-width: 640px) {
@@ -786,12 +1306,14 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   .faq-answer-inner p,
   .faq-scope-link { margin-left: 16px; margin-right: 16px; }
   .faq-answer-inner p { font-size: 0.92rem; }
+  .faq-policy { padding-left: 10px; }
 }
 
-/* Mobile nav — 880px, not 720px: at the larger nav font size, the four
-   links + CTA start clipping against the header edge below ~865px, so
-   the breakpoint was moved up with margin to stay clear of that zone. */
-@media (max-width: 880px) {
+/* Mobile nav — 1010px, not 720px or 880px: measured directly (four links
+   + CTA against the header edge), the desktop layout actually overflows
+   the viewport up to ~990px, not ~865px as a previous pass assumed — 880px
+   left a ~110px dead zone where the CTA clipped off-screen entirely. */
+@media (max-width: 1010px) {
   .header-inner { grid-template-columns: 1fr auto; }
   .nav-toggle { display: flex; grid-column: 2; }
   .primary-nav {
