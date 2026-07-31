@@ -118,6 +118,8 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   text-decoration: none;
   font-size: 1.05rem;
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 .nav-links a:hover,
 .nav-links a:focus-visible { color: var(--blue); }
@@ -127,6 +129,8 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   justify-self: end;
   padding: 10px 18px !important;
   font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 .nav-cta-current {
   background: none;
@@ -198,9 +202,8 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 }
 
 /* Why C23 Exists — asymmetric editorial grid: one dominant statement
-   (left) supported by three numbered challenges (right), not three
-   identical cards. Numerals + rules reuse the timeline's border-top
-   convention instead of introducing a new card style. */
+   (left) supported by three supporting challenge cards (right). No
+   01/02/03 numerals on the cards — deliberately omitted. */
 .eyebrow {
   color: var(--blue);
   text-transform: uppercase;
@@ -228,27 +231,114 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 }
 .why-copy p:last-child { margin-bottom: 0; }
 
+.why-cards-col {
+  min-width: 0; /* this, not .why-frame, is the actual grid item now that the
+    title sits above it — see the min-width note on .why-frame below */
+}
+.why-cards-title {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Bordered housing for the three challenge cards, like a dedicated
+   frame/shelf rather than the cards floating loose in the section. */
+.why-frame {
+  position: relative;
+  min-width: 0; /* without this, the mobile carousel's fixed-width cards give
+    this element a huge intrinsic min-width, which forces the parent grid
+    column (and the whole section) to overflow instead of shrinking to fit */
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 20px;
+  background: var(--paper);
+}
+.why-carousel-arrow {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
+  z-index: 4;
+}
+.why-carousel-arrow svg { width: 16px; height: 16px; }
+.why-carousel-arrow:hover { border-color: var(--blue); color: var(--blue); }
+.why-carousel-prev { left: 4px; }
+.why-carousel-next { right: 4px; }
+
 .why-problems {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* Solid brand-color cards, mimicking the classic "hover to focus one,
+   blur the rest" card interaction. Title + description are always both
+   visible (desktop/tablet/mobile alike) — hover only lifts the hovered
+   card slightly and blurs+shrinks its siblings; it never reveals
+   anything that wasn't already there. Dark ink text on all three —
+   required for WCAG AA, since white fails contrast against every one
+   of these three brand colors at their given lightness. */
+.why-card {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 12px 28px;
+  padding: 14px 16px;
+  cursor: pointer;
+  color: var(--accent-ink);
+  box-shadow: 0 4px 14px hsla(220, 30%, 20%, 0.12);
+  transition: transform 400ms ease, filter 400ms ease, box-shadow 400ms ease;
 }
-.why-problems li {
-  border-top: 3px solid var(--blue);
-  padding-top: 16px;
+.why-card--green { background: var(--green); }
+.why-card--blue { background: var(--blue); }
+.why-card--orange { background: var(--orange); }
+
+.why-card h3 { margin: 0; font-size: 0.95rem; }
+.why-card p {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--accent-ink);
 }
-.why-num {
-  display: block;
-  font-weight: 700;
-  color: var(--blue);
-  font-size: 1.1rem;
-  margin-bottom: 6px;
+.why-card:hover {
+  transform: scale(1.06);
+  z-index: 5;
+  box-shadow: 0 10px 26px hsla(220, 30%, 20%, 0.2);
 }
-.why-problems h3 { margin: 0 0 8px; font-size: 1.15rem; }
-.why-problems p { margin: 0; color: var(--muted); }
+.why-problems:hover > .why-card:not(:hover) {
+  filter: blur(6px);
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-card { transition: none; }
+  .why-card:hover, .why-problems:hover > .why-card:not(:hover) { transform: none; filter: none; }
+}
+
+/* Desktop: same "box - box - box" row as tablet, just at desktop's card width. */
+@media (min-width: 901px) {
+  .why-problems { display: flex; flex-direction: row; gap: 14px; }
+  .why-card { width: 180px; }
+}
+
+/* Tablet: small cards, in one close-together row — "box - box - box". */
+@media (min-width: 641px) and (max-width: 900px) {
+  .why-problems { display: flex; flex-direction: row; justify-content: center; gap: 10px; }
+  .why-card { width: 150px; }
+}
 
 .why-closing-row {
   margin-top: clamp(32px, 5vw, 56px);
@@ -270,6 +360,33 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 @media (max-width: 900px) {
   .why-grid { grid-template-columns: 1fr; }
   .why-heading { max-width: none; }
+}
+
+/* Mobile: one card at a time, centered in the frame (scroll-padding
+   trick so the edge cards can reach dead-center too), with prev/next
+   arrow buttons since a bare swipe hint isn't discoverable enough at
+   this size. Description stays visible without needing hover — hover
+   isn't reliable on touch, so nothing here should depend on it. */
+@media (max-width: 640px) {
+  .why-frame { padding-inline: 6px; }
+  .why-problems {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding-inline: calc(50% - 115px);
+  }
+  .why-card {
+    flex: 0 0 230px;
+    max-height: none;
+    scroll-snap-align: center;
+  }
+  .why-card p { font-size: 0.85rem; }
+  .why-card:hover { transform: none; box-shadow: 0 4px 14px hsla(220, 30%, 20%, 0.12); }
+  .why-problems:hover > .why-card:not(:hover) { filter: none; transform: none; }
+  .why-carousel-arrow { display: flex; }
 }
 
 /* Buttons — every primary CTA site-wide gets the same hover: it lifts
