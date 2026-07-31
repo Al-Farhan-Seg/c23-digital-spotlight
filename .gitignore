@@ -2,3 +2,4 @@ node_modules/
 dist/
 .wrangler/
 desktop.ini
+Temp Assets/

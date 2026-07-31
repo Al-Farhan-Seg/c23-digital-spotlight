@@ -627,6 +627,47 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 /* Apply page */
 .apply-hero { text-align: left; }
 .apply-hero .btn { margin-top: 20px; }
+
+.terms-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 60ch;
+  margin: 28px 0 4px;
+}
+.terms-check input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.terms-check label {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  cursor: pointer;
+}
+.terms-check label a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.terms-check label a:hover { color: var(--ink); }
+.terms-check label a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.terms-check input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .terms-check { max-width: none; }
+}
 .link-back {
   display: inline-block;
   margin: 12px 0 4px;
@@ -639,6 +680,112 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   padding: 28px 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+/* FAQ — narrow centered accordion column, one item open at a time.
+   Height animates via grid-template-rows (0fr -> 1fr), which — unlike
+   max-height — animates to the answer's true content height with no
+   guessed cap and no clipping on long answers. */
+.faq-section { background: var(--paper); }
+.faq-wrap {
+  max-width: 46rem;
+  text-align: center;
+}
+.faq-eyebrow { text-align: center; }
+.faq-heading { margin-bottom: 12px; }
+.faq-intro {
+  color: var(--muted);
+  max-width: 52ch;
+  margin: 0 auto clamp(32px, 4vw, 48px);
+  font-size: 1.05rem;
+}
+
+.faq-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: hsl(220, 16%, 99%);
+  overflow: hidden;
+}
+.faq-q { margin: 0; }
+.faq-trigger {
+  scroll-margin-top: 96px; /* clears the sticky header, plus a little breathing room */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+}
+.faq-trigger:hover { color: var(--blue); }
+.faq-trigger:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+  border-radius: calc(var(--radius) - 2px);
+}
+.faq-q-text { flex: 1; }
+.faq-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: transform 0.25s ease, color 0.15s ease;
+}
+.faq-trigger:hover .faq-icon { color: var(--blue); }
+/* plus -> close: <use>-cloned instances live in a shadow tree the light-DOM
+   can't select into (targeting the inner path class doesn't work), so the
+   whole icon rotates 45deg instead, turning the + into a x. */
+.faq-trigger[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.faq-answer.is-open { grid-template-rows: 1fr; }
+.faq-answer-inner { min-height: 0; overflow: hidden; }
+.faq-answer-inner p {
+  margin: 0 20px 18px;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+.faq-scope-link {
+  display: inline-block;
+  margin: 0 20px 18px;
+  color: var(--blue);
+  font-weight: 600;
+  text-decoration: none;
+}
+.faq-scope-link:hover,
+.faq-scope-link:focus-visible { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-answer,
+  .faq-icon-vert { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .faq-trigger { padding: 15px 16px; font-size: 0.96rem; gap: 12px; }
+  .faq-answer-inner p,
+  .faq-scope-link { margin-left: 16px; margin-right: 16px; }
+  .faq-answer-inner p { font-size: 0.92rem; }
 }
 
 /* Mobile nav — 880px, not 720px: at the larger nav font size, the four

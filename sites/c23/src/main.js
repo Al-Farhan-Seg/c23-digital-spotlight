@@ -26,3 +26,43 @@ if (whyTrack && whyPrev && whyNext) {
   whyPrev.addEventListener('click', () => scrollByCard(-1));
   whyNext.addEventListener('click', () => scrollByCard(1));
 }
+
+const faqTriggers = document.querySelectorAll('.faq-trigger');
+if (faqTriggers.length) {
+  const closeAllFaq = () => {
+    faqTriggers.forEach((other) => {
+      other.setAttribute('aria-expanded', 'false');
+      document.getElementById(other.getAttribute('aria-controls'))?.classList.remove('is-open');
+    });
+  };
+  const openFaq = (trigger) => {
+    closeAllFaq();
+    trigger.setAttribute('aria-expanded', 'true');
+    document.getElementById(trigger.getAttribute('aria-controls'))?.classList.add('is-open');
+  };
+
+  faqTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        closeAllFaq();
+      } else {
+        openFaq(trigger);
+      }
+    });
+  });
+
+  // Deep-linking: #faq-question-N should open (not just scroll to) that item,
+  // both on initial load and when arriving via an in-page hash change.
+  const openFaqFromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    const trigger = document.getElementById(id);
+    if (trigger && trigger.classList.contains('faq-trigger')) {
+      openFaq(trigger);
+      trigger.scrollIntoView({ block: 'start' });
+    }
+  };
+  if (location.hash) openFaqFromHash();
+  window.addEventListener('hashchange', openFaqFromHash);
+}
