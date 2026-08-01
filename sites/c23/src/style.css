@@ -1796,11 +1796,95 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 }
 
 /* Footer */
+/* Footer — a deliberately dark, blue-toned close to an otherwise all-light
+   page: --ink is already the site's dark neutral (used for body text and
+   the nav-toggle bars), reused here as a surface so the footer still reads
+   as this brand rather than an unrelated dark band bolted on. Colour stays
+   narrow on purpose: green marks the one action link, blue marks the one
+   outbound link, orange appears exactly once as a hairline divider — never
+   spread evenly across the footer the way the campaign's --green/--blue
+   trio (why-card colours, etc.) get spread elsewhere. */
 .site-footer {
-  border-top: 1px solid var(--line);
-  padding: 28px 0;
-  color: var(--muted);
+  background: var(--ink);
+  color: hsl(220, 12%, 62%); /* muted-but-readable body copy, 5.7:1 on --ink */
   font-size: 0.9rem;
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  /* top/bottom only — a padding shorthand here would zero out .wrap's own
+     left/right gutter, since both classes land on this element and this
+     rule comes later in the cascade at equal specificity. */
+  padding-top: 40px;
+  padding-bottom: 28px;
+}
+
+.footer-brand-block { min-width: 0; }
+.footer-brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--paper); /* 14.6:1 on --ink */
+}
+.footer-tagline {
+  margin: 6px 0 0;
+  color: hsl(220, 14%, 70%); /* softer than the brand name, still 7.3:1 on --ink */
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 32px;
+}
+
+/* Same link, two states: a real <a> on index.html, an inert
+   aria-current="page" <span> on apply.html itself — mirrors the header
+   nav-cta's existing current-page pattern rather than linking a page to
+   itself. Both share the base rule; only the modifiers differ. */
+.footer-link {
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.15s ease;
+}
+a.footer-link:hover,
+a.footer-link:focus-visible {
+  border-color: currentColor;
+}
+a.footer-link:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.footer-link--apply { color: var(--green); } /* 9.8:1 on --ink */
+.footer-link--portfolio { font-weight: 500; color: var(--blue); } /* 5.4:1 — lighter weight than Apply/Nominate so the unfinished portfolio never reads as the primary CTA */
+.footer-link--current { color: hsl(220, 14%, 70%); cursor: default; }
+
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  /* top/bottom only — see the matching note on .footer-top. */
+  padding-top: 16px;
+  padding-bottom: 32px;
+  border-top: 1px solid hsla(18, 90%, 56%, 0.35); /* the one orange touch: a hairline divider, not a wash */
+}
+.footer-source,
+.footer-copyright { margin: 0; }
+
+@media (max-width: 640px) {
+  .footer-top { flex-direction: column; gap: 20px; padding-top: 32px; padding-bottom: 24px; }
+  .footer-links { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .footer-link { display: inline-block; padding: 4px 0; } /* larger vertical hit area, easy to tap */
+  .footer-meta { flex-direction: column; gap: 6px; padding-top: 16px; padding-bottom: 28px; }
 }
 
 /* FAQ — narrow centered accordion column, one item open at a time.
