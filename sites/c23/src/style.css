@@ -17,6 +17,16 @@
   --accent-ink: hsl(220, 20%, 12%); /* dark text on green — green is too light for white text */
   --radius: 10px;
   --gutter: clamp(20px, 5vw, 72px);
+
+  /* Typography system. Fredoka carries the campaign's visual personality
+     (hero/section headings, a handful of short standout moments) — never
+     dense text. Source Sans 3 is the workhorse: nav, body, forms, buttons,
+     FAQ. Lora appears sparingly, only where copy is genuinely editorial
+     (the two mission-statement lead paragraphs, the two section-closing
+     reflective lines) — never a blanket body-text swap. */
+  --font-display: "Fredoka", sans-serif;
+  --font-sans: "Source Sans 3", sans-serif;
+  --font-serif: "Lora", serif;
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +51,8 @@ html {
 section[id] { scroll-margin-top: 76px; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
+  font-weight: 400;
   color: var(--ink);
   background: var(--paper);
   line-height: 1.55;
@@ -55,9 +66,15 @@ body {
   padding: 0 var(--gutter);
 }
 
-h1, h2 { line-height: 1.15; margin: 0 0 16px; }
-h1 { font-size: clamp(2.4rem, 2.6vw + 2rem, 4.5rem); }
-h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
+/* Fredoka carries every hero/section heading site-wide by default; the one
+   deliberate exception is the application form's dense in-form headings
+   (.apply-group h2), which opt back out to Source Sans further down. h1
+   gets the heavier weight (700) so the hero heading reads distinctly
+   above section headings (600) — two different hierarchy rungs, not the
+   same weight repeated down the page. */
+h1, h2 { font-family: var(--font-display); line-height: 1.15; margin: 0 0 16px; }
+h1 { font-weight: 700; font-size: clamp(2.4rem, 2.6vw + 2rem, 4.5rem); }
+h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 
 /* Header — hover reads in blue, keyboard focus in orange, and the active
    in-view section gets blue text plus a small orange underline mark. Kept
@@ -90,7 +107,7 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   color: var(--ink);
 }
 .brand-logo { width: 34px; height: auto; display: block; }
-.brand-name { font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
+.brand-name { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; white-space: nowrap; }
 
 .nav-toggle {
   display: none;
@@ -239,6 +256,13 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   margin: 0;
   color: hsl(220, 20%, 98%);
 }
+/* The one CTA that picks up the display font — it sits directly under the
+   Fredoka hero heading as part of the same opening moment. Every other
+   button/CTA site-wide (nav, scope, form submit, launch card) stays
+   Source Sans, per the typography system's "selected CTAs, not buttons
+   generally" rule. */
+.hero-cta { font-family: var(--font-display); font-weight: 600; }
+
 .hero-sub {
   margin: 0;
   color: hsl(220, 14%, 88%);
@@ -285,10 +309,13 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   margin: 0 0 24px;
 }
 .why-copy p {
+  font-family: var(--font-serif);
+  font-weight: 400;
   margin: 0 0 16px;
   color: var(--muted);
   max-width: 60ch;
   font-size: 1.05rem;
+  line-height: 1.65;
 }
 .why-copy p:last-child { margin-bottom: 0; }
 
@@ -371,7 +398,7 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 .why-card--blue { background: var(--blue); }
 .why-card--orange { background: var(--orange); }
 
-.why-card h3 { margin: 0; font-size: 0.95rem; }
+.why-card h3 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; }
 .why-card p {
   margin: 8px 0 0;
   font-size: 0.78rem;
@@ -416,9 +443,11 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   gap: 20px;
 }
 .why-closing {
+  font-family: var(--font-serif);
   margin: 0;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.15rem;
+  line-height: 1.5;
   max-width: 52ch;
 }
 
@@ -954,11 +983,14 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 }
 
 .elig-closing {
+  font-family: var(--font-serif);
   margin: clamp(32px, 4vw, 48px) 0 0;
   padding-top: clamp(20px, 3vw, 28px);
   border-top: 1px solid var(--line);
   max-width: 70ch;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.5;
   color: var(--ink);
 }
 
@@ -1011,10 +1043,9 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-radius: 999px;
   background: hsl(210, 45%, 93%);
   color: hsl(210, 55%, 30%);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.85rem;
 }
 .launch-card-title { margin: 0; font-size: 1.15rem; }
 .launch-card-date {
@@ -1114,9 +1145,12 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 .apply-hero { text-align: left; }
 .apply-hero .btn { margin-top: 20px; }
 .apply-intro {
+  font-family: var(--font-serif);
+  font-weight: 400;
   color: var(--muted);
   max-width: 65ch;
   font-size: 1.05rem;
+  line-height: 1.65;
   margin: 12px 0 4px;
 }
 
@@ -1217,6 +1251,10 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 }
 .apply-group:first-child { padding-top: 0; border-top: none; }
 .apply-group h2 {
+  /* Opts back out of the site-wide Fredoka h2 default — a dense,
+     multi-field form is exactly the case the typography system calls out
+     as off-limits for the display font. */
+  font-family: var(--font-sans);
   position: relative;
   padding-left: 16px;
   margin: 0 0 20px;
