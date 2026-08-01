@@ -1,3 +1,129 @@
+// Intro splash (index.html only — guarded, no-op on apply.html since it has
+// no #splash element). The show-once-per-tab decision and its sessionStorage
+// write already happened synchronously in the inline <script> right after
+// #splash in the HTML — if #splash still exists by the time this runs, that
+// means "yes, show and animate it" was already decided. This block only
+// orchestrates the animation/skip/cleanup of a splash that's already there.
+//
+// Wrapped in initSplash() rather than run inline so it can be deferred the
+// same way the inline gate script defers past Chrome's speculative
+// "Preload pages" prerendering (see the matching comment in index.html):
+// document.getElementById('splash') is re-read *inside* this function, not
+// captured at module top-level, specifically so that during a deferred
+// prerendering pass it's re-checked *after* the inline gate's decide() has
+// actually run (guaranteed by listener registration order) — otherwise this
+// would see the not-yet-removed splash on every repeat visit during
+// prerendering and wrongly lock page scroll/inertness for a splash that was
+// never meant to show.
+function initSplash() {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  const skipBtn = document.getElementById('splashSkip');
+  const lockTargets = ['.site-header', 'main', '.site-footer']
+    .map((sel) => document.querySelector(sel))
+    .filter(Boolean);
+
+  document.documentElement.style.overflow = 'hidden';
+  lockTargets.forEach((el) => { el.inert = true; });
+  skipBtn?.focus();
+
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    clearTimeout(failSafeTimer);
+    document.documentElement.style.overflow = '';
+    lockTargets.forEach((el) => { el.inert = false; });
+    splash.remove();
+  };
+
+  // Absolute ceiling: no matter what happens below (an animationend event
+  // that never fires, some other script erroring, anything) the splash
+  // is force-removed and never permanently blocks the page.
+  const failSafeTimer = setTimeout(finish, 4000);
+
+  let exiting = false;
+  const startExit = () => {
+    if (exiting) return;
+    exiting = true;
+    splash.classList.add('is-exiting');
+    splash.addEventListener('animationend', finish, { once: true });
+    setTimeout(finish, 700); // backup, in case animationend never fires
+  };
+
+  let mainTimer;
+  skipBtn?.addEventListener('click', () => {
+    clearTimeout(mainTimer);
+    startExit();
+  }, { once: true });
+
+  // Don't start the entrance animation (or the countdown to exit) until the
+  // render-blocking Google Fonts <link> has actually finished loading. A
+  // CSS animation's clock runs on wall time from the moment styles are
+  // computed, regardless of whether a frame was ever painted — on a cold
+  // cache, fetching that stylesheet can take longer than the entrance
+  // animation itself, so by the time it clears and the browser finally
+  // paints, the animation had already run out in the background and jumps
+  // straight to its end state with no visible motion.
+  // (document.fonts.ready is the wrong signal for this: it only tracks
+  // font faces the browser already knows about from @font-face rules it
+  // has parsed — while this stylesheet is still in flight, the browser
+  // doesn't know those rules exist yet, so fonts.ready resolves as if
+  // there's nothing to wait for, immediately, even though the actual
+  // render-blocking resource hasn't loaded at all.)
+  const fontLink = document.getElementById('webfontStylesheet');
+  const fontsReady = new Promise((resolve) => {
+    if (!fontLink || fontLink.sheet) {
+      // Not present, or already loaded (the common case — small stylesheet,
+      // usually resolves well before this deferred script even runs) —
+      // resolve immediately, no artificial delay.
+      resolve();
+      return;
+    }
+    let settled = false;
+    const done = () => { if (!settled) { settled = true; resolve(); } };
+    fontLink.addEventListener('load', done, { once: true });
+    fontLink.addEventListener('error', done, { once: true }); // fails open
+    setTimeout(done, 800); // safety cap, in case load/error never fire
+  });
+
+  // Full experience is ~3s from when the entrance actually starts (2.5s
+  // settled + the 0.5s exit slide) — a starting point, tune later.
+  // Reduced-motion stays short regardless, per the "remove the splash
+  // quickly" accessibility requirement.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fontsReady.then(() => {
+    requestAnimationFrame(() => {
+      splash.classList.add('is-ready');
+      mainTimer = setTimeout(startExit, reduceMotion ? 500 : 2500);
+    });
+  });
+
+  // Back/forward-cache guard. Navigating away (e.g. tapping "Apply") before
+  // the splash finished its own dismissal — before mainTimer/failSafeTimer
+  // fired — leaves this exact page frozen mid-splash in the browser's
+  // bfcache: DOM, pending timers and all. Returning via Back restores that
+  // frozen snapshot verbatim without re-running any script (the inline
+  // sessionStorage gate included), so the still-present splash reappears —
+  // it wasn't re-shown, it just never finished the first time. The frozen
+  // timers do eventually resume and self-correct, but only after a visible
+  // delay, which reads as the splash "replaying". `pageshow`'s `persisted`
+  // flag is exactly the bfcache-restore signal: force an instant, silent
+  // finish() (no animation) so a resumed page never shows a stale splash.
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) finish();
+  });
+}
+
+// document.prerendering is undefined in browsers without the Prerendering
+// API, so this check is a no-op everywhere except Chrome with speculative
+// prerendering active — see the matching comment on initSplash() above.
+if (document.prerendering) {
+  document.addEventListener('prerenderingchange', initSplash, { once: true });
+} else {
+  initSplash();
+}
+
 const toggle = document.getElementById('navToggle');
 const nav = document.getElementById('primaryNav');
 
@@ -187,7 +313,8 @@ if (applicationForm) {
   // --- Character counter on "Reason for applying". ---
   const reasonField = document.getElementById('reason');
   const reasonCounter = document.getElementById('reason-counter');
-  const REASON_MAX = 500;
+  const REASON_MAX = 1000;
+  const REASON_MIN = 100;
   const updateReasonCounter = () => {
     const remaining = REASON_MAX - reasonField.value.length;
     reasonCounter.textContent = `${remaining} characters remaining`;
@@ -264,8 +391,8 @@ if (applicationForm) {
       setFieldError(reasonField, errorEl, 'Tell us briefly why you’re applying.');
       return false;
     }
-    if (reasonField.value.trim().length < 10) {
-      setFieldError(reasonField, errorEl, 'Add a little more detail (at least a few words).');
+    if (reasonField.value.trim().length < REASON_MIN) {
+      setFieldError(reasonField, errorEl, `Add a little more detail (at least ${REASON_MIN} characters).`);
       return false;
     }
     setFieldError(reasonField, errorEl, '');

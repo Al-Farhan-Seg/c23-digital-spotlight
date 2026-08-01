@@ -8,10 +8,72 @@
   <link rel="icon" type="image/png" href="./src/assets/c23-digi-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet" />
+  <link id="webfontStylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
+  <!-- Homepage-only intro splash. Guarded entirely by JS (main.js no-ops if
+       #splash isn't present), gated to once per tab via sessionStorage, and
+       hidden outright when JS is disabled — see the <noscript> rule below. -->
+  <noscript><style>#splash { display: none !important; }</style></noscript>
+  <div id="splash" class="splash">
+    <div class="splash-content">
+      <img class="splash-logo" src="./src/assets/c23-digi-logo.png" alt="" width="120" height="127" onerror="this.style.display='none'" />
+      <p class="splash-title">C23 Digital Spotlight</p>
+      <p class="splash-tagline">One week. One website. One stronger presence.</p>
+    </div>
+    <button type="button" class="splash-skip" id="splashSkip">Skip</button>
+  </div>
+  <!-- Synchronous and inline on purpose — this is the single, sole place
+       that decides whether the splash shows, and it commits that decision
+       to sessionStorage immediately, before anything else on the page runs.
+       main.js is a module script: it only executes after the document has
+       finished parsing, so if it were the one deciding + setting the flag,
+       a refresh fired before it got a chance to run would find no flag set
+       yet and show the splash again — that was the actual bug. Running
+       this check inline, synchronously, at this exact point in the parse,
+       also means an already-shown splash is removed before the browser
+       ever paints it (no flash). main.js's only remaining job is to
+       animate/orchestrate a splash that's still here by the time it runs. -->
+  <script>
+    (function () {
+      var splash = document.getElementById('splash');
+      if (!splash) return;
+      function decide() {
+        try {
+          if (sessionStorage.getItem('c23SplashShown') === 'true') {
+            splash.remove();
+          } else {
+            sessionStorage.setItem('c23SplashShown', 'true');
+          }
+        } catch (e) {
+          // sessionStorage unavailable — fail open by skipping the splash
+          // entirely, same direction main.js already fails open in.
+          splash.remove();
+        }
+      }
+      // Chrome's "Preload pages" setting (chrome://settings/performance)
+      // speculatively prerenders a likely-next same-origin page — including
+      // this one — in a hidden background pass before the user actually
+      // navigates to it. If that pass ran this decision, it would commit the
+      // sessionStorage write (or remove the splash) for a page the user
+      // never actually saw yet, and a separate real navigation later could
+      // read/write out of step with it — surfacing as the splash reappearing
+      // or misfiring on an ordinary reload/link click, Chrome-only, since
+      // this prerendering feature is Chrome-specific. document.prerendering
+      // is exactly the documented signal for "don't act yet, this isn't a
+      // real visit"; deferring to prerenderingchange runs decide() once at
+      // the moment the page is actually activated and shown to the user —
+      // a no-op check everywhere else, since document.prerendering is simply
+      // undefined in browsers that don't implement it.
+      if (document.prerendering) {
+        document.addEventListener('prerenderingchange', decide, { once: true });
+      } else {
+        decide();
+      }
+    })();
+  </script>
+
   <svg aria-hidden="true" style="display:none">
     <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21.801 10A10 10 0 1 1 17 3.335"/>

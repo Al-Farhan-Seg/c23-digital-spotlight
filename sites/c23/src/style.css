@@ -29,6 +29,169 @@
   --font-serif: "Lora", serif;
 }
 
+/* Homepage intro splash — a once-per-tab branded moment, gone in ~2s.
+   Colours below are the same three brand hues (69 green / 210 blue /
+   18 orange), softened and lightened toward --paper rather than run at full
+   saturation — the splash should read as an introduction to the light
+   campaign site underneath, not a separate dark experience. The final
+   (orange) stop lands close to --paper's own lightness so the upward exit
+   slide reveals the page's actual background without a hard cut. :root's
+   --green/--blue/--orange stay untouched, they're tuned for small UI
+   accents, not a huge background wash. */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    hsl(69, 46%, 88%) 0%,
+    hsl(210, 42%, 91%) 48%,
+    hsl(18, 40%, 95%) 100%
+  );
+  text-align: center;
+}
+/* Exit only ever runs via this JS-added class (both the normal timed path
+   and Skip add it the same way) — deterministic, unlike trying to retime
+   an already-running CSS animation through a delay change. */
+.splash.is-exiting {
+  animation: splash-exit 0.5s cubic-bezier(0.4, 0, 1, 1) forwards;
+  pointer-events: none;
+}
+@keyframes splash-exit {
+  to { transform: translateY(-100%); }
+}
+
+.splash-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 48px;
+}
+/* Light, mostly-opaque neutral surface behind the logo/text cluster, not a
+   hard-edged card — extra contrast insurance regardless of which gradient
+   stop lands behind it, now that the gradient itself is light rather than
+   dark. Flat colour plus a restrained border and very soft shadow for
+   separation — no blur, deliberately not a glassmorphism panel. */
+.splash-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: hsla(0, 0%, 100%, 0.8);
+  border: 1px solid hsla(220, 20%, 70%, 0.4);
+  border-radius: 28px;
+  box-shadow: 0 12px 32px hsla(220, 25%, 25%, 0.1);
+  z-index: -1;
+}
+
+/* Entrance animations are gated behind .splash.is-ready (added by main.js
+   only once document.fonts.ready has settled) rather than auto-playing the
+   instant these elements exist. A plain "animation: ... both" here would
+   start its clock as soon as styles are computed — on a cold cache, the
+   render-blocking web-font stylesheet can take longer to resolve than the
+   animation itself, so by the time the browser is actually able to paint a
+   frame, the animation's wall-clock timeline has already run out and it
+   renders straight to its end state with no visible motion. The 0%
+   keyframe state is written here as each element's own static style so it
+   holds correctly before .is-ready ever arrives. */
+.splash-logo {
+  width: clamp(64px, 18vw, 110px);
+  height: auto;
+  aspect-ratio: 120 / 127;
+  display: block;
+  opacity: 0;
+  transform: scale(0.7) rotate(180deg);
+}
+.splash.is-ready .splash-logo {
+  animation: splash-logo-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes splash-logo-in {
+  0% { opacity: 0; transform: scale(0.7) rotate(180deg); }
+  100% { opacity: 1; transform: scale(1) rotate(360deg); }
+}
+
+.splash-title {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(14px);
+}
+.splash.is-ready .splash-title {
+  animation: splash-text-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+.splash-tagline {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(14px);
+}
+.splash.is-ready .splash-tagline {
+  animation: splash-text-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+@keyframes splash-text-in {
+  0% { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.splash-skip {
+  position: absolute;
+  right: clamp(16px, 4vw, 32px);
+  bottom: clamp(16px, 4vw, 32px);
+  z-index: 2;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid hsla(210, 45%, 55%, 0.55);
+  background: hsla(0, 0%, 100%, 0.82);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.splash-skip:hover { background: hsl(0, 0%, 100%); border-color: var(--blue); }
+.splash-skip:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash.is-exiting {
+    animation: splash-exit-fade 0.3s ease forwards;
+  }
+  @keyframes splash-exit-fade {
+    to { opacity: 0; }
+  }
+  .splash-logo, .splash-title, .splash-tagline { transform: none; }
+  .splash.is-ready .splash-logo,
+  .splash.is-ready .splash-title,
+  .splash.is-ready .splash-tagline {
+    animation: splash-fade-only 0.3s ease forwards;
+  }
+  @keyframes splash-fade-only {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .splash-skip { transition: none; }
+}
+
+@media (max-width: 480px) {
+  .splash-content { padding: 28px 32px; gap: 10px; }
+}
+
 * { box-sizing: border-box; }
 
 html, body {
