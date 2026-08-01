@@ -34,23 +34,195 @@
     <section class="section apply-hero">
       <div class="wrap">
         <h1>Apply, or nominate someone qualified</h1>
-        <p class="placeholder-note">Application link goes live once finalized. Applications stay open throughout the pilot, so you do not need to reapply weekly.</p>
+        <p class="apply-intro">Applications stay open throughout the pilot, so you do not need to reapply weekly. This form is for the application only &mdash; details about your business or project, images, and branding are collected privately after you're selected.</p>
         <a href="./index.html#eligibility" class="link-back">Review eligibility, readiness and impact criteria</a>
+      </div>
+    </section>
 
-        <div class="terms-check">
-          <input type="checkbox" id="termsAccept" name="termsAccept" required />
-          <label for="termsAccept">
-            I have read and accept the
-            <a href="./index.html#promise">campaign scope</a>,
-            <a href="./index.html#faq-question-1">deadlines</a>,
-            <a href="./index.html#faq-question-5">revision limits</a>,
-            <a href="./index.html#faq-question-3">hosting terms</a>,
-            <a href="./index.html#faq-question-7">referral conditions</a>,
-            and <a href="./index.html#faq-question-8">optional paid-upgrade policy</a>.
-          </label>
-        </div>
+    <section class="section section-alt apply-form-section">
+      <div class="wrap apply-form-wrap">
+        <form id="applicationForm" class="apply-form" novalidate>
 
-        <a href="#" class="btn btn-primary btn-disabled" aria-disabled="true">Apply or nominate someone</a>
+          <div class="apply-group">
+            <h2>Your details</h2>
+
+            <div class="field">
+              <label for="fullName">Full name</label>
+              <input type="text" id="fullName" name="full_name" autocomplete="name" required aria-describedby="fullName-error" />
+              <p class="field-error" id="fullName-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select id="gender" name="gender" required aria-describedby="gender-error">
+                <option value="" selected disabled>Select gender</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+              </select>
+              <p class="field-error" id="gender-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-error" />
+              <p class="field-error" id="email-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="phone">Preferred contact number</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" required pattern="(0|\+?256)7[0-9]{8}" placeholder="07XXXXXXXX" aria-describedby="phone-error" />
+              <p class="field-error" id="phone-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="whatsappNumber">Class WhatsApp-group number</label>
+              <p class="field-hint">The number currently registered in the Class of &rsquo;23 WhatsApp group &mdash; this is how eligibility gets verified.</p>
+              <input type="tel" id="whatsappNumber" name="whatsapp_number" required pattern="(0|\+?256)7[0-9]{8}" placeholder="07XXXXXXXX" aria-describedby="whatsappNumber-error" />
+              <p class="field-error" id="whatsappNumber-error" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="apply-group">
+            <h2>School attendance</h2>
+            <p class="field-hint">Select every class you attended &mdash; partial attendance still counts. Each class you select needs its stream or discipline.</p>
+
+            <fieldset class="school-level" id="schoolAttendance">
+              <legend>O-Level</legend>
+
+              <div class="class-row">
+                <label class="class-check"><input type="checkbox" id="classS1" name="class_s1" value="S1" data-class-checkbox /> S1</label>
+                <select name="stream_s1" data-class-select disabled aria-label="S1 stream">
+                  <option value="" selected disabled>Stream</option>
+                  <option>East</option><option>West</option><option>North</option><option>South</option><option>Central</option>
+                </select>
+              </div>
+              <div class="class-row">
+                <label class="class-check"><input type="checkbox" id="classS2" name="class_s2" value="S2" data-class-checkbox /> S2</label>
+                <select name="stream_s2" data-class-select disabled aria-label="S2 stream">
+                  <option value="" selected disabled>Stream</option>
+                  <option>East</option><option>West</option><option>North</option><option>South</option><option>Central</option>
+                </select>
+              </div>
+              <div class="class-row">
+                <label class="class-check"><input type="checkbox" id="classS3" name="class_s3" value="S3" data-class-checkbox /> S3</label>
+                <select name="stream_s3" data-class-select disabled aria-label="S3 stream">
+                  <option value="" selected disabled>Stream</option>
+                  <option>East</option><option>West</option><option>North</option><option>South</option>
+                </select>
+              </div>
+              <div class="class-row">
+                <label class="class-check"><input type="checkbox" id="classS4" name="class_s4" value="S4" data-class-checkbox /> S4</label>
+                <select name="stream_s4" data-class-select disabled aria-label="S4 stream">
+                  <option value="" selected disabled>Stream</option>
+                  <option>East</option><option>West</option><option>North</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <fieldset class="school-level">
+              <legend>A-Level</legend>
+
+              <div class="class-row">
+                <label class="class-check"><input type="checkbox" id="classS5" name="class_s5" value="S5" data-class-checkbox /> S5</label>
+                <select name="discipline_s5" data-class-select disabled aria-label="S5 discipline">
+                  <option value="" selected disabled>Discipline</option>
+                  <option>Arts</option><option>Sciences</option>
+                </select>
+              </div>
+              <div class="class-row">
+                <label class="class-check"><input type="checkbox" id="classS6" name="class_s6" value="S6" data-class-checkbox /> S6</label>
+                <select name="discipline_s6" data-class-select disabled aria-label="S6 discipline">
+                  <option value="" selected disabled>Discipline</option>
+                  <option>Arts</option><option>Sciences</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <p class="field-error" id="schoolAttendance-error" aria-live="polite"></p>
+          </div>
+
+          <div class="apply-group">
+            <h2>Application type</h2>
+
+            <fieldset class="radio-group">
+              <legend>Applying for</legend>
+              <label class="radio-option"><input type="radio" name="applicant_type" value="Myself" data-applicant-type required /> Myself</label>
+              <label class="radio-option"><input type="radio" name="applicant_type" value="Someone I'm referring" data-applicant-type /> Someone I&rsquo;m referring</label>
+            </fieldset>
+            <p class="field-error" id="applicantType-error" aria-live="polite"></p>
+
+            <div class="referral-fields" id="referralFields" hidden>
+              <div class="field">
+                <label for="referredName">Referred person&rsquo;s full name</label>
+                <input type="text" id="referredName" name="referred_name" aria-describedby="referredName-error" />
+                <p class="field-error" id="referredName-error" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="referredContact">Referred person&rsquo;s contact (phone, WhatsApp, or email)</label>
+                <input type="text" id="referredContact" name="referred_contact" aria-describedby="referredContact-error" />
+                <p class="field-error" id="referredContact-error" aria-live="polite"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="apply-group">
+            <h2>Readiness &amp; motivation</h2>
+
+            <div class="field field-checkbox">
+              <label class="checkbox-option">
+                <input type="checkbox" id="readinessConfirmed" name="readiness_confirmed" required aria-describedby="readinessConfirmed-error" />
+                I understand I must provide all required information and images within 24 hours if selected.
+              </label>
+              <p class="field-error" id="readinessConfirmed-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="reason">Why are you applying?</label>
+              <textarea id="reason" name="reason" rows="4" maxlength="500" required aria-describedby="reason-error reason-counter"></textarea>
+              <div class="field-meta">
+                <p class="field-error" id="reason-error" aria-live="polite"></p>
+                <p class="field-counter" id="reason-counter" aria-live="polite">500 characters remaining</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="apply-group">
+            <h2>Consent</h2>
+
+            <div class="terms-check">
+              <input type="checkbox" id="termsAccept" name="terms_accepted" required aria-describedby="termsAccept-error" />
+              <label for="termsAccept">
+                I have read and accept the
+                <a href="./index.html#promise">campaign scope</a>,
+                <a href="./index.html#faq-question-1">deadlines</a>,
+                <a href="./index.html#faq-question-5">revision limits</a>,
+                <a href="./index.html#faq-question-3">hosting terms</a>,
+                <a href="./index.html#faq-question-7">referral conditions</a>,
+                and <a href="./index.html#faq-question-8">optional paid-upgrade policy</a>.
+              </label>
+            </div>
+            <p class="field-error" id="termsAccept-error" aria-live="polite"></p>
+
+            <div class="field-honeypot" aria-hidden="true">
+              <label for="website">Leave this field empty</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="field field-captcha">
+              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
+              <p class="field-error" id="captcha-error" aria-live="polite"></p>
+            </div>
+
+            <input type="hidden" name="access_key" value="46419fd2-b435-443b-b799-2fb6884b96bd" />
+            <input type="hidden" name="subject" value="New C23 Digital Spotlight application" />
+            <input type="hidden" name="from_name" value="C23 Digital Spotlight application form" />
+
+            <div class="field-submit">
+              <button type="submit" class="btn btn-primary" id="submitBtn">Submit application</button>
+              <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+        </form>
       </div>
     </section>
   </main>
@@ -61,6 +233,10 @@
     </div>
   </footer>
 
+  <!-- Manual hCaptcha setup (not Web3Forms' own client/script.js) so our
+       hand-rolled submission flow in main.js stays in sole control of
+       submit behaviour. Shared free-plan sitekey per Web3Forms' docs. -->
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <script type="module" src="./src/main.js"></script>
 </body>
 </html>

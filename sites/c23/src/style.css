@@ -1094,6 +1094,12 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 /* Apply page */
 .apply-hero { text-align: left; }
 .apply-hero .btn { margin-top: 20px; }
+.apply-intro {
+  color: var(--muted);
+  max-width: 65ch;
+  font-size: 1.05rem;
+  margin: 12px 0 4px;
+}
 
 .terms-check {
   display: flex;
@@ -1117,18 +1123,18 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   cursor: pointer;
 }
 .terms-check label a {
-  color: var(--blue);
+  color: hsl(210, 55%, 30%); /* var(--blue) fails WCAG AA as text, ~2.7:1 */
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .terms-check label a:hover { color: var(--ink); }
 .terms-check label a:focus-visible {
-  outline: 2px solid var(--blue);
+  outline: 2px solid var(--green);
   outline-offset: 2px;
   border-radius: 2px;
 }
 .terms-check input[type="checkbox"]:focus-visible {
-  outline: 2px solid var(--blue);
+  outline: 2px solid var(--green);
   outline-offset: 2px;
 }
 
@@ -1138,7 +1144,266 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 .link-back {
   display: inline-block;
   margin: 12px 0 4px;
-  color: var(--blue);
+  /* var(--blue) is ~2.7:1 on paper, fails WCAG AA for text — same fix
+     already applied to .faq-scope-link and .launch-card-cta */
+  color: hsl(210, 55%, 30%);
+}
+.link-back:hover { color: var(--ink); }
+.link-back:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Application form — grouped into labelled "fascicles" rather than one
+   long flat list of 12 fields. Controls sit on var(--paper) against the
+   section's var(--paper-alt) background (the same elevation technique
+   used for FAQ items and launch cards), so fields read as distinct from
+   their surrounding group without needing borders on every side. Error
+   state uses orange (this site's "boundary/marker" colour, per the FAQ
+   policy-note precedent) rather than a generic red, so it stays inside
+   the established palette. Focus rings reuse the green outline used
+   everywhere else interactive on the site. */
+.apply-form-section { padding-top: clamp(40px, 6vw, 72px); }
+.apply-form-wrap { max-width: 42rem; }
+
+.apply-form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 40px);
+}
+.apply-group {
+  padding-top: clamp(24px, 3vw, 32px);
+  border-top: 1px solid var(--line);
+}
+.apply-group:first-child { padding-top: 0; border-top: none; }
+.apply-group h2 {
+  font-size: 1.25rem;
+  margin: 0 0 18px;
+}
+
+.field { margin-top: 18px; }
+.apply-group h2 + .field,
+.apply-group h2 + .field-hint { margin-top: 0; }
+.field label,
+.school-level legend,
+.radio-group legend {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.field-hint {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease;
+}
+.field textarea { resize: vertical; min-height: 5.5em; }
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 1px;
+  border-color: var(--green);
+}
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--orange);
+}
+.field-error {
+  margin: 6px 0 0;
+  color: hsl(18, 75%, 34%); /* readable orange, same family as .elig-note-label pattern */
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.field-error:empty { display: none; }
+
+.field-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+}
+.field-meta .field-error { margin-top: 0; }
+.field-counter {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+.field-counter.is-near-limit { color: hsl(18, 75%, 34%); }
+
+/* School attendance — collapsed rows: an unchecked class's select stays
+   disabled and visually dimmed, so five rows read as compact, not as
+   five permanently-open dropdowns. */
+.school-level {
+  border: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+.school-level:last-of-type { margin-bottom: 0; }
+.school-level legend { padding: 0; margin-bottom: 10px; }
+.class-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.school-level .class-row:last-child { border-bottom: none; }
+.class-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  min-width: 56px;
+  cursor: pointer;
+}
+.class-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.class-check input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+.class-row select {
+  flex: 1;
+  min-width: 140px;
+  max-width: 220px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+.class-row select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--paper-alt);
+}
+.class-row select:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 1px;
+}
+.class-row select[aria-invalid="true"] { border-color: var(--orange); }
+
+.radio-group { border: none; padding: 0; margin: 0; }
+.radio-group legend { margin-bottom: 10px; }
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 6px 0;
+  cursor: pointer;
+}
+.radio-option input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.radio-option input[type="radio"]:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.referral-fields {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--paper);
+  border-radius: var(--radius);
+}
+.referral-fields .field:first-child { margin-top: 0; }
+
+.field-checkbox { margin-top: 0; }
+.checkbox-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.checkbox-option input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.checkbox-option input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* Honeypot: off-screen, not display:none — some bots specifically skip
+   display:none fields, so true bots that fill every field still get
+   caught. Real users never encounter it: no tab stop, hidden from
+   assistive tech. */
+.field-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.field-captcha { margin-top: 18px; overflow-x: auto; }
+
+.field-submit {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.form-status {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  max-width: 55ch;
+}
+.form-status:empty { display: none; }
+.form-status.is-success { color: hsl(85, 55%, 24%); }
+.form-status.is-error { color: hsl(18, 75%, 34%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .field input, .field select, .field textarea, .class-row select { transition: none; }
+}
+
+@media (max-width: 480px) {
+  .class-row select { max-width: none; flex-basis: 100%; }
 }
 
 /* Footer */
