@@ -13,6 +13,53 @@ nav.querySelectorAll('a').forEach((link) => {
   });
 });
 
+// Hero background carousel (index.html only — guarded, no-op on apply.html).
+// Slides left every 3 seconds; pauses when the tab isn't visible (no point
+// burning cycles on an offscreen slide) and never starts at all under
+// prefers-reduced-motion, per this site's existing motion-accessibility
+// convention — the first image just stays put instead of cycling.
+//
+// Looping technique: the track's last child is a clone of the first slide
+// (see index.html). Sliding onto that clone looks identical to sliding onto
+// the real first slide, so once the transition into it finishes, we can
+// snap the track back to position 0 with transitions disabled for that one
+// frame — invisibly, since the clone and the real slide 1 are pixel-identical.
+const heroTrack = document.querySelector('.hero-carousel-track');
+if (heroTrack && heroTrack.children.length > 2 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const realSlideCount = heroTrack.children.length - 1; // exclude the trailing clone
+  let index = 0;
+  let heroTimer = null;
+
+  const advanceHero = () => {
+    index += 1;
+    heroTrack.style.transform = `translateX(-${index * 100}%)`;
+  };
+
+  heroTrack.addEventListener('transitionend', (event) => {
+    if (event.propertyName !== 'transform' || index !== realSlideCount) return;
+    heroTrack.classList.add('is-resetting');
+    index = 0;
+    heroTrack.style.transform = 'translateX(0)';
+    heroTrack.offsetHeight; // force layout so the instant jump commits before...
+    heroTrack.classList.remove('is-resetting'); // ...transitions resume here
+  });
+
+  const startHero = () => {
+    if (heroTimer) return;
+    heroTimer = setInterval(advanceHero, 3000);
+  };
+  const stopHero = () => {
+    clearInterval(heroTimer);
+    heroTimer = null;
+  };
+
+  startHero();
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopHero();
+    else startHero();
+  });
+}
+
 const whyTrack = document.querySelector('.why-problems');
 const whyPrev = document.querySelector('.why-carousel-prev');
 const whyNext = document.querySelector('.why-carousel-next');

@@ -82,13 +82,24 @@
 
   <main>
     <section class="hero" id="top">
-      <img class="hero-bg" src="./src/assets/s6-jump-original-optimized.jpeg" alt="" aria-hidden="true" />
+      <div class="hero-carousel" aria-hidden="true">
+        <div class="hero-carousel-track">
+          <img class="hero-bg" src="./src/assets/hero-carousel-1-optimized.jpg" alt="" />
+          <img class="hero-bg" src="./src/assets/hero-carousel-2-optimized.jpg" alt="" />
+          <img class="hero-bg" src="./src/assets/hero-carousel-3-optimized.jpg" alt="" />
+          <img class="hero-bg" src="./src/assets/hero-carousel-4-optimized.jpg" alt="" />
+          <img class="hero-bg" src="./src/assets/hero-carousel-5-optimized.jpg" alt="" />
+          <!-- clone of slide 1, so the leftward slide can loop back without a
+               visible backwards snap — see main.js's transitionend handler -->
+          <img class="hero-bg" src="./src/assets/hero-carousel-1-optimized.jpg" alt="" />
+        </div>
+      </div>
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="wrap hero-inner">
         <div class="hero-content">
-          <h1>A Digital Presence Effort for KMSS C23 Alumni Community</h1>
-          <p class="hero-sub">One alumna/alumnus. One week. One stronger online presence.</p>
-          <a href="./apply.html" class="btn btn-primary hero-cta">Apply or nominate someone</a>
+          <h1>Building Stronger Digital Presence for KMSS Class of '23</h1>
+          <p class="hero-sub">One alumna or alumnus selected each week for a free starter website.</p>
+          <a href="./apply.html" class="btn btn-primary hero-cta">Apply or Nominate</a>
         </div>
       </div>
     </section>
@@ -98,14 +109,14 @@
         <div class="why-grid">
           <div class="why-lead">
             <p class="eyebrow">Why C23 Digital Spotlight Exists</p>
-            <h2 class="why-heading">Good work is happening in our alumni network, but too much of it is difficult to discover, understand and share.</h2>
+            <h2 class="why-heading">Great work exists in our alumni network but too much of it is still hard to find, trust and share.</h2>
             <div class="why-copy">
               <p>Many alumni are building businesses, offering professional services and running meaningful community projects. Yet their entire online presence may be scattered across WhatsApp statuses, social-media pages or messages that disappear after a few hours.</p>
               <p>C23 Digital Spotlight helps selected alumni and their networks turn what they already do into a clear, credible and easily shareable web presence, so potential customers, employers, collaborators and supporters can understand their work and take the next step.</p>
             </div>
           </div>
           <div class="why-cards-col">
-            <h3 class="why-cards-title">The 3 Pain Points</h3>
+            <h3 class="why-cards-title">Why this matters</h3>
             <div class="why-frame">
               <button class="why-carousel-arrow why-carousel-prev" type="button" aria-label="Previous challenge">
                 <svg class="scope-icon" aria-hidden="true"><use href="#icon-chevron-left"></use></svg>

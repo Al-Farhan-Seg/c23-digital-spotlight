@@ -46,32 +46,36 @@
           <div class="apply-group">
             <h2>Your details</h2>
 
-            <div class="field">
-              <label for="fullName">Full name</label>
-              <input type="text" id="fullName" name="full_name" autocomplete="name" required aria-describedby="fullName-error" />
-              <p class="field-error" id="fullName-error" aria-live="polite"></p>
+            <div class="field-row">
+              <div class="field">
+                <label for="fullName">Full name</label>
+                <input type="text" id="fullName" name="full_name" autocomplete="name" required aria-describedby="fullName-error" />
+                <p class="field-error" id="fullName-error" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required aria-describedby="gender-error">
+                  <option value="" selected disabled>Select gender</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                </select>
+                <p class="field-error" id="gender-error" aria-live="polite"></p>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="gender">Gender</label>
-              <select id="gender" name="gender" required aria-describedby="gender-error">
-                <option value="" selected disabled>Select gender</option>
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-              </select>
-              <p class="field-error" id="gender-error" aria-live="polite"></p>
-            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-error" />
+                <p class="field-error" id="email-error" aria-live="polite"></p>
+              </div>
 
-            <div class="field">
-              <label for="email">Email address</label>
-              <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-error" />
-              <p class="field-error" id="email-error" aria-live="polite"></p>
-            </div>
-
-            <div class="field">
-              <label for="phone">Preferred contact number</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" required pattern="(0|\+?256)7[0-9]{8}" placeholder="07XXXXXXXX" aria-describedby="phone-error" />
-              <p class="field-error" id="phone-error" aria-live="polite"></p>
+              <div class="field">
+                <label for="phone">Preferred contact number</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" required pattern="(0|\+?256)7[0-9]{8}" placeholder="07XXXXXXXX" aria-describedby="phone-error" />
+                <p class="field-error" id="phone-error" aria-live="polite"></p>
+              </div>
             </div>
 
             <div class="field">
@@ -86,57 +90,59 @@
             <h2>School attendance</h2>
             <p class="field-hint">Select every class you attended &mdash; partial attendance still counts. Each class you select needs its stream or discipline.</p>
 
-            <fieldset class="school-level" id="schoolAttendance">
-              <legend>O-Level</legend>
+            <div class="school-attendance-panel">
+              <fieldset class="school-level" id="schoolAttendance">
+                <legend>O-Level</legend>
 
-              <div class="class-row">
-                <label class="class-check"><input type="checkbox" id="classS1" name="class_s1" value="S1" data-class-checkbox /> S1</label>
-                <select name="stream_s1" data-class-select disabled aria-label="S1 stream">
-                  <option value="" selected disabled>Stream</option>
-                  <option>East</option><option>West</option><option>North</option><option>South</option><option>Central</option>
-                </select>
-              </div>
-              <div class="class-row">
-                <label class="class-check"><input type="checkbox" id="classS2" name="class_s2" value="S2" data-class-checkbox /> S2</label>
-                <select name="stream_s2" data-class-select disabled aria-label="S2 stream">
-                  <option value="" selected disabled>Stream</option>
-                  <option>East</option><option>West</option><option>North</option><option>South</option><option>Central</option>
-                </select>
-              </div>
-              <div class="class-row">
-                <label class="class-check"><input type="checkbox" id="classS3" name="class_s3" value="S3" data-class-checkbox /> S3</label>
-                <select name="stream_s3" data-class-select disabled aria-label="S3 stream">
-                  <option value="" selected disabled>Stream</option>
-                  <option>East</option><option>West</option><option>North</option><option>South</option>
-                </select>
-              </div>
-              <div class="class-row">
-                <label class="class-check"><input type="checkbox" id="classS4" name="class_s4" value="S4" data-class-checkbox /> S4</label>
-                <select name="stream_s4" data-class-select disabled aria-label="S4 stream">
-                  <option value="" selected disabled>Stream</option>
-                  <option>East</option><option>West</option><option>North</option>
-                </select>
-              </div>
-            </fieldset>
+                <div class="class-row">
+                  <label class="class-check"><input type="checkbox" id="classS1" name="class_s1" value="S1" data-class-checkbox /> S1</label>
+                  <select name="stream_s1" data-class-select disabled aria-label="S1 stream">
+                    <option value="" selected disabled>Stream</option>
+                    <option>East</option><option>West</option><option>North</option><option>South</option><option>Central</option>
+                  </select>
+                </div>
+                <div class="class-row">
+                  <label class="class-check"><input type="checkbox" id="classS2" name="class_s2" value="S2" data-class-checkbox /> S2</label>
+                  <select name="stream_s2" data-class-select disabled aria-label="S2 stream">
+                    <option value="" selected disabled>Stream</option>
+                    <option>East</option><option>West</option><option>North</option><option>South</option><option>Central</option>
+                  </select>
+                </div>
+                <div class="class-row">
+                  <label class="class-check"><input type="checkbox" id="classS3" name="class_s3" value="S3" data-class-checkbox /> S3</label>
+                  <select name="stream_s3" data-class-select disabled aria-label="S3 stream">
+                    <option value="" selected disabled>Stream</option>
+                    <option>East</option><option>West</option><option>North</option><option>South</option>
+                  </select>
+                </div>
+                <div class="class-row">
+                  <label class="class-check"><input type="checkbox" id="classS4" name="class_s4" value="S4" data-class-checkbox /> S4</label>
+                  <select name="stream_s4" data-class-select disabled aria-label="S4 stream">
+                    <option value="" selected disabled>Stream</option>
+                    <option>East</option><option>West</option><option>North</option>
+                  </select>
+                </div>
+              </fieldset>
 
-            <fieldset class="school-level">
-              <legend>A-Level</legend>
+              <fieldset class="school-level">
+                <legend>A-Level</legend>
 
-              <div class="class-row">
-                <label class="class-check"><input type="checkbox" id="classS5" name="class_s5" value="S5" data-class-checkbox /> S5</label>
-                <select name="discipline_s5" data-class-select disabled aria-label="S5 discipline">
-                  <option value="" selected disabled>Discipline</option>
-                  <option>Arts</option><option>Sciences</option>
-                </select>
-              </div>
-              <div class="class-row">
-                <label class="class-check"><input type="checkbox" id="classS6" name="class_s6" value="S6" data-class-checkbox /> S6</label>
-                <select name="discipline_s6" data-class-select disabled aria-label="S6 discipline">
-                  <option value="" selected disabled>Discipline</option>
-                  <option>Arts</option><option>Sciences</option>
-                </select>
-              </div>
-            </fieldset>
+                <div class="class-row">
+                  <label class="class-check"><input type="checkbox" id="classS5" name="class_s5" value="S5" data-class-checkbox /> S5</label>
+                  <select name="discipline_s5" data-class-select disabled aria-label="S5 discipline">
+                    <option value="" selected disabled>Discipline</option>
+                    <option>Arts</option><option>Sciences</option>
+                  </select>
+                </div>
+                <div class="class-row">
+                  <label class="class-check"><input type="checkbox" id="classS6" name="class_s6" value="S6" data-class-checkbox /> S6</label>
+                  <select name="discipline_s6" data-class-select disabled aria-label="S6 discipline">
+                    <option value="" selected disabled>Discipline</option>
+                    <option>Arts</option><option>Sciences</option>
+                  </select>
+                </div>
+              </fieldset>
+            </div>
 
             <p class="field-error" id="schoolAttendance-error" aria-live="polite"></p>
           </div>
@@ -146,8 +152,10 @@
 
             <fieldset class="radio-group">
               <legend>Applying for</legend>
-              <label class="radio-option"><input type="radio" name="applicant_type" value="Myself" data-applicant-type required /> Myself</label>
-              <label class="radio-option"><input type="radio" name="applicant_type" value="Someone I'm referring" data-applicant-type /> Someone I&rsquo;m referring</label>
+              <div class="radio-options">
+                <label class="radio-option"><input type="radio" name="applicant_type" value="Myself" data-applicant-type required /> Myself</label>
+                <label class="radio-option"><input type="radio" name="applicant_type" value="Someone I'm referring" data-applicant-type /> Someone I&rsquo;m referring</label>
+              </div>
             </fieldset>
             <p class="field-error" id="applicantType-error" aria-live="polite"></p>
 
@@ -186,7 +194,7 @@
             </div>
           </div>
 
-          <div class="apply-group">
+          <div class="apply-group apply-group--consent">
             <h2>Consent</h2>
 
             <div class="terms-check">

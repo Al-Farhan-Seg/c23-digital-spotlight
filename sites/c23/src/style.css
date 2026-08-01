@@ -191,14 +191,33 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   text-align: center;
   isolation: isolate;
 }
-.hero-bg {
+.hero-carousel {
   position: absolute;
   inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+.hero-carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+/* applied for one frame while the track jumps back from the trailing clone
+   to the real first slide, so that reset is instant, not an animated
+   rewind-to-the-right — see main.js */
+.hero-carousel-track.is-resetting {
+  transition: none;
+}
+.hero-bg {
+  flex: 0 0 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  z-index: -2;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel-track { transition: none; }
 }
 .hero-overlay {
   position: absolute;
@@ -1155,31 +1174,78 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-radius: 2px;
 }
 
-/* Application form — grouped into labelled "fascicles" rather than one
-   long flat list of 12 fields. Controls sit on var(--paper) against the
-   section's var(--paper-alt) background (the same elevation technique
-   used for FAQ items and launch cards), so fields read as distinct from
-   their surrounding group without needing borders on every side. Error
-   state uses orange (this site's "boundary/marker" colour, per the FAQ
-   policy-note precedent) rather than a generic red, so it stays inside
-   the established palette. Focus rings reuse the green outline used
-   everywhere else interactive on the site. */
+/* Application form — an elevated "application surface" rather than fields
+   sitting flat on the section. The shell itself reuses the site's existing
+   paper-on-paper-alt elevation trick (already used for FAQ items and
+   launch cards) promoted to the whole form; a thin green top rule marks it
+   the same way a thin colour rule already marks the hero subhead and the
+   active nav link. Inside, three accent colours each keep exactly one job:
+   green = brand-primary marker (shell rule + section-heading rule), blue =
+   secondary/interactive (conditional referral box, O-/A-Level micro-labels),
+   orange = restrained warning (readiness notice + the pre-existing
+   error-text colour). Nothing else picks up colour. */
 .apply-form-section { padding-top: clamp(40px, 6vw, 72px); }
-.apply-form-wrap { max-width: 42rem; }
+.apply-form-wrap { max-width: 44rem; }
 
 .apply-form {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 4vw, 40px);
+  gap: clamp(30px, 4vw, 42px);
+  padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 44px) clamp(32px, 4vw, 48px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  /* restrained, believable lift — same shadow weight already used for the
+     FAQ item's open state, not a heavier "floating card" shadow */
+  box-shadow: 0 2px 10px hsla(220, 30%, 15%, 0.07);
+  overflow: hidden;
 }
+.apply-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--green);
+}
+
 .apply-group {
   padding-top: clamp(24px, 3vw, 32px);
   border-top: 1px solid var(--line);
 }
 .apply-group:first-child { padding-top: 0; border-top: none; }
 .apply-group h2 {
-  font-size: 1.25rem;
-  margin: 0 0 18px;
+  position: relative;
+  padding-left: 16px;
+  margin: 0 0 20px;
+  font-size: clamp(1.3rem, 1vw + 1.05rem, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.apply-group h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.15em;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--green);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+.field-row .field { margin-top: 0; }
+.apply-group h2 + .field-row { margin-top: 0; }
+@media (max-width: 640px) {
+  .field-row { grid-template-columns: 1fr; gap: 0; }
+  .field-row .field:not(:first-child) { margin-top: 18px; }
 }
 
 .field { margin-top: 18px; }
@@ -1191,7 +1257,19 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   display: block;
   font-weight: 600;
   font-size: 0.95rem;
-  margin-bottom: 6px;
+  letter-spacing: 0.005em;
+  margin-bottom: 8px;
+}
+/* Required native fields get a quiet marker — same muted-orange family as
+   the error text, not an aggressive red. This is attribute-driven, so the
+   referral fields' asterisk appears and disappears automatically as
+   main.js toggles `required` on them; no JS changes needed. */
+.field:has(> input:required) label::after,
+.field:has(> select:required) label::after,
+.field:has(> textarea:required) label::after,
+.radio-group:has(input:required) legend::after {
+  content: " *";
+  color: hsl(18, 75%, 40%);
 }
 .field-hint {
   margin: 0 0 10px;
@@ -1206,22 +1284,38 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 .field select,
 .field textarea {
   width: 100%;
-  padding: 11px 14px;
+  padding: 12px 16px;
   font: inherit;
   font-size: 0.95rem;
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
+.field input::placeholder,
+.field textarea::placeholder { color: hsl(220, 10%, 58%); }
 .field textarea { resize: vertical; min-height: 5.5em; }
+.field select {
+  appearance: none;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23464e5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: hsl(220, 14%, 72%);
+}
 .field input:focus-visible,
 .field select:focus-visible,
 .field textarea:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 1px;
   border-color: var(--green);
+  box-shadow: 0 0 0 4px hsla(69, 96%, 43%, 0.16);
 }
 .field input[aria-invalid="true"],
 .field select[aria-invalid="true"],
@@ -1252,25 +1346,50 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 }
 .field-counter.is-near-limit { color: hsl(18, 75%, 34%); }
 
-/* School attendance — collapsed rows: an unchecked class's select stays
-   disabled and visually dimmed, so five rows read as compact, not as
-   five permanently-open dropdowns. */
+/* School attendance — both fieldsets sit in one inset panel (paper-alt
+   against the shell's paper, the same nested elevation logic used
+   elsewhere just one level deeper), so the block reads as one clean unit
+   rather than two fieldsets loose in the group. Collapsed rows: an
+   unchecked class's select stays disabled and visually dimmed, so five
+   rows read as compact, not as five permanently-open dropdowns. */
+.school-attendance-panel {
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(16px, 2.5vw, 22px) clamp(16px, 3vw, 24px);
+}
 .school-level {
   border: none;
   padding: 0;
-  margin: 0 0 18px;
+  margin: 0 0 16px;
 }
 .school-level:last-of-type { margin-bottom: 0; }
-.school-level legend { padding: 0; margin-bottom: 10px; }
+.school-level + .school-level {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.school-level legend {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: hsl(210, 55%, 30%); /* accessible blue-text value, same as .terms-check label a */
+}
 .class-row {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px 16px;
-  padding: 8px 0;
+  padding: 9px 6px;
+  border-radius: 6px;
   border-bottom: 1px solid var(--line);
+  transition: background-color 0.15s ease;
 }
 .school-level .class-row:last-child { border-bottom: none; }
+.class-row:has(input:checked) { background: hsl(220, 16%, 97%); }
 .class-check {
   display: flex;
   align-items: center;
@@ -1294,40 +1413,62 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   flex: 1;
   min-width: 140px;
   max-width: 220px;
-  padding: 8px 12px;
+  padding: 8px 34px 8px 12px;
   font: inherit;
   font-size: 0.9rem;
   color: var(--ink);
-  background: var(--paper);
+  background-color: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23464e5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 15px;
   transition: border-color 0.15s ease, opacity 0.15s ease;
 }
+.class-row select:not(:disabled):hover { border-color: hsl(220, 14%, 72%); }
 .class-row select:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background: var(--paper-alt);
+  background-color: var(--paper-alt);
 }
 .class-row select:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 1px;
+  box-shadow: 0 0 0 4px hsla(69, 96%, 43%, 0.16);
 }
 .class-row select[aria-invalid="true"] { border-color: var(--orange); }
 
 .radio-group { border: none; padding: 0; margin: 0; }
 .radio-group legend { margin-bottom: 10px; }
+.radio-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
 .radio-option {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-weight: 500;
   font-size: 0.95rem;
-  padding: 6px 0;
+  padding: 12px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.radio-option:hover { border-color: hsl(220, 14%, 72%); }
+.radio-option:has(input:checked) {
+  border-color: var(--green);
+  background: hsl(75, 45%, 96%);
 }
 .radio-option input[type="radio"] {
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
   accent-color: var(--green);
   cursor: pointer;
 }
@@ -1336,15 +1477,28 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   outline-offset: 2px;
 }
 
+/* Referral fields — a left-accent box in blue (secondary/interactive),
+   since it only exists because of an in-form choice; the same visual
+   language as the readiness notice below, just the other accent colour. */
 .referral-fields {
   margin-top: 16px;
-  padding: 16px;
-  background: var(--paper);
-  border-radius: var(--radius);
+  padding: 16px 18px;
+  background: hsl(210, 45%, 95%);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
 }
 .referral-fields .field:first-child { margin-top: 0; }
 
-.field-checkbox { margin-top: 0; }
+/* Readiness confirmation — a left-accent notice in orange, this site's
+   warning/consequence colour, because the copy itself describes a real
+   consequence (must respond within 24 hours), not just a formality. */
+.field-checkbox {
+  margin-top: 0;
+  padding: 14px 16px;
+  background: hsl(18, 85%, 93%);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
 .checkbox-option {
   display: flex;
   align-items: flex-start;
@@ -1379,10 +1533,24 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   overflow: hidden;
 }
 
+/* Consent — the closing "action zone": a distinct inset surface so it
+   reads as the form's finish line, not just one more group in the list. */
+.apply-group--consent {
+  margin-top: clamp(24px, 3vw, 32px);
+  padding: clamp(22px, 3vw, 30px) clamp(20px, 3vw, 28px);
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-top: none;
+  border-radius: var(--radius);
+}
+.apply-group--consent h2 { margin-bottom: 16px; }
+
 .field-captcha { margin-top: 18px; overflow-x: auto; }
 
 .field-submit {
-  margin-top: 8px;
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1399,11 +1567,31 @@ h2 { font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
 .form-status.is-error { color: hsl(18, 75%, 34%); }
 
 @media (prefers-reduced-motion: reduce) {
-  .field input, .field select, .field textarea, .class-row select { transition: none; }
+  .field input, .field select, .field textarea, .class-row select,
+  .radio-option, .class-row { transition: none; }
 }
 
 @media (max-width: 480px) {
   .class-row select { max-width: none; flex-basis: 100%; }
+}
+
+/* Narrow viewports: the shell's own padding plus the consent panel's
+   padding would otherwise stack (two insets deep), squeezing the already
+   fixed-width hCaptcha widget more than the pre-existing overflow-x:auto
+   fallback on .field-captcha was designed to absorb. Bleeding the consent
+   panel to the shell's own edge means only one inset applies, same as
+   every other group. */
+@media (max-width: 640px) {
+  .apply-form { padding-left: 16px; padding-right: 16px; }
+  .apply-group--consent {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
 }
 
 /* Footer */
