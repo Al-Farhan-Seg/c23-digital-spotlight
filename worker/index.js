@@ -3,6 +3,7 @@
 // served elsewhere) must never reach this map's fallback path.
 const HOSTNAME_TO_SLUG = {
   'c23.farhansegujja.com': 'c23',
+  'nimu-timber.farhansegujja.com': 'nimu-timber',
 };
 
 export default {

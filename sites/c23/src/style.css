@@ -1,43 +1,20 @@
-/* Signature palette, descending priority: white > green > blue > orange.
-   Green is reserved exclusively for primary CTAs (the one "do this" color).
-   Blue covers secondary/interactive accents (hover, checkmarks, timeline).
-   Orange appears exactly once, as a decorative flourish, to stay rare. */
 :root {
   --paper: hsl(220, 16%, 96%);
   --paper-alt: hsl(220, 16%, 91%);
   --green: hsl(69, 96%, 43%);
   --blue: hsl(210, 50%, 60%);
   --orange: hsl(18, 90%, 56%);
-
   --ink: hsl(220, 20%, 14%);
   --muted: hsl(220, 10%, 40%);
   --line: hsl(220, 14%, 86%);
-
   --accent: var(--green);
-  --accent-ink: hsl(220, 20%, 12%); /* dark text on green — green is too light for white text */
+  --accent-ink: hsl(220, 20%, 12%);
   --radius: 10px;
   --gutter: clamp(20px, 5vw, 72px);
-
-  /* Typography system. Fredoka carries the campaign's visual personality
-     (hero/section headings, a handful of short standout moments) — never
-     dense text. Source Sans 3 is the workhorse: nav, body, forms, buttons,
-     FAQ. Lora appears sparingly, only where copy is genuinely editorial
-     (the two mission-statement lead paragraphs, the two section-closing
-     reflective lines) — never a blanket body-text swap. */
   --font-display: "Fredoka", sans-serif;
   --font-sans: "Source Sans 3", sans-serif;
   --font-serif: "Lora", serif;
 }
-
-/* Homepage intro splash — a once-per-tab branded moment, gone in ~2s.
-   Colours below are the same three brand hues (69 green / 210 blue /
-   18 orange), softened and lightened toward --paper rather than run at full
-   saturation — the splash should read as an introduction to the light
-   campaign site underneath, not a separate dark experience. The final
-   (orange) stop lands close to --paper's own lightness so the upward exit
-   slide reveals the page's actual background without a hard cut. :root's
-   --green/--blue/--orange stay untouched, they're tuned for small UI
-   accents, not a huge background wash. */
 .splash {
   position: fixed;
   inset: 0;
@@ -47,25 +24,18 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    hsl(69, 46%, 88%) 0%,
-    hsl(210, 42%, 91%) 48%,
-    hsl(18, 40%, 95%) 100%
-  );
+  background: linear-gradient( 180deg, hsl(69, 46%, 88%) 0%, hsl(210, 42%, 91%) 48%, hsl(18, 40%, 95%) 100% );
   text-align: center;
 }
-/* Exit only ever runs via this JS-added class (both the normal timed path
-   and Skip add it the same way) — deterministic, unlike trying to retime
-   an already-running CSS animation through a delay change. */
 .splash.is-exiting {
   animation: splash-exit 0.5s cubic-bezier(0.4, 0, 1, 1) forwards;
   pointer-events: none;
 }
 @keyframes splash-exit {
-  to { transform: translateY(-100%); }
+  to {
+    transform: translateY(-100%);
+  }
 }
-
 .splash-content {
   position: relative;
   z-index: 1;
@@ -75,11 +45,6 @@
   gap: 14px;
   padding: 40px 48px;
 }
-/* Light, mostly-opaque neutral surface behind the logo/text cluster, not a
-   hard-edged card — extra contrast insurance regardless of which gradient
-   stop lands behind it, now that the gradient itself is light rather than
-   dark. Flat colour plus a restrained border and very soft shadow for
-   separation — no blur, deliberately not a glassmorphism panel. */
 .splash-content::before {
   content: "";
   position: absolute;
@@ -90,17 +55,6 @@
   box-shadow: 0 12px 32px hsla(220, 25%, 25%, 0.1);
   z-index: -1;
 }
-
-/* Entrance animations are gated behind .splash.is-ready (added by main.js
-   only once document.fonts.ready has settled) rather than auto-playing the
-   instant these elements exist. A plain "animation: ... both" here would
-   start its clock as soon as styles are computed — on a cold cache, the
-   render-blocking web-font stylesheet can take longer to resolve than the
-   animation itself, so by the time the browser is actually able to paint a
-   frame, the animation's wall-clock timeline has already run out and it
-   renders straight to its end state with no visible motion. The 0%
-   keyframe state is written here as each element's own static style so it
-   holds correctly before .is-ready ever arrives. */
 .splash-logo {
   width: clamp(64px, 18vw, 110px);
   height: auto;
@@ -113,10 +67,15 @@
   animation: splash-logo-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes splash-logo-in {
-  0% { opacity: 0; transform: scale(0.7) rotate(180deg); }
-  100% { opacity: 1; transform: scale(1) rotate(360deg); }
+  0% {
+    opacity: 0;
+    transform: scale(0.7) rotate(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+  }
 }
-
 .splash-title {
   margin: 10px 0 0;
   font-family: var(--font-display);
@@ -142,10 +101,15 @@
   animation: splash-text-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
 @keyframes splash-text-in {
-  0% { opacity: 0; transform: translateY(14px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
 .splash-skip {
   position: absolute;
   right: clamp(16px, 4vw, 32px);
@@ -162,57 +126,66 @@
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-.splash-skip:hover { background: hsl(0, 0%, 100%); border-color: var(--blue); }
+.splash-skip:hover {
+  background: hsl(0, 0%, 100%);
+  border-color: var(--blue);
+}
 .splash-skip:focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 3px;
 }
-
 @media (prefers-reduced-motion: reduce) {
   .splash.is-exiting {
     animation: splash-exit-fade 0.3s ease forwards;
   }
   @keyframes splash-exit-fade {
-    to { opacity: 0; }
+    to {
+      opacity: 0;
+    }
   }
-  .splash-logo, .splash-title, .splash-tagline { transform: none; }
-  .splash.is-ready .splash-logo,
-  .splash.is-ready .splash-title,
-  .splash.is-ready .splash-tagline {
+  .splash-logo, .splash-title, .splash-tagline {
+    transform: none;
+  }
+  .splash.is-ready .splash-logo, .splash.is-ready .splash-title, .splash.is-ready .splash-tagline {
     animation: splash-fade-only 0.3s ease forwards;
   }
   @keyframes splash-fade-only {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
-  .splash-skip { transition: none; }
+  .splash-skip {
+    transition: none;
+  }
 }
-
 @media (max-width: 480px) {
-  .splash-content { padding: 28px 32px; gap: 10px; }
+  .splash-content {
+    padding: 28px 32px;
+    gap: 10px;
+  }
 }
-
-* { box-sizing: border-box; }
-
+* {
+  box-sizing: border-box;
+}
 html, body {
   margin: 0;
   padding: 0;
-  /* clip, not hidden: `overflow-x: hidden` turns html/body into a scroll
-     container, which silently breaks the header's `position: sticky` (it
-     scrolls away instead of pinning). `clip` blocks horizontal overflow
-     the same way without creating that container. */
   overflow-x: clip;
 }
-
 html {
   scroll-behavior: smooth;
 }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 }
-/* offset anchored scroll targets so the sticky header never covers the heading */
-section[id] { scroll-margin-top: 76px; }
-
+section[id] {
+  scroll-margin-top: 76px;
+}
 body {
   font-family: var(--font-sans);
   font-weight: 400;
@@ -220,29 +193,24 @@ body {
   background: var(--paper);
   line-height: 1.55;
 }
-
-/* Full width everywhere — no centered "blog column". .wrap only adds
-   breathing-room padding, it never narrows the section itself. */
 .wrap {
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
-
-/* Fredoka carries every hero/section heading site-wide by default; the one
-   deliberate exception is the application form's dense in-form headings
-   (.apply-group h2), which opt back out to Source Sans further down. h1
-   gets the heavier weight (700) so the hero heading reads distinctly
-   above section headings (600) — two different hierarchy rungs, not the
-   same weight repeated down the page. */
-h1, h2 { font-family: var(--font-display); line-height: 1.15; margin: 0 0 16px; }
-h1 { font-weight: 700; font-size: clamp(2.4rem, 2.6vw + 2rem, 4.5rem); }
-h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
-
-/* Header — hover reads in blue, keyboard focus in orange, and the active
-   in-view section gets blue text plus a small orange underline mark. Kept
-   to that one mapping throughout so no two links read as differently
-   "themed" — only default/hover/active/focus differ, never the link itself. */
+h1, h2 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+h1 {
+  font-weight: 700;
+  font-size: clamp(2.4rem, 2.6vw + 2rem, 4.5rem);
+}
+h2 {
+  font-weight: 600;
+  font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem);
+}
 .site-header {
   border-bottom: 1px solid var(--paper-alt);
   position: sticky;
@@ -250,7 +218,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background: var(--paper);
   z-index: 10;
 }
-
 .header-inner {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -259,7 +226,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   height: 76px;
   position: relative;
 }
-
 .brand {
   grid-column: 1;
   justify-self: start;
@@ -269,9 +235,17 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   text-decoration: none;
   color: var(--ink);
 }
-.brand-logo { width: 34px; height: auto; display: block; }
-.brand-name { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; white-space: nowrap; }
-
+.brand-logo {
+  width: 34px;
+  height: auto;
+  display: block;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -291,18 +265,22 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   width: 100%;
   transition: background-color 0.15s ease;
 }
-.nav-toggle:hover span { background: var(--blue); }
+.nav-toggle:hover span {
+  background: var(--blue);
+}
 .nav-toggle:focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 3px;
   border-radius: 4px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav-toggle span { transition: none; }
+  .nav-toggle span {
+    transition: none;
+  }
 }
-
-.primary-nav { display: contents; }
-
+.primary-nav {
+  display: contents;
+}
 .nav-links {
   grid-column: 2;
   justify-self: center;
@@ -321,15 +299,17 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   padding-bottom: 4px;
   transition: color 0.15s ease;
 }
-.nav-links a:hover { color: var(--blue); }
+.nav-links a:hover {
+  color: var(--blue);
+}
 .nav-links a:focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 4px;
   border-radius: 2px;
 }
-/* Active = the section currently in view (set by a small scroll-spy in
-   main.js — visual only, changes no destination or click behaviour). */
-.nav-links a.is-active { color: var(--blue); }
+.nav-links a.is-active {
+  color: var(--blue);
+}
 .nav-links a.is-active::after {
   content: "";
   position: absolute;
@@ -341,9 +321,10 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background: var(--orange);
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav-links a { transition: none; }
+  .nav-links a {
+    transition: none;
+  }
 }
-
 .nav-cta {
   grid-column: 3;
   justify-self: end;
@@ -358,8 +339,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   color: var(--muted);
   cursor: default;
 }
-
-/* Hero — full-bleed background photo, centered text on top */
 .hero {
   position: relative;
   min-height: 100dvh;
@@ -383,9 +362,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   height: 100%;
   transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
-/* applied for one frame while the track jumps back from the trailing clone
-   to the real first slide, so that reset is instant, not an animated
-   rewind-to-the-right — see main.js */
 .hero-carousel-track.is-resetting {
   transition: none;
 }
@@ -397,7 +373,9 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   object-position: center;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-carousel-track { transition: none; }
+  .hero-carousel-track {
+    transition: none;
+  }
 }
 .hero-overlay {
   position: absolute;
@@ -406,7 +384,9 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   opacity: 0.55;
   z-index: -1;
 }
-.hero-inner { padding: 0; }
+.hero-inner {
+  padding: 0;
+}
 .hero-content {
   max-width: 46rem;
   margin: 0 auto;
@@ -419,13 +399,10 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   margin: 0;
   color: hsl(220, 20%, 98%);
 }
-/* The one CTA that picks up the display font — it sits directly under the
-   Fredoka hero heading as part of the same opening moment. Every other
-   button/CTA site-wide (nav, scope, form submit, launch card) stays
-   Source Sans, per the typography system's "selected CTAs, not buttons
-   generally" rule. */
-.hero-cta { font-family: var(--font-display); font-weight: 600; }
-
+.hero-cta {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
 .hero-sub {
   margin: 0;
   color: hsl(220, 14%, 88%);
@@ -434,9 +411,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   position: relative;
   padding-bottom: 14px;
 }
-/* decorative orange flourish under the hero subhead — orange has since picked
-   up functional roles elsewhere (FAQ close icon/policy markers, nav focus
-   rings and active-link mark), so this is no longer the page's only orange */
 .hero-sub::after {
   content: "";
   position: absolute;
@@ -448,10 +422,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-radius: 2px;
   background: var(--orange);
 }
-
-/* Why C23 Exists — asymmetric editorial grid: one dominant statement
-   (left) supported by three supporting challenge cards (right). No
-   01/02/03 numerals on the cards — deliberately omitted. */
 .eyebrow {
   color: var(--blue);
   text-transform: uppercase;
@@ -480,14 +450,12 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   font-size: 1.05rem;
   line-height: 1.65;
 }
-.why-copy p:last-child { margin-bottom: 0; }
-
+.why-copy p:last-child {
+  margin-bottom: 0;
+}
 .why-cards-col {
-  min-width: 0; /* this, not .why-frame, is the actual grid item now that the
-    title sits above it — see the min-width note on .why-frame below */
-  align-self: center; /* centers this column within the row's height,
-    which .why-lead (the taller column) still determines — .why-lead keeps
-    its own top alignment via .why-grid's align-items: start */
+  min-width: 0;
+  align-self: center;
 }
 .why-cards-title {
   margin: 0 0 12px;
@@ -496,14 +464,9 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   color: var(--ink);
   text-align: center;
 }
-
-/* Bordered housing for the three challenge cards, like a dedicated
-   frame/shelf rather than the cards floating loose in the section. */
 .why-frame {
   position: relative;
-  min-width: 0; /* without this, the mobile carousel's fixed-width cards give
-    this element a huge intrinsic min-width, which forces the parent grid
-    column (and the whole section) to overflow instead of shrinking to fit */
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 20px;
   padding: 20px;
@@ -526,24 +489,25 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   padding: 0;
   z-index: 4;
 }
-.why-carousel-arrow svg { width: 16px; height: 16px; }
-.why-carousel-arrow:hover { border-color: var(--blue); color: var(--blue); }
-.why-carousel-prev { left: 4px; }
-.why-carousel-next { right: 4px; }
-
+.why-carousel-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+.why-carousel-arrow:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.why-carousel-prev {
+  left: 4px;
+}
+.why-carousel-next {
+  right: 4px;
+}
 .why-problems {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
-/* Solid brand-color cards, mimicking the classic "hover to focus one,
-   blur the rest" card interaction. Title + description are always both
-   visible (desktop/tablet/mobile alike) — hover only lifts the hovered
-   card slightly and blurs+shrinks its siblings; it never reveals
-   anything that wasn't already there. Dark ink text on all three —
-   required for WCAG AA, since white fails contrast against every one
-   of these three brand colors at their given lightness. */
 .why-card {
   display: flex;
   flex-direction: column;
@@ -557,11 +521,21 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   box-shadow: 0 4px 14px hsla(220, 30%, 20%, 0.12);
   transition: transform 400ms ease, filter 400ms ease, box-shadow 400ms ease;
 }
-.why-card--green { background: var(--green); }
-.why-card--blue { background: var(--blue); }
-.why-card--orange { background: var(--orange); }
-
-.why-card h3 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; }
+.why-card--green {
+  background: var(--green);
+}
+.why-card--blue {
+  background: var(--blue);
+}
+.why-card--orange {
+  background: var(--orange);
+}
+.why-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
 .why-card p {
   margin: 8px 0 0;
   font-size: 0.78rem;
@@ -577,24 +551,36 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   filter: blur(6px);
   transform: scale(0.94);
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .why-card { transition: none; }
-  .why-card:hover, .why-problems:hover > .why-card:not(:hover) { transform: none; filter: none; }
+  .why-card {
+    transition: none;
+  }
+  .why-card:hover, .why-problems:hover > .why-card:not(:hover) {
+    transform: none;
+    filter: none;
+  }
 }
-
-/* Desktop: same "box - box - box" row as tablet, just at desktop's card width. */
 @media (min-width: 901px) {
-  .why-problems { display: flex; flex-direction: row; gap: 14px; }
-  .why-card { width: 180px; }
+  .why-problems {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+  }
+  .why-card {
+    width: 180px;
+  }
 }
-
-/* Tablet: small cards, in one close-together row — "box - box - box". */
 @media (min-width: 641px) and (max-width: 900px) {
-  .why-problems { display: flex; flex-direction: row; justify-content: center; gap: 10px; }
-  .why-card { width: 150px; }
+  .why-problems {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+  .why-card {
+    width: 150px;
+  }
 }
-
 .why-closing-row {
   margin-top: clamp(32px, 5vw, 56px);
   padding-top: 28px;
@@ -613,19 +599,18 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   line-height: 1.5;
   max-width: 52ch;
 }
-
 @media (max-width: 900px) {
-  .why-grid { grid-template-columns: 1fr; }
-  .why-heading { max-width: none; }
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+  .why-heading {
+    max-width: none;
+  }
 }
-
-/* Mobile: one card at a time, centered in the frame (scroll-padding
-   trick so the edge cards can reach dead-center too), with prev/next
-   arrow buttons since a bare swipe hint isn't discoverable enough at
-   this size. Description stays visible without needing hover — hover
-   isn't reliable on touch, so nothing here should depend on it. */
 @media (max-width: 640px) {
-  .why-frame { padding-inline: 6px; }
+  .why-frame {
+    padding-inline: 6px;
+  }
   .why-problems {
     display: flex;
     flex-direction: row;
@@ -640,15 +625,21 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
     max-height: none;
     scroll-snap-align: center;
   }
-  .why-card p { font-size: 0.85rem; }
-  .why-card:hover { transform: none; box-shadow: 0 4px 14px hsla(220, 30%, 20%, 0.12); }
-  .why-problems:hover > .why-card:not(:hover) { filter: none; transform: none; }
-  .why-carousel-arrow { display: flex; }
+  .why-card p {
+    font-size: 0.85rem;
+  }
+  .why-card:hover {
+    transform: none;
+    box-shadow: 0 4px 14px hsla(220, 30%, 20%, 0.12);
+  }
+  .why-problems:hover > .why-card:not(:hover) {
+    filter: none;
+    transform: none;
+  }
+  .why-carousel-arrow {
+    display: flex;
+  }
 }
-
-/* Buttons — every primary CTA site-wide gets the same hover: it lifts
-   slightly and reveals two stacked offset layers in the other two brand
-   colours behind it (a deliberate, restrained brand motif, only on hover). */
 .btn {
   display: inline-block;
   padding: 14px 28px;
@@ -667,8 +658,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   transform: translate(-4px, -4px);
   box-shadow: 4px 4px 0 var(--blue), 8px 8px 0 var(--orange);
 }
-/* Pressed: compresses back down and darkens, reading as "landing" rather
-   than "lifting" — the opposite motion of :hover. */
 .btn-primary:active {
   background: hsl(69, 96%, 36%);
   transform: translate(0, 0);
@@ -684,26 +673,27 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn { transition: none; }
-  .btn-primary:hover, .btn-primary:active { transform: none; }
+  .btn {
+    transition: none;
+  }
+  .btn-primary:hover, .btn-primary:active {
+    transform: none;
+  }
 }
-
-/* Sections */
-.section { padding: clamp(48px, 7vw, 96px) 0; }
-.section-alt { background: var(--paper-alt); }
+.section {
+  padding: clamp(48px, 7vw, 96px) 0;
+}
+.section-alt {
+  background: var(--paper-alt);
+}
 .placeholder-note {
   color: var(--muted);
   font-style: italic;
   max-width: 60ch;
 }
-
-/* Scope comparison — three cards, restrained (no pricing-template clichés:
-   no shadows, no "Most Popular", no fake prices, no label-chip dressing).
-   Each card's category reads from its full border colour and its icon
-   (repeated as every list marker), not from a text badge. Included is
-   visually primary via a pale tint + the only CTA; Excluded and Upgrade
-   stay equal-weight neutral cards so neither reads as lesser. */
-.scope-heading { font-size: clamp(2rem, 2.2vw + 1.6rem, 3.1rem); }
+.scope-heading {
+  font-size: clamp(2rem, 2.2vw + 1.6rem, 3.1rem);
+}
 .scope-intro {
   color: var(--muted);
   max-width: 60ch;
@@ -731,30 +721,42 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background: hsl(75, 45%, 97%);
   border-color: var(--green);
 }
-.scope-card--excluded { border-color: var(--orange); }
-.scope-card--upgrade { border-color: var(--blue); }
-
-/* Hover: card fills with its own accent colour; text/icons switch to a
-   dark ink that clears WCAG AA (4.5:1+) against all three accents. */
-.scope-card--included:hover { background: var(--green); }
-.scope-card--excluded:hover { background: var(--orange); }
-.scope-card--upgrade:hover { background: var(--blue); }
-.scope-card:hover h3,
-.scope-card:hover .scope-card-desc,
-.scope-card:hover .scope-list li {
+.scope-card--excluded {
+  border-color: var(--orange);
+}
+.scope-card--upgrade {
+  border-color: var(--blue);
+}
+.scope-card--included:hover {
+  background: var(--green);
+}
+.scope-card--excluded:hover {
+  background: var(--orange);
+}
+.scope-card--upgrade:hover {
+  background: var(--blue);
+}
+.scope-card:hover h3, .scope-card:hover .scope-card-desc, .scope-card:hover .scope-list li {
   color: var(--accent-ink);
 }
-.scope-card:hover .scope-icon { color: var(--accent-ink); }
-/* the Included CTA is green-on-dark by default; once its card turns
-   solid green on hover it would blend in, so it inverts to stay visible */
+.scope-card:hover .scope-icon {
+  color: var(--accent-ink);
+}
 .scope-card--included:hover .scope-cta {
   background: var(--accent-ink);
   color: var(--green);
 }
-
-.scope-card h3 { margin: 0; font-size: 1.3rem; transition: color 0.2s ease; }
-.scope-card-desc { margin: 0; color: var(--muted); font-size: 0.96rem; transition: color 0.2s ease; }
-
+.scope-card h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  transition: color 0.2s ease;
+}
+.scope-card-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+  transition: color 0.2s ease;
+}
 .scope-list {
   list-style: none;
   margin: 0;
@@ -779,37 +781,40 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   flex-shrink: 0;
   transition: color 0.2s ease;
 }
-.scope-card--included .scope-icon { color: var(--green); }
-.scope-card--excluded .scope-icon { color: var(--orange); }
-.scope-card--upgrade .scope-icon { color: var(--blue); }
-
-.scope-cta { align-self: center; margin-top: 4px; }
-
+.scope-card--included .scope-icon {
+  color: var(--green);
+}
+.scope-card--excluded .scope-icon {
+  color: var(--orange);
+}
+.scope-card--upgrade .scope-icon {
+  color: var(--blue);
+}
+.scope-cta {
+  align-self: center;
+  margin-top: 4px;
+}
 @media (prefers-reduced-motion: reduce) {
-  .scope-card,
-  .scope-card h3,
-  .scope-card-desc,
-  .scope-list li,
-  .scope-icon {
+  .scope-card, .scope-card h3, .scope-card-desc, .scope-list li, .scope-icon {
     transition: none;
   }
 }
-
 @media (max-width: 900px) {
-  .scope-grid { grid-template-columns: 1fr 1fr; }
-  .scope-card--included { grid-column: 1 / -1; }
+  .scope-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .scope-card--included {
+    grid-column: 1 / -1;
+  }
 }
 @media (max-width: 640px) {
-  .scope-grid { grid-template-columns: 1fr; }
-  .scope-card--included { grid-column: auto; }
+  .scope-grid {
+    grid-template-columns: 1fr;
+  }
+  .scope-card--included {
+    grid-column: auto;
+  }
 }
-
-/* How a launch week works — 7 expanding photo cards. Classic flexbox
-   trick: every card is flex:1 at rest; the hovered/focused one grows to
-   flex:5, and the rest compress automatically since total flex units
-   increase, no JS needed. Blue is reused here as the process accent
-   (already its role via timeline/eyebrow elsewhere), applied only to
-   the interactive ring/underline, never tinting the real photos. */
 .week-stack {
   list-style: none;
   margin: clamp(24px, 4vw, 40px) 0 0;
@@ -868,48 +873,50 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   overflow: hidden;
   transition: opacity 0.3s ease, max-height 0.3s ease;
 }
-.week-card:hover,
-.week-card:focus-visible {
+.week-card:hover, .week-card:focus-visible {
   flex: 5;
   box-shadow: 0 0 0 3px var(--blue);
 }
-.week-card:hover .week-card-desc,
-.week-card:focus-visible .week-card-desc {
+.week-card:hover .week-card-desc, .week-card:focus-visible .week-card-desc {
   opacity: 1;
   max-height: 100px;
   transition-delay: 0.15s;
 }
-
 @media (max-width: 760px) {
-  .week-stack { flex-direction: column; height: auto; gap: 12px; }
-  .week-card { flex: none; height: 150px; }
-  .week-card-desc { opacity: 1; max-height: none; }
-  .week-card:hover, .week-card:focus-visible { flex: none; }
+  .week-stack {
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+  }
+  .week-card {
+    flex: none;
+    height: 150px;
+  }
+  .week-card-desc {
+    opacity: 1;
+    max-height: none;
+  }
+  .week-card:hover, .week-card:focus-visible {
+    flex: none;
+  }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .week-card { transition: none; }
-  .week-card-desc { transition: none; }
+  .week-card {
+    transition: none;
+  }
+  .week-card-desc {
+    transition: none;
+  }
 }
-
-/* Eligibility, Readiness and Criteria — matches the Scope section's card
-   language exactly (same border weight, same tinted-background-for-the-
-   first-card pattern, same "hover fills solid with the accent colour and
-   swaps text to accent-ink" behaviour), in the same colour order: green,
-   orange, blue. Card 1 (Eligibility) = green like Scope's Included card,
-   card 2 (Readiness) = orange like Excluded, card 3 (Criteria) = blue like
-   Upgrade. Panels differ in *content* rather than layout — Eligibility's
-   distinguishing feature is a bordered verification callout, Readiness's
-   is its checklist, Criteria's is the week-by-week rotation timeline —
-   so colour is never the only thing telling them apart. */
-.elig-heading { margin-bottom: 12px; }
+.elig-heading {
+  margin-bottom: 12px;
+}
 .elig-intro {
   color: var(--muted);
   max-width: 62ch;
   font-size: 1.05rem;
   margin: 0;
 }
-
 .elig-grid {
   margin: clamp(32px, 4vw, 48px) 0 0;
   display: grid;
@@ -945,42 +952,44 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   --panel-tint: hsl(210, 45%, 93%);
   border-color: var(--panel-accent);
 }
-
-/* Hover: solid accent fill + accent-ink text, identical mechanism to
-   .scope-card:hover. Nested elements that carry their own background
-   (chips, the verification note) swap to paper instead of accent-ink text,
-   so they still read as distinct boxes rather than disappearing into the
-   fill. */
-.elig-panel:hover { background: var(--panel-accent); border-color: var(--panel-accent); }
-.elig-panel:hover .elig-panel-head h3,
-.elig-panel:hover .elig-panel-core,
-.elig-panel:hover .elig-panel-footnote,
-.elig-panel:hover .elig-check-list li,
-.elig-panel:hover .elig-dash-list li,
-.elig-panel:hover .elig-timeline li {
+.elig-panel:hover {
+  background: var(--panel-accent);
+  border-color: var(--panel-accent);
+}
+.elig-panel:hover .elig-panel-head h3, .elig-panel:hover .elig-panel-core, .elig-panel:hover .elig-panel-footnote, .elig-panel:hover .elig-check-list li, .elig-panel:hover .elig-dash-list li, .elig-panel:hover .elig-timeline li {
   color: var(--accent-ink);
 }
-.elig-panel:hover .elig-panel-icon { background: var(--accent-ink); color: var(--panel-accent); }
-.elig-panel:hover .elig-check-list li::before,
-.elig-panel:hover .elig-timeline-mark--a,
-.elig-panel:hover .elig-timeline li:not(:first-child)::before {
+.elig-panel:hover .elig-panel-icon {
+  background: var(--accent-ink);
+  color: var(--panel-accent);
+}
+.elig-panel:hover .elig-check-list li::before, .elig-panel:hover .elig-timeline-mark--a, .elig-panel:hover .elig-timeline li:not(:first-child)::before {
   background: var(--accent-ink);
 }
-.elig-panel:hover .elig-dash-list li::before { color: var(--accent-ink); }
-.elig-panel:hover .elig-timeline-mark--b { border-color: var(--accent-ink); }
-.elig-panel:hover .elig-chip-list li,
-.elig-panel:hover .elig-note { background: var(--paper); }
-
-@media (prefers-reduced-motion: reduce) {
-  .elig-panel { transition: none; }
+.elig-panel:hover .elig-dash-list li::before {
+  color: var(--accent-ink);
 }
-
+.elig-panel:hover .elig-timeline-mark--b {
+  border-color: var(--accent-ink);
+}
+.elig-panel:hover .elig-chip-list li, .elig-panel:hover .elig-note {
+  background: var(--paper);
+}
+@media (prefers-reduced-motion: reduce) {
+  .elig-panel {
+    transition: none;
+  }
+}
 .elig-panel-head {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.elig-panel-head h3 { margin: 0; font-size: 1.2rem; transition: color 0.2s ease; }
+.elig-panel-head h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
 .elig-panel-icon {
   flex-shrink: 0;
   width: 34px;
@@ -991,7 +1000,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   color: var(--panel-accent);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 .elig-panel-core {
   margin: 0;
   font-weight: 600;
@@ -1005,10 +1013,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   line-height: 1.6;
   transition: color 0.2s ease;
 }
-
-/* Eligibility: the four "still counts" cases as wrapped chips, not bullets —
-   reads as a set of equal, interchangeable qualifying cases rather than a
-   sequence. */
 .elig-chip-list {
   list-style: none;
   margin: 0;
@@ -1049,7 +1053,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   line-height: 1.55;
   color: var(--ink);
 }
-
 .elig-check-list {
   list-style: none;
   margin: 0;
@@ -1076,9 +1079,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background: var(--panel-accent);
   transition: background-color 0.2s ease;
 }
-
-/* Criteria: dash markers (a distinct list treatment from Readiness's dot
-   list), then the timeline as the panel's standout element. */
 .elig-dash-list {
   list-style: none;
   margin: 0;
@@ -1103,7 +1103,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   font-weight: 700;
   transition: color 0.2s ease;
 }
-
 .elig-timeline {
   list-style: none;
   margin: 6px 0 0;
@@ -1132,8 +1131,13 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   z-index: 1;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
-.elig-timeline-mark--a { background: var(--panel-accent); }
-.elig-timeline-mark--b { background: var(--paper); border: 2px solid var(--panel-accent); }
+.elig-timeline-mark--a {
+  background: var(--panel-accent);
+}
+.elig-timeline-mark--b {
+  background: var(--paper);
+  border: 2px solid var(--panel-accent);
+}
 .elig-timeline li:not(:first-child)::before {
   content: "";
   position: absolute;
@@ -1144,7 +1148,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background: var(--line);
   transition: background-color 0.2s ease;
 }
-
 .elig-closing {
   font-family: var(--font-serif);
   margin: clamp(32px, 4vw, 48px) 0 0;
@@ -1156,24 +1159,25 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   line-height: 1.5;
   color: var(--ink);
 }
-
 @media (max-width: 900px) {
-  .elig-grid { grid-template-columns: 1fr 1fr; }
-  .elig-panel--criteria { grid-column: 1 / -1; }
-  .elig-timeline { max-width: 420px; }
+  .elig-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .elig-panel--criteria {
+    grid-column: 1 / -1;
+  }
+  .elig-timeline {
+    max-width: 420px;
+  }
 }
-
 @media (max-width: 640px) {
-  .elig-grid { grid-template-columns: 1fr; }
-  .elig-panel--criteria { grid-column: auto; }
+  .elig-grid {
+    grid-template-columns: 1fr;
+  }
+  .elig-panel--criteria {
+    grid-column: auto;
+  }
 }
-
-/* Launch Archive — an empty state dressed as the first real card in a grid,
-   not a grey placeholder box. A dashed blue-tinted border reads as "slot
-   reserved" rather than "broken"; the four-stage progress list is shown
-   neutrally (no stage marked reached) since no participant is picked yet —
-   asserting a stage would be an invented status. Real launch cards will be
-   solid-bordered `.launch-card` items prepended ahead of this one. */
 .launches-intro {
   color: var(--muted);
   max-width: 60ch;
@@ -1210,7 +1214,10 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   font-weight: 500;
   font-size: 0.85rem;
 }
-.launch-card-title { margin: 0; font-size: 1.15rem; }
+.launch-card-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
 .launch-card-date {
   margin: 0;
   color: var(--muted);
@@ -1221,9 +1228,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   color: var(--ink);
   margin-right: 4px;
 }
-
-/* Neutral 4-stage roadmap — a connecting line behind evenly-muted dots.
-   No stage reads as "reached", since none genuinely is yet. */
 .launch-progress {
   list-style: none;
   margin: 4px 0 0;
@@ -1263,50 +1267,61 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   height: 1.5px;
   background: var(--line);
 }
-.launch-progress li:first-child::after { content: none; }
-
+.launch-progress li:first-child::after {
+  content: none;
+}
 .launch-card-cta {
   margin-top: auto;
   padding-top: 4px;
-  /* var(--blue) is ~2.7:1 on paper — fine for icons/borders, not enough for
-     link text (WCAG AA needs 4.5:1). Same darker blue as .launch-badge's
-     text, which does pass. */
   color: hsl(210, 55%, 30%);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.launch-card-cta:hover { color: var(--ink); }
+.launch-card-cta:hover {
+  color: var(--ink);
+}
 .launch-card-cta:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
   border-radius: 2px;
 }
-
 @media (max-width: 480px) {
-  /* Horizontal stepper gets cramped under ~4 short labels at narrow
-     widths; a vertical list stays readable without shrinking type. */
-  .launch-progress { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .launch-progress {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
   .launch-progress li {
     width: 100%;
     text-align: left;
     padding-top: 0;
     padding-left: 22px;
   }
-  .launch-progress li::before { top: 50%; left: 4px; transform: translate(0, -50%); }
+  .launch-progress li::before {
+    top: 50%;
+    left: 4px;
+    transform: translate(0, -50%);
+  }
   .launch-progress li::after {
     top: 100%;
     left: 8px;
     width: 1.5px;
     height: 10px;
   }
-  .launch-progress li:first-child::after { content: ""; }
-  .launch-progress li:last-child::after { content: none; }
+  .launch-progress li:first-child::after {
+    content: "";
+  }
+  .launch-progress li:last-child::after {
+    content: none;
+  }
 }
-
-/* Apply page */
-.apply-hero { text-align: left; }
-.apply-hero .btn { margin-top: 20px; }
+.apply-hero {
+  text-align: left;
+}
+.apply-hero .btn {
+  margin-top: 20px;
+}
 .apply-intro {
   font-family: var(--font-serif);
   font-weight: 400;
@@ -1316,7 +1331,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   line-height: 1.65;
   margin: 12px 0 4px;
 }
-
 .terms-check {
   display: flex;
   align-items: flex-start;
@@ -1339,11 +1353,13 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   cursor: pointer;
 }
 .terms-check label a {
-  color: hsl(210, 55%, 30%); /* var(--blue) fails WCAG AA as text, ~2.7:1 */
+  color: hsl(210, 55%, 30%);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.terms-check label a:hover { color: var(--ink); }
+.terms-check label a:hover {
+  color: var(--ink);
+}
 .terms-check label a:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
@@ -1353,37 +1369,30 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
-
 @media (max-width: 640px) {
-  .terms-check { max-width: none; }
+  .terms-check {
+    max-width: none;
+  }
 }
 .link-back {
   display: inline-block;
   margin: 12px 0 4px;
-  /* var(--blue) is ~2.7:1 on paper, fails WCAG AA for text — same fix
-     already applied to .faq-scope-link and .launch-card-cta */
   color: hsl(210, 55%, 30%);
 }
-.link-back:hover { color: var(--ink); }
+.link-back:hover {
+  color: var(--ink);
+}
 .link-back:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
   border-radius: 2px;
 }
-
-/* Application form — an elevated "application surface" rather than fields
-   sitting flat on the section. The shell itself reuses the site's existing
-   paper-on-paper-alt elevation trick (already used for FAQ items and
-   launch cards) promoted to the whole form; a thin green top rule marks it
-   the same way a thin colour rule already marks the hero subhead and the
-   active nav link. Inside, three accent colours each keep exactly one job:
-   green = brand-primary marker (shell rule + section-heading rule), blue =
-   secondary/interactive (conditional referral box, O-/A-Level micro-labels),
-   orange = restrained warning (readiness notice + the pre-existing
-   error-text colour). Nothing else picks up colour. */
-.apply-form-section { padding-top: clamp(40px, 6vw, 72px); }
-.apply-form-wrap { max-width: 44rem; }
-
+.apply-form-section {
+  padding-top: clamp(40px, 6vw, 72px);
+}
+.apply-form-wrap {
+  max-width: 44rem;
+}
 .apply-form {
   position: relative;
   display: flex;
@@ -1393,8 +1402,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  /* restrained, believable lift — same shadow weight already used for the
-     FAQ item's open state, not a heavier "floating card" shadow */
   box-shadow: 0 2px 10px hsla(220, 30%, 15%, 0.07);
   overflow: hidden;
 }
@@ -1407,16 +1414,15 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   height: 4px;
   background: var(--green);
 }
-
 .apply-group {
   padding-top: clamp(24px, 3vw, 32px);
   border-top: 1px solid var(--line);
 }
-.apply-group:first-child { padding-top: 0; border-top: none; }
+.apply-group:first-child {
+  padding-top: 0;
+  border-top: none;
+}
 .apply-group h2 {
-  /* Opts back out of the site-wide Fredoka h2 default — a dense,
-     multi-field form is exactly the case the typography system calls out
-     as off-limits for the display font. */
   font-family: var(--font-sans);
   position: relative;
   padding-left: 16px;
@@ -1435,40 +1441,41 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-radius: 2px;
   background: var(--green);
 }
-
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
   margin-top: 18px;
 }
-.field-row .field { margin-top: 0; }
-.apply-group h2 + .field-row { margin-top: 0; }
-@media (max-width: 640px) {
-  .field-row { grid-template-columns: 1fr; gap: 0; }
-  .field-row .field:not(:first-child) { margin-top: 18px; }
+.field-row .field {
+  margin-top: 0;
 }
-
-.field { margin-top: 18px; }
-.apply-group h2 + .field,
-.apply-group h2 + .field-hint { margin-top: 0; }
-.field label,
-.school-level legend,
-.radio-group legend {
+.apply-group h2 + .field-row {
+  margin-top: 0;
+}
+@media (max-width: 640px) {
+  .field-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .field-row .field:not(:first-child) {
+    margin-top: 18px;
+  }
+}
+.field {
+  margin-top: 18px;
+}
+.apply-group h2 + .field, .apply-group h2 + .field-hint {
+  margin-top: 0;
+}
+.field label, .school-level legend, .radio-group legend {
   display: block;
   font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.005em;
   margin-bottom: 8px;
 }
-/* Required native fields get a quiet marker — same muted-orange family as
-   the error text, not an aggressive red. This is attribute-driven, so the
-   referral fields' asterisk appears and disappears automatically as
-   main.js toggles `required` on them; no JS changes needed. */
-.field:has(> input:required) label::after,
-.field:has(> select:required) label::after,
-.field:has(> textarea:required) label::after,
-.radio-group:has(input:required) legend::after {
+.field:has(> input:required) label::after, .field:has(> select:required) label::after, .field:has(> textarea:required) label::after, .radio-group:has(input:required) legend::after {
   content: " *";
   color: hsl(18, 75%, 40%);
 }
@@ -1478,12 +1485,7 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   font-size: 0.88rem;
   line-height: 1.5;
 }
-
-.field input[type="text"],
-.field input[type="email"],
-.field input[type="tel"],
-.field select,
-.field textarea {
+.field input[type="text"], .field input[type="email"], .field input[type="tel"], .field select, .field textarea {
   width: 100%;
   padding: 12px 16px;
   font: inherit;
@@ -1494,9 +1496,13 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-radius: var(--radius);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.field input::placeholder,
-.field textarea::placeholder { color: hsl(220, 10%, 58%); }
-.field textarea { resize: vertical; min-height: 5.5em; }
+.field input::placeholder, .field textarea::placeholder {
+  color: hsl(220, 10%, 58%);
+}
+.field textarea {
+  resize: vertical;
+  min-height: 5.5em;
+}
 .field select {
   appearance: none;
   padding-right: 38px;
@@ -1505,32 +1511,27 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background-position: right 12px center;
   background-size: 16px;
 }
-.field input:hover,
-.field select:hover,
-.field textarea:hover {
+.field input:hover, .field select:hover, .field textarea:hover {
   border-color: hsl(220, 14%, 72%);
 }
-.field input:focus-visible,
-.field select:focus-visible,
-.field textarea:focus-visible {
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 1px;
   border-color: var(--green);
   box-shadow: 0 0 0 4px hsla(69, 96%, 43%, 0.16);
 }
-.field input[aria-invalid="true"],
-.field select[aria-invalid="true"],
-.field textarea[aria-invalid="true"] {
+.field input[aria-invalid="true"], .field select[aria-invalid="true"], .field textarea[aria-invalid="true"] {
   border-color: var(--orange);
 }
 .field-error {
   margin: 6px 0 0;
-  color: hsl(18, 75%, 34%); /* readable orange, same family as .elig-note-label pattern */
+  color: hsl(18, 75%, 34%);
   font-size: 0.85rem;
   line-height: 1.4;
 }
-.field-error:empty { display: none; }
-
+.field-error:empty {
+  display: none;
+}
 .field-meta {
   display: flex;
   align-items: flex-start;
@@ -1538,21 +1539,18 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   gap: 12px;
   margin-top: 6px;
 }
-.field-meta .field-error { margin-top: 0; }
+.field-meta .field-error {
+  margin-top: 0;
+}
 .field-counter {
   margin: 0;
   color: var(--muted);
   font-size: 0.82rem;
   white-space: nowrap;
 }
-.field-counter.is-near-limit { color: hsl(18, 75%, 34%); }
-
-/* School attendance — both fieldsets sit in one inset panel (paper-alt
-   against the shell's paper, the same nested elevation logic used
-   elsewhere just one level deeper), so the block reads as one clean unit
-   rather than two fieldsets loose in the group. Collapsed rows: an
-   unchecked class's select stays disabled and visually dimmed, so five
-   rows read as compact, not as five permanently-open dropdowns. */
+.field-counter.is-near-limit {
+  color: hsl(18, 75%, 34%);
+}
 .school-attendance-panel {
   background: var(--paper-alt);
   border: 1px solid var(--line);
@@ -1564,7 +1562,9 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   padding: 0;
   margin: 0 0 16px;
 }
-.school-level:last-of-type { margin-bottom: 0; }
+.school-level:last-of-type {
+  margin-bottom: 0;
+}
 .school-level + .school-level {
   margin-top: 16px;
   padding-top: 16px;
@@ -1577,7 +1577,7 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: hsl(210, 55%, 30%); /* accessible blue-text value, same as .terms-check label a */
+  color: hsl(210, 55%, 30%);
 }
 .class-row {
   display: flex;
@@ -1589,8 +1589,12 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-bottom: 1px solid var(--line);
   transition: background-color 0.15s ease;
 }
-.school-level .class-row:last-child { border-bottom: none; }
-.class-row:has(input:checked) { background: hsl(220, 16%, 97%); }
+.school-level .class-row:last-child {
+  border-bottom: none;
+}
+.class-row:has(input:checked) {
+  background: hsl(220, 16%, 97%);
+}
 .class-check {
   display: flex;
   align-items: center;
@@ -1628,7 +1632,9 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   background-size: 15px;
   transition: border-color 0.15s ease, opacity 0.15s ease;
 }
-.class-row select:not(:disabled):hover { border-color: hsl(220, 14%, 72%); }
+.class-row select:not(:disabled):hover {
+  border-color: hsl(220, 14%, 72%);
+}
 .class-row select:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -1639,10 +1645,17 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   outline-offset: 1px;
   box-shadow: 0 0 0 4px hsla(69, 96%, 43%, 0.16);
 }
-.class-row select[aria-invalid="true"] { border-color: var(--orange); }
-
-.radio-group { border: none; padding: 0; margin: 0; }
-.radio-group legend { margin-bottom: 10px; }
+.class-row select[aria-invalid="true"] {
+  border-color: var(--orange);
+}
+.radio-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.radio-group legend {
+  margin-bottom: 10px;
+}
 .radio-options {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -1661,7 +1674,9 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   cursor: pointer;
   transition: border-color 0.15s ease, background-color 0.15s ease;
 }
-.radio-option:hover { border-color: hsl(220, 14%, 72%); }
+.radio-option:hover {
+  border-color: hsl(220, 14%, 72%);
+}
 .radio-option:has(input:checked) {
   border-color: var(--green);
   background: hsl(75, 45%, 96%);
@@ -1677,10 +1692,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
-
-/* Referral fields — a left-accent box in blue (secondary/interactive),
-   since it only exists because of an in-form choice; the same visual
-   language as the readiness notice below, just the other accent colour. */
 .referral-fields {
   margin-top: 16px;
   padding: 16px 18px;
@@ -1688,11 +1699,9 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-left: 3px solid var(--blue);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
-.referral-fields .field:first-child { margin-top: 0; }
-
-/* Readiness confirmation — a left-accent notice in orange, this site's
-   warning/consequence colour, because the copy itself describes a real
-   consequence (must respond within 24 hours), not just a formality. */
+.referral-fields .field:first-child {
+  margin-top: 0;
+}
 .field-checkbox {
   margin-top: 0;
   padding: 14px 16px;
@@ -1721,11 +1730,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
-
-/* Honeypot: off-screen, not display:none — some bots specifically skip
-   display:none fields, so true bots that fill every field still get
-   caught. Real users never encounter it: no tab stop, hidden from
-   assistive tech. */
 .field-honeypot {
   position: absolute;
   left: -9999px;
@@ -1733,9 +1737,6 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   height: 1px;
   overflow: hidden;
 }
-
-/* Consent — the closing "action zone": a distinct inset surface so it
-   reads as the form's finish line, not just one more group in the list. */
 .apply-group--consent {
   margin-top: clamp(24px, 3vw, 32px);
   padding: clamp(22px, 3vw, 30px) clamp(20px, 3vw, 28px);
@@ -1744,10 +1745,13 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   border-top: none;
   border-radius: var(--radius);
 }
-.apply-group--consent h2 { margin-bottom: 16px; }
-
-.field-captcha { margin-top: 18px; overflow-x: auto; }
-
+.apply-group--consent h2 {
+  margin-bottom: 16px;
+}
+.field-captcha {
+  margin-top: 18px;
+  overflow-x: auto;
+}
 .field-submit {
   margin-top: 12px;
   padding-top: 20px;
@@ -1763,27 +1767,31 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   line-height: 1.5;
   max-width: 55ch;
 }
-.form-status:empty { display: none; }
-.form-status.is-success { color: hsl(85, 55%, 24%); }
-.form-status.is-error { color: hsl(18, 75%, 34%); }
-
+.form-status:empty {
+  display: none;
+}
+.form-status.is-success {
+  color: hsl(85, 55%, 24%);
+}
+.form-status.is-error {
+  color: hsl(18, 75%, 34%);
+}
 @media (prefers-reduced-motion: reduce) {
-  .field input, .field select, .field textarea, .class-row select,
-  .radio-option, .class-row { transition: none; }
+  .field input, .field select, .field textarea, .class-row select, .radio-option, .class-row {
+    transition: none;
+  }
 }
-
 @media (max-width: 480px) {
-  .class-row select { max-width: none; flex-basis: 100%; }
+  .class-row select {
+    max-width: none;
+    flex-basis: 100%;
+  }
 }
-
-/* Narrow viewports: the shell's own padding plus the consent panel's
-   padding would otherwise stack (two insets deep), squeezing the already
-   fixed-width hCaptcha widget more than the pre-existing overflow-x:auto
-   fallback on .field-captcha was designed to absorb. Bleeding the consent
-   panel to the shell's own edge means only one inset applies, same as
-   every other group. */
 @media (max-width: 640px) {
-  .apply-form { padding-left: 16px; padding-right: 16px; }
+  .apply-form {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
   .apply-group--consent {
     margin-left: -16px;
     margin-right: -16px;
@@ -1794,59 +1802,40 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
     border-radius: 0;
   }
 }
-
-/* Footer */
-/* Footer — a deliberately dark, blue-toned close to an otherwise all-light
-   page: --ink is already the site's dark neutral (used for body text and
-   the nav-toggle bars), reused here as a surface so the footer still reads
-   as this brand rather than an unrelated dark band bolted on. Colour stays
-   narrow on purpose: green marks the one action link, blue marks the one
-   outbound link, orange appears exactly once as a hairline divider — never
-   spread evenly across the footer the way the campaign's --green/--blue
-   trio (why-card colours, etc.) get spread elsewhere. */
 .site-footer {
   background: var(--ink);
-  color: hsl(220, 12%, 62%); /* muted-but-readable body copy, 5.7:1 on --ink */
+  color: hsl(220, 12%, 62%);
   font-size: 0.9rem;
 }
-
 .footer-top {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 28px;
-  /* top/bottom only — a padding shorthand here would zero out .wrap's own
-     left/right gutter, since both classes land on this element and this
-     rule comes later in the cascade at equal specificity. */
   padding-top: 40px;
   padding-bottom: 28px;
 }
-
-.footer-brand-block { min-width: 0; }
+.footer-brand-block {
+  min-width: 0;
+}
 .footer-brand {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.15rem;
-  color: var(--paper); /* 14.6:1 on --ink */
+  color: var(--paper);
 }
 .footer-tagline {
   margin: 6px 0 0;
-  color: hsl(220, 14%, 70%); /* softer than the brand name, still 7.3:1 on --ink */
+  color: hsl(220, 14%, 70%);
 }
-
 .footer-links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 32px;
 }
-
-/* Same link, two states: a real <a> on index.html, an inert
-   aria-current="page" <span> on apply.html itself — mirrors the header
-   nav-cta's existing current-page pattern rather than linking a page to
-   itself. Both share the base rule; only the modifiers differ. */
 .footer-link {
   font-weight: 600;
   text-decoration: none;
@@ -1854,8 +1843,7 @@ h2 { font-weight: 600; font-size: clamp(1.6rem, 1.4vw + 1.3rem, 2.4rem); }
   padding-bottom: 1px;
   transition: border-color 0.15s ease;
 }
-a.footer-link:hover,
-a.footer-link:focus-visible {
+a.footer-link:hover, a.footer-link:focus-visible {
   border-color: currentColor;
 }
 a.footer-link:focus-visible {
@@ -1863,41 +1851,59 @@ a.footer-link:focus-visible {
   outline-offset: 4px;
   border-radius: 2px;
 }
-.footer-link--apply { color: var(--green); } /* 9.8:1 on --ink */
-.footer-link--portfolio { font-weight: 500; color: var(--blue); } /* 5.4:1 — lighter weight than Apply/Nominate so the unfinished portfolio never reads as the primary CTA */
-.footer-link--current { color: hsl(220, 14%, 70%); cursor: default; }
-
+.footer-link--apply {
+  color: var(--green);
+}
+.footer-link--portfolio {
+  font-weight: 500;
+  color: var(--blue);
+}
+.footer-link--current {
+  color: hsl(220, 14%, 70%);
+  cursor: default;
+}
 .footer-meta {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 24px;
-  /* top/bottom only — see the matching note on .footer-top. */
   padding-top: 16px;
   padding-bottom: 32px;
-  border-top: 1px solid hsla(18, 90%, 56%, 0.35); /* the one orange touch: a hairline divider, not a wash */
+  border-top: 1px solid hsla(18, 90%, 56%, 0.35);
 }
-.footer-source,
-.footer-copyright { margin: 0; }
-
+.footer-source, .footer-copyright {
+  margin: 0;
+}
 @media (max-width: 640px) {
-  .footer-top { flex-direction: column; gap: 20px; padding-top: 32px; padding-bottom: 24px; }
-  .footer-links { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .footer-link { display: inline-block; padding: 4px 0; } /* larger vertical hit area, easy to tap */
-  .footer-meta { flex-direction: column; gap: 6px; padding-top: 16px; padding-bottom: 28px; }
+  .footer-top {
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 32px;
+    padding-bottom: 24px;
+  }
+  .footer-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .footer-link {
+    display: inline-block;
+    padding: 4px 0;
+  }
+  .footer-meta {
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 16px;
+    padding-bottom: 28px;
+  }
 }
-
-/* FAQ — narrow centered accordion column, one item open at a time.
-   Height animates via grid-template-rows (0fr -> 1fr), which — unlike
-   max-height — animates to the answer's true content height with no
-   guessed cap and no clipping on long answers. */
-.faq-section { background: var(--paper); }
+.faq-section {
+  background: var(--paper);
+}
 .faq-wrap {
   max-width: 46rem;
   text-align: center;
 }
-/* Eyebrow reads as a small badge in green (this section's accent),
-   overriding the shared blue `.eyebrow` used everywhere else on the page. */
 .faq-eyebrow {
   display: inline-block;
   text-align: center;
@@ -1911,7 +1917,6 @@ a.footer-link:focus-visible {
   margin-bottom: 12px;
   padding-bottom: 16px;
 }
-/* small heading accent, echoing the hero's single-flourish underline motif */
 .faq-heading::after {
   content: "";
   position: absolute;
@@ -1929,7 +1934,6 @@ a.footer-link:focus-visible {
   margin: 0 auto clamp(32px, 4vw, 48px);
   font-size: 1.05rem;
 }
-
 .faq-list {
   list-style: none;
   margin: 0;
@@ -1939,10 +1943,6 @@ a.footer-link:focus-visible {
   flex-direction: column;
   gap: 10px;
 }
-/* Closed rows sit on paper-alt (one step darker than the section bg) so
-   the open row — back on a near-white surface — reads as lifted without
-   needing a heavy shadow. State is never color-only: the icon's shape
-   (+ vs x) and the row's own presence carry it; color just reinforces. */
 .faq-item {
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -1960,9 +1960,11 @@ a.footer-link:focus-visible {
   border-top-width: 3px;
   box-shadow: 0 2px 10px hsla(220, 30%, 15%, 0.07);
 }
-.faq-q { margin: 0; }
+.faq-q {
+  margin: 0;
+}
 .faq-trigger {
-  scroll-margin-top: 96px; /* clears the sticky header, plus a little breathing room */
+  scroll-margin-top: 96px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -1978,13 +1980,17 @@ a.footer-link:focus-visible {
   font-size: 1rem;
   color: var(--ink);
 }
-.faq-item:has(.faq-answer.is-open) .faq-trigger { padding-top: 16px; }
+.faq-item:has(.faq-answer.is-open) .faq-trigger {
+  padding-top: 16px;
+}
 .faq-trigger:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: -2px;
   border-radius: calc(var(--radius) - 2px);
 }
-.faq-q-text { flex: 1; }
+.faq-q-text {
+  flex: 1;
+}
 .faq-icon {
   width: 20px;
   height: 20px;
@@ -1992,28 +1998,28 @@ a.footer-link:focus-visible {
   color: var(--blue);
   transition: transform 0.25s ease, color 0.15s ease;
 }
-/* plus -> close: <use>-cloned instances live in a shadow tree the light-DOM
-   can't select into (targeting the inner path class doesn't work), so the
-   whole icon rotates 45deg instead, turning the + into a x — the close
-   state also switches the icon to orange, distinct from the plus's blue. */
-.faq-trigger[aria-expanded="true"] .faq-icon { color: var(--orange); transform: rotate(45deg); }
-
+.faq-trigger[aria-expanded="true"] .faq-icon {
+  color: var(--orange);
+  transform: rotate(45deg);
+}
 .faq-answer {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.3s ease;
 }
-.faq-answer.is-open { grid-template-rows: 1fr; }
-.faq-answer-inner { min-height: 0; overflow: hidden; }
+.faq-answer.is-open {
+  grid-template-rows: 1fr;
+}
+.faq-answer-inner {
+  min-height: 0;
+  overflow: hidden;
+}
 .faq-answer-inner p {
   margin: 0 20px 18px;
   color: var(--muted);
   font-size: 0.96rem;
   line-height: 1.6;
 }
-/* Marks the handful of answers directly referenced by the apply-page terms
-   checkbox (deadlines, hosting, revisions, referrals, upgrades) — a marker,
-   not a fill, so long text never sits on a bright orange background. */
 .faq-policy {
   border-left: 3px solid var(--orange);
   padding-left: 13px;
@@ -2026,34 +2032,44 @@ a.footer-link:focus-visible {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.faq-scope-link:hover { color: var(--ink); }
+.faq-scope-link:hover {
+  color: var(--ink);
+}
 .faq-scope-link:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
   border-radius: 2px;
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .faq-answer,
-  .faq-icon,
-  .faq-item { transition: none; }
+  .faq-answer, .faq-icon, .faq-item {
+    transition: none;
+  }
 }
-
 @media (max-width: 640px) {
-  .faq-trigger { padding: 15px 16px; font-size: 0.96rem; gap: 12px; }
-  .faq-answer-inner p,
-  .faq-scope-link { margin-left: 16px; margin-right: 16px; }
-  .faq-answer-inner p { font-size: 0.92rem; }
-  .faq-policy { padding-left: 10px; }
+  .faq-trigger {
+    padding: 15px 16px;
+    font-size: 0.96rem;
+    gap: 12px;
+  }
+  .faq-answer-inner p, .faq-scope-link {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .faq-answer-inner p {
+    font-size: 0.92rem;
+  }
+  .faq-policy {
+    padding-left: 10px;
+  }
 }
-
-/* Mobile nav — 1010px, not 720px or 880px: measured directly (four links
-   + CTA against the header edge), the desktop layout actually overflows
-   the viewport up to ~990px, not ~865px as a previous pass assumed — 880px
-   left a ~110px dead zone where the CTA clipped off-screen entirely. */
 @media (max-width: 1010px) {
-  .header-inner { grid-template-columns: 1fr auto; }
-  .nav-toggle { display: flex; grid-column: 2; }
+  .header-inner {
+    grid-template-columns: 1fr auto;
+  }
+  .nav-toggle {
+    display: flex;
+    grid-column: 2;
+  }
   .primary-nav {
     display: none;
     position: absolute;
@@ -2064,7 +2080,18 @@ a.footer-link:focus-visible {
     border-bottom: 1px solid var(--line);
     padding: 16px var(--gutter) 20px;
   }
-  .primary-nav.open { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-  .nav-links { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .nav-cta { justify-self: auto; }
+  .primary-nav.open {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .nav-cta {
+    justify-self: auto;
+  }
 }

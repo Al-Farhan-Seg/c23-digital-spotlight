@@ -22,6 +22,15 @@ wrangler.jsonc
 vite.config.base.mjs    shared Vite config (base: '/'), merged per site
 ```
 
+## Participant section cap
+
+Participant sites may use up to seven meaningful sections when each section directly supports trust, understanding, persuasion, or action. The one-page constraint remains unchanged.
+
+## Source readability
+
+- Keep HTML, CSS, and JavaScript formatted for direct human debugging: one structural element, selector block, declaration, statement, or logical branch per readable line or compact block. Do not leave minified or AI-compressed source in `sites/`.
+- Do not add comments to HTML, CSS, or JavaScript source files. Make naming, structure, and code flow clear enough to stand on their own.
+
 ## Hard rules
 
 - **Never edit another participant's `sites/<slug>/` unless explicitly asked.** Each launched site is live production for a real person; treat it as protected.
