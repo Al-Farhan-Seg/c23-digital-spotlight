@@ -1186,51 +1186,110 @@ h2 {
 }
 .launch-grid {
   list-style: none;
-  margin: clamp(28px, 4vw, 40px) 0 0;
+  margin: clamp(24px, 3vw, 32px) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: clamp(18px, 2.5vw, 28px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 .launch-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  padding: clamp(20px, 2.5vw, 26px);
   border-radius: var(--radius);
   background: var(--paper);
 }
-.launch-card--placeholder {
-  border: 1.5px dashed hsl(210, 35%, 72%);
+.launch-card--live {
+  display: grid;
+  grid-template-columns: minmax(150px, .72fr) minmax(0, 1.28fr);
+  overflow: hidden;
+  border: 1px solid hsl(220, 16%, 82%);
+  box-shadow: 0 10px 24px hsl(220, 22%, 22%, .07);
+}
+.launch-card-media {
+  position: relative;
+  min-height: 220px;
+  display: block;
+  overflow: hidden;
+  background: var(--ink);
+}
+.launch-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, hsl(220, 20%, 12%, .72));
+  pointer-events: none;
+}
+.launch-card-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform .45s ease;
+}
+.launch-card-media:hover img {
+  transform: scale(1.025);
+}
+.launch-card-preview-label {
+  position: absolute;
+  z-index: 1;
+  right: 18px;
+  bottom: 16px;
+  padding: 5px 9px;
+  border: 1px solid hsl(0, 0%, 100%, .34);
+  border-radius: 999px;
+  color: hsl(0, 0%, 100%);
+  background: hsl(220, 20%, 12%, .48);
+  font-size: .73rem;
+  font-weight: 600;
+}
+.launch-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(20px, 2.5vw, 28px);
+}
+.launch-card-status {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: clamp(18px, 2.5vw, 26px);
+  color: var(--muted);
+  font-size: .85rem;
 }
 .launch-badge {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 999px;
-  background: hsl(210, 45%, 93%);
-  color: hsl(210, 55%, 30%);
+  background: hsl(69, 74%, 88%);
+  color: hsl(84, 56%, 23%);
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 0.85rem;
 }
+.launch-card-label {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
 .launch-card-title {
   margin: 0;
-  font-size: 1.15rem;
-}
-.launch-card-date {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-.launch-card-date-label {
-  font-weight: 600;
   color: var(--ink);
-  margin-right: 4px;
+  font-size: clamp(1.45rem, 2vw, 1.9rem);
+  line-height: 1.05;
+}
+.launch-card-business {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 1.06rem;
 }
 .launch-progress {
   list-style: none;
-  margin: 4px 0 0;
+  margin: clamp(28px, 4vw, 42px) 0 0;
   padding: 0;
   width: 100%;
   display: flex;
@@ -1240,23 +1299,35 @@ h2 {
   position: relative;
   flex: 1;
   text-align: center;
-  padding-top: 18px;
-  color: var(--muted);
+  padding-top: 22px;
+  color: hsl(84, 36%, 27%);
   font-size: 0.78rem;
   font-weight: 600;
 }
 .launch-progress li::before {
-  content: "";
   position: absolute;
-  top: 3px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 9px;
-  height: 9px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--paper);
-  border: 2px solid var(--line);
+  background: var(--green);
   z-index: 1;
+}
+.launch-progress-icon {
+  position: absolute;
+  top: 1px;
+  left: 50%;
+  z-index: 2;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%);
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }
 .launch-progress li::after {
   content: "";
@@ -1264,56 +1335,92 @@ h2 {
   top: 7px;
   left: -50%;
   width: 100%;
-  height: 1.5px;
-  background: var(--line);
+  height: 2px;
+  background: var(--green);
 }
 .launch-progress li:first-child::after {
   content: none;
 }
 .launch-card-cta {
-  margin-top: auto;
-  padding-top: 4px;
-  color: hsl(210, 55%, 30%);
+  margin-top: clamp(30px, 4vw, 46px);
+  color: var(--ink);
   font-weight: 600;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration-color: var(--green);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
 }
 .launch-card-cta:hover {
-  color: var(--ink);
+  color: hsl(210, 55%, 30%);
 }
 .launch-card-cta:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
   border-radius: 2px;
 }
-@media (max-width: 480px) {
-  .launch-progress {
-    flex-direction: column;
-    gap: 10px;
+@media (max-width: 680px) {
+  .launch-grid {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+  .launch-card--live {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-width: 0;
+  }
+  .launch-card-content {
+    padding: 20px;
+  }
+  .launch-card-media img {
+    min-height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .launch-card-status {
     align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 20px;
+  }
+  .launch-progress {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
   }
   .launch-progress li {
-    width: 100%;
-    text-align: left;
-    padding-top: 0;
-    padding-left: 22px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 480px) {
+  .launch-progress li {
+    text-align: center;
+    padding-top: 24px;
+    padding-left: 0;
+    font-size: .72rem;
+    line-height: 1.2;
   }
   .launch-progress li::before {
-    top: 50%;
-    left: 4px;
-    transform: translate(0, -50%);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .launch-progress-icon {
+    top: 3px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .launch-progress li::after {
-    top: 100%;
-    left: 8px;
-    width: 1.5px;
-    height: 10px;
-  }
-  .launch-progress li:first-child::after {
-    content: "";
-  }
-  .launch-progress li:last-child::after {
     content: none;
+  }
+  .launch-card-content {
+    padding: 20px 16px 24px;
+  }
+}
+@media (max-width: 360px) {
+  .launch-badge {
+    max-width: 100%;
+  }
+  .launch-progress {
+    gap: 4px;
   }
 }
 .apply-hero {

@@ -110,7 +110,7 @@ A successful build is not proof of a finished website.
 
 ## Commands
 
-- `npm run dev -- <slug>` — local Vite dev server for one site.
+- `npm run dev -- <slug> [--port <port>] [--host [address]]` — local Vite dev server for one site; use a different port when running multiple sites concurrently.
 - `npm run build` — builds every site in `sites/` into `dist/`.
 - `npm run preview` — build, then `wrangler dev` (exercises the real Worker + ASSETS binding, not just Vite).
 - `npm run deploy` — build, then `wrangler deploy`.

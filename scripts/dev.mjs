@@ -12,7 +12,7 @@ const available = readdirSync(sitesDir, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name);
 
-const usage = `Usage: npm run dev -- <slug> [--host [address]]\nAvailable sites: ${available.join(', ')}`;
+const usage = `Usage: npm run dev -- <slug> [--port <port>] [--host [address]]\nAvailable sites: ${available.join(', ')}`;
 
 if (!slug || slug.startsWith('--') || !available.includes(slug)) {
   console.error(usage);
@@ -30,6 +30,19 @@ if (hostIndex !== -1) {
   host = value === undefined || value.startsWith('--') ? true : value;
 }
 
+let port;
+const portArgument = extraArgs.find((argument) => argument === '--port' || argument.startsWith('--port='));
+if (portArgument) {
+  const value = portArgument === '--port'
+    ? extraArgs[extraArgs.indexOf('--port') + 1]
+    : portArgument.slice('--port='.length);
+  port = Number(value);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    console.error(`Invalid port: ${value}\n${usage}`);
+    process.exit(1);
+  }
+}
+
 const siteRoot = resolve(sitesDir, slug);
 const localConfigPath = resolve(siteRoot, 'vite.config.local.mjs');
 const localConfig = existsSync(localConfigPath)
@@ -38,7 +51,9 @@ const localConfig = existsSync(localConfigPath)
 
 const config = mergeConfig(mergeConfig(baseConfig, localConfig), {
   root: siteRoot,
-  ...(host !== undefined ? { server: { host } } : {}),
+  ...(host !== undefined || port !== undefined
+    ? { server: { ...(host !== undefined ? { host } : {}), ...(port !== undefined ? { port } : {}) } }
+    : {}),
 });
 
 const server = await createServer(config);
