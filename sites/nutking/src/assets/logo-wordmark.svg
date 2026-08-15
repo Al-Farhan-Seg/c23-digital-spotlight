@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 120" role="img" aria-labelledby="nutkingLogoTitle">
+  <title id="nutkingLogoTitle">NUTKING</title>
+  <path
+    d="M133,34 L133,12 L144,23 L155,2 L166,23 L177,2 L188,23 L199,12 L199,34 Z"
+    fill="#C08A2E"
+    stroke="#8C611C"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+  <circle cx="144" cy="23" r="4" fill="#8C611C" />
+  <circle cx="155" cy="2" r="4.5" fill="#8C611C" />
+  <circle cx="166" cy="23" r="4" fill="#8C611C" />
+  <circle cx="177" cy="2" r="4.5" fill="#8C611C" />
+  <circle cx="188" cy="23" r="4" fill="#8C611C" />
+  <text x="0" y="96" font-family="'Bitter', Georgia, serif" font-weight="800" font-size="80" letter-spacing="-1">
+    <tspan fill="#7A0E1E">NUT</tspan><tspan fill="none" stroke="#C08A2E" stroke-width="2.25">KING</tspan>
+  </text>
+</svg>
