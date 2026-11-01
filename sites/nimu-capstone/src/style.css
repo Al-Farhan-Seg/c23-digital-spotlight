@@ -75,7 +75,9 @@ h1,h2 {
 }
 .site-header {
   position:absolute;
-  inset:0 0 auto;
+  top:auto;
+  left:0;
+  right:0;
   z-index:3;
   color:var(--paper);
 }
