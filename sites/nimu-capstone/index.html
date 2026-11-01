@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#163625" />
+    <title>
+      Nimu Timber & Woodworks | BUC3106 Coursework Demo
+    </title>
+    <link rel="icon" type="image/png" href="./src/assets/favicon-64.png" />
+    <meta name="description" content="Educational e-commerce demonstration for Nimu Timber & Woodworks, built for the MUBS BUC3106 E-Commerce Capstone Project." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <!-- Required course disclosure banner, kept identical on every page -->
+    <p class="coursework-banner">
+      Student project for BUC3106 at MUBS &middot; Payments and orders are not active &middot; <a href="./policies.html#privacy">Read the data notice</a>
+    </p>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="./index.html" aria-label="Nimu Timber & Woodworks coursework demo, back to home">
+          <img src="./src/assets/logo-128.webp" alt="" width="128" height="128" decoding="async" />
+          <span>
+            <strong>
+              Nimu Timber
+            </strong>
+            <small>
+              &amp; Woodworks
+            </small>
+          </span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">
+          <span></span>
+          <span></span>
+          <span class="sr-only">
+            Toggle navigation
+          </span>
+        </button>
+        <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+          <span class="nav-current" aria-current="page">Home</span>
+          <a href="./products.html">Products</a>
+          <a href="./about.html">About</a>
+          <a href="./pay.html">How to Pay &amp; Order</a>
+          <a href="./policies.html">Policies</a>
+          <a class="nav-cta whatsapp-cta" href="https://wa.me/256790320976?text=Hello%20Nimu%20Timber%20%26%20Woodworks%2C%20I%E2%80%99m%20interested%20in%20your%20timber%20products%20and%20would%20like%20to%20enquire%20about%20available%20timber%20types%2C%20sizes%2C%20pricing%2C%20and%20delivery.%20Please%20share%20the%20current%20options.%20Thank%20you." target="_blank" rel="noopener">
+            <span class="platform-icon platform-icon--whatsapp" aria-hidden="true"></span>
+            Enquire on WhatsApp
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero section" id="top">
+        <picture class="hero-media">
+          <source media="(max-width: 720px)" srcset="./src/assets/timber-yard-720.webp" />
+          <img class="hero-image" src="./src/assets/timber-yard-1080.webp" alt="Timber stock arranged inside the Nimu Timber yard" width="1080" height="701" fetchpriority="high" decoding="async" />
+        </picture>
+        <div class="hero-wash" aria-hidden="true"></div>
+        <div class="shell hero-content">
+          <p class="eyebrow">
+            Bwaise Industrial Area &middot; Mambule Road
+          </p>
+          <h1>
+            Quality timber solutions for work that needs to last.
+          </h1>
+          <p>
+            Reliable Musambya and Kalitunsi timber for construction, roofing, furniture and general building projects. This demo site walks through how an order, payment and delivery could work.
+          </p>
+          <a class="button button-primary" href="./pay.html">
+            See how ordering works
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section reasons" id="reasons">
+        <div class="shell section-grid">
+          <div class="section-intro">
+            <h2>
+              Why customers choose Nimu Timber.
+            </h2>
+            <p>
+              Three reasons builders, carpenters and homeowners come back &mdash; based on what the business already tells customers on WhatsApp and in the yard.
+            </p>
+          </div>
+        </div>
+        <div class="shell reasons-grid">
+          <article class="reason-card">
+            <p class="reason-number">01</p>
+            <h3>Timber that is kept dry</h3>
+            <p>Stock is stored inside the warehouse, so it is ready to work with in a few days rather than left to season outdoors.</p>
+          </article>
+          <article class="reason-card">
+            <p class="reason-number">02</p>
+            <h3>Cut to your size</h3>
+            <p>Musambya and Kalitunsi timber can be cut to the lengths a specific job needs, instead of selling only fixed stock sizes.</p>
+          </article>
+          <article class="reason-card">
+            <p class="reason-number">03</p>
+            <h3>Supply that scales with the job</h3>
+            <p>From a single homeowner repair to a bulk order for a contractor, the yard supplies both small and large projects.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section featured" id="featured">
+        <div class="shell section-grid">
+          <div class="section-intro">
+            <h2>
+              Featured timber collections.
+            </h2>
+            <p>
+              A sample of the catalogue built for this coursework project. Full details, including which prices are confirmed, are on the Products page.
+            </p>
+          </div>
+        </div>
+        <div class="shell featured-grid">
+          <a class="featured-card" href="./products.html#structural">
+            <img src="./src/assets/upright-timber-640.webp" alt="Upright timber boards stored in a workshop" width="640" height="480" loading="lazy" decoding="async" />
+            <h3>Structural &amp; Roofing Timber</h3>
+            <p>Musambya and Kalitunsi timber for construction and roofing work.</p>
+          </a>
+          <a class="featured-card" href="./products.html#furniture">
+            <img src="./src/assets/warehouse-timber-480.webp" alt="Rough-cut timber boards standing inside the warehouse" width="480" height="360" loading="lazy" decoding="async" />
+            <h3>Furniture &amp; Workshop Timber</h3>
+            <p>Dried, workshop-ready timber and custom cutting for carpenters.</p>
+          </a>
+          <a class="featured-card" href="./products.html#bulk">
+            <img src="./src/assets/delivery-truck-512.webp" alt="Truck loaded with timber logs" width="512" height="683" loading="lazy" decoding="async" />
+            <h3>Bulk &amp; Contractor Supply</h3>
+            <p>Larger bundles with delivery, aimed at contractors and businesses.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section audience" id="audience">
+        <div class="shell section-grid">
+          <div class="section-intro">
+            <h2>
+              Built for two kinds of customer.
+            </h2>
+            <p>
+              The catalogue and the ordering flow on this demo separate individual buyers from business buyers, because they shop differently.
+            </p>
+          </div>
+        </div>
+        <div class="shell audience-grid">
+          <article class="audience-card">
+            <p class="audience-tag">Individual customers</p>
+            <h3>Homeowners &amp; small projects</h3>
+            <p>Single pieces or small quantities of timber for repairs, furniture or small building jobs, paid for by Mobile Money, cash on delivery, or in person.</p>
+          </article>
+          <article class="audience-card">
+            <p class="audience-tag">Business customers</p>
+            <h3>Contractors &amp; companies</h3>
+            <p>Bulk timber for construction sites and workshops, with bank transfer as an additional payment route and delivery coordinated for larger loads.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section cta-band" id="order">
+        <div class="shell cta-band-inner">
+          <h2>Ready to see how an order would run?</h2>
+          <p>The How to Pay &amp; Order page walks through the sample workflow step by step, for both individual and business customers.</p>
+          <a class="button button-primary" href="./pay.html">
+            View the ordering guide
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-top">
+        <div class="footer-brand">
+          <img src="./src/assets/logo-128.webp" alt="" width="128" height="128" loading="lazy" decoding="async" />
+          <div>
+            <p class="footer-label">
+              Nimu Timber &amp; Woodworks
+            </p>
+            <p>
+              BUC3106 coursework demonstration
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="shell footer-links">
+        <div>
+          <p class="footer-heading">Pages</p>
+          <a href="./index.html">Home</a>
+          <a href="./products.html">Products</a>
+          <a href="./about.html">About</a>
+          <a href="./pay.html">How to Pay &amp; Order</a>
+          <a href="./policies.html">Policies</a>
+        </div>
+        <div>
+          <p class="footer-heading">Find us</p>
+          <p>
+            Bwaise Industrial Area
+            <br />
+            Mambule Road
+          </p>
+        </div>
+        <div>
+          <p class="footer-heading">Contact</p>
+          <div class="footer-socials">
+            <a class="footer-social whatsapp-cta" href="https://wa.me/256790320976" target="_blank" rel="noopener" aria-label="Message Nimu Timber on WhatsApp">
+              <span class="platform-icon platform-icon--whatsapp" aria-hidden="true"></span>
+            </a>
+            <a class="footer-social social-link--tiktok" href="https://tiktok.com/@wood.timber" target="_blank" rel="noopener" aria-label="Visit Nimu Timber on TikTok">
+              <img class="platform-icon platform-icon--tiktok" src="./src/assets/tiktok.svg" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="shell footer-bottom">
+        <p>
+          &copy; <span id="year"></span> Nimu Timber &amp; Woodworks &mdash; Student project for BUC3106 at MUBS
+        </p>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

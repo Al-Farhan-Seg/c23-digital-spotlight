@@ -4,6 +4,7 @@
 const HOSTNAME_TO_SLUG = {
   'c23.farhansegujja.com': 'c23',
   'nimu-timber.farhansegujja.com': 'nimu-timber',
+  'nimu-capstone.farhansegujja.com': 'nimu-capstone',
   'nutking.farhansegujja.com': 'nutking',
   'modestmuse.farhansegujja.com': 'modestmuse',
   'wrist-mode.farhansegujja.com': 'wrist-mode',
