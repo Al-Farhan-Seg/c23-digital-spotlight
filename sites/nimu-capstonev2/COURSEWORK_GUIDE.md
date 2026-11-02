@@ -152,6 +152,8 @@ beyond the coursework presentation
   not match exactly (7 ft is 84 in), so the page says the exact length is to be
   confirmed. Ask the owner whether 7 ft is nominal and 82–83 in the actual length,
   then update the wording and remove the note.
+- **Payment logos:** the MTN and Airtel logos on `pay.html` come from two Wikimedia Commons files (originals in `src/assets/logos/`; the on-page copies are recoloured inline symbols). They are trademarks of their owners and identify the payment method only. Replace them with files from MTN's and Airtel's own brand pages if the group wants official assets.
+- **Merchant codes:** the sample Mobile Money merchant codes (`000 111` and `000 222`) are 6 digits and deliberately fake. Confirm with the owner whether the "Send Money" menu wording is right for merchant payments.
 - **Payment details:** open `pay.html` and look inside the `.method`
   blocks under `id="payment-methods"` (card payment is the separate
   `.method-proposed` block). The page has no form or payment control. Replace the sample numbers and

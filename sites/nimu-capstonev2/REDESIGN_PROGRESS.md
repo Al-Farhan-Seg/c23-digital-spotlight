@@ -508,6 +508,18 @@ Safari, Firefox, real touch devices, screen-reader testing, Windows high-contras
 4. Plan for real-browser, Worker and performance checks (the DNS record for `nimu-capstonev2` and a deploy are needed for the Worker check).
 5. Commit timing (Phase 8 is uncommitted).
 
+
+## Payment logos and merchant codes log
+
+Owner asked for 6-digit merchant codes and SVG logos for Airtel and MTN Mobile Money in our brand tokens, then asked me to search the web for how the real logos look.
+
+- **Merchant codes:** the earlier 10-digit sample numbers (`0771 00 00 00`, `0750 00 00 00`, used in the Phase 6 and concise-pass logs above) are superseded by 6-digit sample codes `000 111` (MTN) and `000 222` (Airtel). Label wording is now "Sample merchant code". Each code stays on the same line as its label at 360px and wider; at 320 to 340px the code drops below its label but never splits; no overflow at 320 to 1280px.
+- **Web search:** text searches gave only loose descriptions (MTN's yellow oval, Airtel's red wordmark); both are trademarked. I opened Wikimedia Commons and found the two small SVG candidates, then asked permission before downloading.
+- **Download (owner approved):** "MTN 2022 logo.svg" (850 bytes) and "Airtel Africa logo.svg" (4,759 bytes) from commons.wikimedia.org into a scratch folder first, inspected (plain paths, no scripts, images or external references), then kept unmodified in `src/assets/logos/` and inlined as recoloured symbols on the Pay page (contract section 29).
+- **Verified:** logos render at 42x21 and 34x34px in 56px forest tiles; visually checked in the Pay methods section at 1280px; checked widths 320, 340, 360, 375, 390, 414, 768, 1280. Not checked: the phone render image by image, Safari and Firefox.
+- **Not verified:** that these Commons files match MTN's and Airtel's current official artwork.
+- Uncommitted.
+
 ## Current status
 
-Phases 1 to 8 are built. Phases 1 to 7 are approved and committed; Phase 8 is approved. **Next: Phase 9 (final audit).**
+Phases 1 to 8 are built, approved and committed. The payment-logo and merchant-code change above is uncommitted. **Next: Phase 9 (final audit).**

@@ -945,6 +945,27 @@ main > * + * {
   height:22px;
   flex-basis:22px;
 }
+.method .method-head .icon-tile {
+  width:56px;
+  height:56px;
+  flex-basis:56px;
+}
+.method .method-head .icon-tile .icon {
+  width:28px;
+  height:28px;
+}
+.logo {
+  display:block;
+  fill:currentColor;
+}
+.logo--mtn {
+  width:42px;
+  height:21px;
+}
+.logo--airtel {
+  width:34px;
+  height:34px;
+}
 .icon-tile--sm {
   width:32px;
   height:32px;
@@ -1150,7 +1171,11 @@ main > * + * {
 .method-steps li {
   margin-bottom:6px;
 }
+.no-wrap {
+  white-space:nowrap;
+}
 .method-steps code {
+  white-space:nowrap;
   padding:1px 6px;
   background:var(--paper);
   border-radius:var(--radius-xs);
@@ -1610,6 +1635,11 @@ main > * + * {
   .ops-figure img {
     height:auto;
     aspect-ratio:4 / 3;
+  }
+}
+@media (max-width:359px) {
+  .no-wrap {
+    white-space:normal;
   }
 }
 @media (max-width:520px) {
