@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#163625" />
+    <title>
+      How to Pay & Order | Nimu Timber & Woodworks Coursework Demo
+    </title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="icon" type="image/png" href="./src/assets/favicon-64.png" />
+    <meta name="description" content="Illustrative payment and ordering workflow for the Nimu Timber & Woodworks BUC3106 coursework demonstration. Not a live checkout." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <aside aria-label="Demonstration notice">
+      <p class="coursework-banner">
+        Student project for BUC3106 at MUBS &middot; Payments and orders are not active &middot; <a href="./policies.html#privacy">Read the data notice</a>
+      </p>
+    </aside>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="./index.html" aria-label="Nimu Timber &amp; Woodworks coursework demo, back to home">
+          <img src="./src/assets/logo-128.webp" alt="" width="128" height="128" decoding="async" />
+          <span>
+            <strong>Nimu Timber</strong>
+            <small>&amp; Woodworks</small>
+          </span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">
+          <span></span>
+          <span></span>
+          <span class="sr-only">Menu</span>
+        </button>
+        <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+          <div class="nav-links">
+            <a href="./index.html">Home</a>
+            <a href="./products.html">Products</a>
+            <a href="./about.html">About</a>
+            <span class="nav-current" aria-current="page">How to Pay &amp; Order</span>
+            <a href="./policies.html">Policies</a>
+          </div>
+          <a class="nav-cta" href="https://wa.me/256790320976?text=Hello%20Nimu%20Timber%20%26%20Woodworks%2C%20I%E2%80%99m%20interested%20in%20your%20timber%20products%20and%20would%20like%20to%20enquire%20about%20available%20timber%20types%2C%20sizes%2C%20pricing%2C%20and%20delivery.%20Please%20share%20the%20current%20options.%20Thank%20you." target="_blank" rel="noopener">
+            <span class="platform-icon platform-icon--whatsapp" aria-hidden="true"></span>
+            Enquire on WhatsApp
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <svg class="icon-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><path d="M7.5 8.5h.01"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><path d="M16 14.5h.01"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.5 3 8 7.5 9.5 4.5-1.5 7.5-5 7.5-9.5V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20.5h18"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="3" y="6.5" width="18" height="11" rx="1.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 12h.01M17.5 12h.01"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M6.5 15h3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5M12 17.5h.01"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3v3h-7z"/><circle cx="6.5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M5 21V5l8-2v18"/><path d="M13 9h6v12M8.5 8h.01M8.5 12h.01M8.5 16h.01M16 13h.01M16 17h.01M3 21h18"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 4h6v3H9z"/><path d="M7 5.5H5.5v15h13v-15H17M9 12h6M9 16h4"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 16 16 3l5 5L8 21z"/><path d="m7.5 12.5 2.5 2.5M10.5 9.5l2.5 2.5M13.5 6.5 16 9"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><path d="M9 4 7 20M17 4l-2 16M4.5 9h16M3.5 15h16"/></symbol>
+  <symbol id="i-log" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12h.01"/></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><path d="M12 4 3 8.5l9 4.5 9-4.5z"/><path d="m3 13 9 4.5 9-4.5M3 17l9 4.5 9-4.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6.5-5.7 6.5-11a6.5 6.5 0 0 0-13 0c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-refund" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 0-2.6 5.9"/><path d="M20 5v5h-5"/></symbol>
+  <symbol id="i-logo-mtn" viewBox="0 0 1280 640"><path fill="currentColor" fill-rule="evenodd" d="M640,0C286.5,0,0,143.3,0,320s286.5,320,640,320s640-143.3,640-320S993.5,0,640,0z M640,589.5 C314.4,589.5,50.5,468.8,50.5,320S314.4,50.5,640,50.5s589.5,120.7,589.5,269.5S965.6,589.5,640,589.5z M559.3,263.9v-50.5h180.5 v50.5h-65v162.8h-50.5V263.9H559.3z M957.8,213.3v213.3h-50.5l-91.6-127v127h-50.5V213.3h50.5l91.6,127v-127L957.8,213.3z M320.7,426.7V213.3h50.5l56.1,86.3l56.1-86.3H534v213.3h-50.5V306l-38.3,58.9h-35.6L371.2,306v120.7H320.7z"/></symbol>
+  <symbol id="i-logo-airtel" viewBox="-2.29867263 -2.29867263 81.21976626 81.66055526"><path fill="currentColor" d="m 45.31305,52.114374 -4.94125,0.8062 0.0487,17.9475 c 0.0138,4.0238 2.3675,5.92 6.30625,5.9075 0.94625,0 1.835,-0.1825 1.835,-0.1825 l -0.009,-2.9875 c -0.0538,-0.01 -0.4175,-0.01 -0.69375,-0.015 -2.0775,-0.067 -2.49,-1.21 -2.495,-2.5275 l -0.0275,-10.1012 3.18125,-0.01 -0.01,-3.5425 -3.17875,0.01 -0.0163,-5.305 z m 30.56937,21.3862 c -2.0075,-0.1462 -2.43,-1.025 -2.4325,-2.4925 l -0.0537,-18.9987 -4.8275,0.8375 0.0487,17.8637 c 0.01,4.2313 2.31375,6.0388 6.16,6.0275 0.825,0 1.845,-0.1987 1.845,-0.1987 l -0.007,-3.0325 c 0,0 -0.4525,0.014 -0.7325,-0.01 m -48.33,-12.603 0.0362,15.7787 4.915,-0.014 -0.04,-14.855 c 0.64375,-0.6238 2.005,-1.1788 3.29375,-1.235 1.19875,-0.05 1.9775,0.1987 1.9775,0.1987 l 1.3525,-3.06 c -0.53125,-0.2537 -1.79,-0.5787 -3.25125,-0.575 -2.1175,0.01 -5.36625,0.6363 -8.28375,3.7613 m 31.66313,12.638 c -1.3225,0 -2.22,-0.4275 -2.8025,-1.0538 -0.87125,-0.9375 -1.2625,-2.8662 -1.165,-4.91 l 10.3975,-0.029 0,-0.4788 c -0.11,-6.8087 -2.44125,-9.8962 -7.52125,-9.8825 -5.6675,0.016 -7.86375,5.23 -7.8925,10.1363 -0.025,3.0962 1.15,6.2112 3.3025,7.985 1.295,1.0787 3.105,1.67 5.19625,1.665 1.1425,0 2.335,-0.1725 3.41875,-0.5113 2.0825,-0.6525 3.62,-1.7725 3.62,-1.7725 l -1.37125,-2.795 c -0.24125,0.1838 -2.31625,1.6388 -5.1825,1.6463 m -1.08375,-12.7675 c 2.145,-0.01 2.465,2.32 2.4675,3.7637 l -5.215,0.014 c 0.0788,-1.8575 0.84375,-3.7725 2.7475,-3.7775 m -49.778,-3.6008 c -2.305,0.01 -4.3725,0.6638 -6.49625,1.7313 l -0.5425,0.275 1.30375,2.89 0.7325,-0.3475 c 1.49875,-0.68 3.1075,-1.135 4.55,-1.0788 1.745,0.068 2.46375,0.8663 2.46875,2.54 l 0.002,0.9788 -2.85875,0.01 c -4.59375,0.011 -7.44125,2.4575 -7.51375,6.235 0.0113,3.5887 3.015,6.6787 7.17875,6.6662 3.3575,-0.01 6.20125,-1.1112 8.11625,-3.0362 l -0.0263,-10.2488 c -0.015,-4.9912 -3.585,-6.6237 -6.915,-6.6137 m 2.03875,15.915 c -0.47375,0.3337 -1.44375,0.625 -2.5025,0.6275 -1.93875,0.01 -2.81875,-1.4775 -2.79125,-3.21 0.0312,-1.4388 0.9225,-3.0688 3.34375,-3.075 l 1.93375,-0.01 0.0163,5.6625 z m 8.52087,3.601 4.82125,-0.014 -0.0538,-19.2012 -4.81875,0.8 0.0512,18.415 z m 2.3865,-26.8852 c -1.7125,0 -3.10875,1.3838 -3.10125,3.0738 0.002,1.7237 1.3575,3.0712 3.07625,3.065 1.7175,0 3.05875,-1.3538 3.0525,-3.06 0.0263,-0.815 -0.27375,-1.585 -0.84,-2.1625 -0.57375,-0.5938 -1.3525,-0.9188 -2.1875,-0.9163"/><path fill="currentColor" d="m 57.01467,8.7188745 c -0.81,-2.565 -2.3725,-4.6738 -4.635,-6.2625 -0.265,-0.215 -3.09375,-2.47130005 -8.41375,-2.456300047333 C 39.09842,0.01407445 33.76717,1.9050745 28.11842,5.6325745 l -0.1775,0.1188 -0.0275,0.015 -0.505,0.3187 -0.435,0.2963 c -1.15375,0.7862 -2.2575,1.6375 -3.28375,2.545 -2.38375,2.3199995 -5.1,6.1924995 -4.91875,9.4736995 0.075,1.3963 0.65875,2.53 1.735,3.3688 0.96875,0.7587 2.18,1.1387 3.59,1.1337 2.9025,-0.01 6.075,-1.5937 8.24375,-2.9337 l 0.41,-0.2825 c 0.37875,-0.2475 0.75625,-0.5013 1.1325,-0.7588 l 0.37375,-0.2487 c 3.08125,-2.0788 6.2725,-4.2288 9.86625,-5.49 0.9325,-0.3263 1.7475,-0.4838 2.5,-0.4863 0.37125,0 0.7325,0.036 1.08,0.12 1.09375,0.2488 1.89875,0.8675 2.37875,1.845 0.84,1.7013 0.64875,4.3838 -0.48,6.8425 -1.54125,3.3513 -4.19125,6.655 -7.8825,9.8263 -1.87375,1.61 -3.615,2.8575 -5.1625,3.7062 l -0.13875,0.074 c -0.71875,0.4 -1.5325,0.8462 -2.38875,1.1762 l -0.1175,0.044 c -0.25625,0.096 -0.4725,0.1837 -0.66875,0.2487 -2.3325,0.6325 -2.29375,-0.4562 -1.93625,-1.32 0.1925,-0.4725 0.845,-1.2887 1.6375,-2.1187 0.4325,-0.4388 0.875,-0.8538 1.3325,-1.2838 0.49125,-0.4575 0.995,-0.9287 1.50125,-1.4462 l 0.1125,-0.1088 c 0.6275,-0.635 1.49,-1.5025 1.43625,-2.745 -0.0763,-1.645 -1.7525,-2.6662 -3.3225,-2.7062 l -0.11375,0 c -1.5125,0 -2.9375,0.8925 -3.87,1.64 -0.93125,0.7512 -1.92875,1.8787 -2.58875,2.9375 -0.95375,1.5287 -2.97125,5.4237 -0.9925,8.5287 0.795,1.2425 2.1125,1.87 3.92125,1.865 1.265,0 2.7575,-0.315 4.44125,-0.93 2.51875,-0.92 4.51,-2.185 6.43625,-3.41 l 0.51875,-0.3312 c 2.04,-1.2913 4.0225,-2.7938 6.0725,-4.5925 4.52375,-3.9825 7.23625,-7.8763 8.7825,-12.6375 0.625,-1.9288 1.51125,-5.6875 0.40375,-9.2074995"/></symbol>
+</svg>
+      <section class="section page-hero">
+        <div class="shell">
+          <p class="eyebrow">How to pay &amp; order</p>
+          <h1>A sample order, start to finish.</h1>
+          <p class="page-hero-lead"><strong>Student project for BUC3106 at MUBS. Payments and orders are not active.</strong> No form here collects data. Every number and account is fictitious.</p>
+          <div class="catalogue-nav">
+            <a class="button button-outline" href="#order-steps"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-list"></use></svg> Steps</a>
+            <a class="button button-outline" href="#payment-methods"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-wallet"></use></svg> Payment</a>
+            <a class="button button-outline" href="#delivery-refunds"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-truck"></use></svg> Delivery &amp; refunds</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight section--panel" id="compare">
+        <div class="shell">
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">Before you start</p>
+              <h2>Individual or business?</h2>
+            </div>
+          </div>
+          <div class="compare">
+            <div class="compare-col">
+              <div class="compare-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg></span>
+                <div>
+                  <p class="audience-tag">Individual</p>
+                  <h3>Homeowners and small projects</h3>
+                </div>
+              </div>
+              <dl class="spec-list">
+                <div>
+                  <dt>Order</dt>
+                  <dd>Single pieces or small quantities.</dd>
+                </div>
+                <div>
+                  <dt>Enquiry</dt>
+                  <dd>WhatsApp, with product code and quantity.</dd>
+                </div>
+                <div>
+                  <dt>Payment</dt>
+                  <dd>Mobile Money or cash on delivery.</dd>
+                </div>
+                <div>
+                  <dt>Timber</dt>
+                  <dd>Collect, or agree delivery.</dd>
+                </div>
+              </dl>
+            </div>
+            <div class="compare-col">
+              <div class="compare-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-building"></use></svg></span>
+                <div>
+                  <p class="audience-tag">Business</p>
+                  <h3>Contractors and companies</h3>
+                </div>
+              </div>
+              <dl class="spec-list">
+                <div>
+                  <dt>Order</dt>
+                  <dd>Bulk for sites and workshops.</dd>
+                </div>
+                <div>
+                  <dt>Enquiry</dt>
+                  <dd>Phone quotation or WhatsApp.</dd>
+                </div>
+                <div>
+                  <dt>Payment</dt>
+                  <dd>Same routes, plus bank transfer.</dd>
+                </div>
+                <div>
+                  <dt>Timber</dt>
+                  <dd>Delivery coordinated for larger loads.</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight section--sand" id="order-steps">
+        <div class="shell">
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">The process</p>
+              <h2>Five steps, in order.</h2>
+            </div>
+          </div>
+          <div class="process">
+            <ol class="order-steps-list" role="list">
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-box"></use></svg></span>
+                <div>
+                  <h3>Choose a product</h3>
+                  <p>Note the code, timber type and size. Check whether it is marked SAMPLE.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><span class="platform-icon platform-icon--whatsapp" aria-hidden="true"></span></span>
+                <div>
+                  <h3>Send an enquiry</h3>
+                  <p>Message on WhatsApp with the code and quantity. Businesses can request a quotation by phone.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tag"></use></svg></span>
+                <div>
+                  <h3>Agree price and quantity</h3>
+                  <p>Pricing is negotiable. Confirm collection or delivery.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-wallet"></use></svg></span>
+                <div>
+                  <h3>Pay</h3>
+                  <p>Mobile Money and bank transfer are paid first. Cash on delivery is agreed first and paid at handover.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg></span>
+                <div>
+                  <h3>Verify and confirm</h3>
+                  <p>Prepaid: funds are verified before preparation. Cash on delivery: total and address are confirmed. Confirmation comes before collection or delivery.</p>
+                </div>
+              </li>
+            </ol>
+            <aside class="checklist" aria-labelledby="checklist-title">
+              <p class="eyebrow">Reference list, not a form</p>
+              <h3 id="checklist-title">Have ready</h3>
+              <ul class="checklist-items">
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-hash"></use></svg></span>
+                  <span><strong>Product code</strong> e.g. NTW-101</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-log"></use></svg></span>
+                  <span><strong>Timber type</strong> Musambya or Kalitunsi</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-ruler"></use></svg></span>
+                  <span><strong>Size</strong> Catalogue sizes are SAMPLE</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-stack"></use></svg></span>
+                  <span><strong>Quantity</strong> Pieces, boards or bundles</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg></span>
+                  <span><strong>Collection or delivery</strong> With address, if delivered</span>
+                </li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight section--panel" id="payment-methods">
+        <div class="shell">
+          <div class="home-head">
+            <div>
+              <p class="eyebrow">Step 4 in detail</p>
+              <h2>Payment methods.</h2>
+            </div>
+            <p>All accounts and numbers are fictitious.</p>
+          </div>
+          <div class="methods">
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile icon-tile--logo"><svg class="logo logo--mtn" aria-hidden="true" focusable="false"><use href="#i-logo-mtn"></use></svg></span>
+                <div>
+                  <h3>MTN Mobile Money</h3>
+                  <p class="method-type">Prepaid <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Choose Send Money in the Mobile Money menu.</li>
+                <li><span class="no-wrap">Sample merchant code <code>000&nbsp;111</code></span>, agreed amount in UGX.</li>
+                <li>Send the transaction reference on WhatsApp.</li>
+              </ol>
+            </article>
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile icon-tile--logo"><svg class="logo logo--airtel" aria-hidden="true" focusable="false"><use href="#i-logo-airtel"></use></svg></span>
+                <div>
+                  <h3>Airtel Money</h3>
+                  <p class="method-type">Prepaid <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Choose Send Money in the Airtel Money menu.</li>
+                <li><span class="no-wrap">Sample merchant code <code>000&nbsp;222</code></span>, agreed amount in UGX.</li>
+                <li>Send the transaction reference on WhatsApp.</li>
+              </ol>
+            </article>
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bank"></use></svg></span>
+                <div>
+                  <h3>Bank transfer</h3>
+                  <p class="method-type">Prepaid &middot; business customers <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Request the sample details: &ldquo;Nimu Timber &amp; Woodworks (Demo)&rdquo;, <code>0000 1234 5678</code>, Demo Commercial Bank.</li>
+                <li>Transfer the invoice amount and keep the receipt.</li>
+                <li>Send the receipt and invoice number before delivery is scheduled.</li>
+              </ol>
+            </article>
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cash"></use></svg></span>
+                <div>
+                  <h3>Cash on delivery</h3>
+                  <p class="method-type">Pay on delivery <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Confirm the address and total before dispatch.</li>
+                <li>Pay the driver in cash and get a signed delivery note.</li>
+                <li>Keep the note as proof.</li>
+              </ol>
+            </article>
+          </div>
+          <article class="method-proposed">
+            <div class="method-head">
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-card"></use></svg></span>
+              <div>
+                <h3>Card payment</h3>
+                <p class="method-type"><span class="status-badge status-badge--sample">Proposed, not active</span></p>
+              </div>
+            </div>
+            <p>For class discussion only. No gateway is connected and no card details should be entered.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section--tight section--sand" id="verification">
+        <div class="shell">
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">Step 5 in detail</p>
+              <h2>Prepaid or on delivery.</h2>
+            </div>
+          </div>
+          <div class="verify-grid">
+            <div class="verify-col">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg></span>
+                <h3>Mobile Money and bank transfer</h3>
+              </div>
+              <p>Confirmed only when the money shows in the business&rsquo;s own account or Mobile Money line. Timber is not prepared or released before.</p>
+              <p class="warning-note"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg> <span><strong>Warning:</strong> never trust a payment screenshot alone. Confirm the funds have arrived before releasing timber.</span></p>
+            </div>
+            <div class="verify-col">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cash"></use></svg></span>
+                <h3>Cash on delivery</h3>
+              </div>
+              <p>Total and address are agreed first. Payment is made at handover and recorded on a signed delivery note.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight section--panel" id="delivery-refunds">
+        <div class="shell">
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">After confirmation</p>
+              <h2>Handover and refunds.</h2>
+            </div>
+          </div>
+          <ol class="handover" role="list">
+            <li>
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg></span>
+              <h3>Confirmed</h3>
+              <p>The business confirms the order and a collection or delivery date.</p>
+            </li>
+            <li>
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-box"></use></svg></span>
+              <h3>Prepared</h3>
+              <p>Timber is pulled from stock and cut to size if requested.</p>
+            </li>
+            <li>
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-truck"></use></svg></span>
+              <h3>Handed over</h3>
+              <p>Collected from the yard, or delivered and checked against the agreed quantity.</p>
+            </li>
+          </ol>
+          <div class="refund-note">
+            <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-refund"></use></svg></span>
+            <p>If a confirmed order cannot be fulfilled, the amount paid would be refunded by the same method once both sides agree.</p>
+            <a class="text-link" href="./policies.html#returns">Returns and refunds policy</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="next-step" id="next-step">
+        <div class="shell next-step-inner">
+          <div>
+            <h2>Ready to pick your timber?</h2>
+            <p>Note a product code from the catalogue.</p>
+          </div>
+          <div class="next-step-actions">
+            <a class="button button-primary" href="./products.html">
+              Browse the sample catalogue
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-main">
+        <div>
+          <div class="footer-brand">
+            <img src="./src/assets/logo-128.webp" alt="" width="128" height="128" loading="lazy" decoding="async" />
+            <div>
+              <p class="footer-label">Nimu Timber &amp; Woodworks</p>
+              <p>BUC3106 coursework demonstration</p>
+            </div>
+          </div>
+          <p class="footer-heading">Find us</p>
+          <address class="footer-address">
+            Bwaise Industrial Area<br />
+            Mambule Road
+          </address>
+        </div>
+        <nav aria-label="Footer pages">
+          <p class="footer-heading">Pages</p>
+          <ul class="footer-list">
+              <li><a href="./index.html">Home</a></li>
+              <li><a href="./products.html">Products</a></li>
+              <li><a href="./about.html">About</a></li>
+              <li><a href="./pay.html" aria-current="page">How to Pay &amp; Order</a></li>
+              <li><a href="./policies.html">Policies</a></li>
+          </ul>
+        </nav>
+        <div>
+          <p class="footer-heading">Contact</p>
+          <ul class="footer-list">
+            <li>
+              <a href="https://wa.me/256790320976" target="_blank" rel="noopener">
+                <span class="platform-icon platform-icon--whatsapp" aria-hidden="true"></span>
+                WhatsApp
+                <span class="sr-only">(opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://tiktok.com/@wood.timber" target="_blank" rel="noopener">
+                <img class="platform-icon platform-icon--tiktok" src="./src/assets/tiktok.svg" alt="" width="20" height="20" aria-hidden="true" />
+                TikTok @wood.timber
+                <span class="sr-only">(opens in a new tab)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="shell footer-bottom">
+        <p>&copy; <span id="year">2026</span> Nimu Timber &amp; Woodworks</p>
+        <p>Student project for BUC3106 at MUBS &middot; Payments and orders are not active</p>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
