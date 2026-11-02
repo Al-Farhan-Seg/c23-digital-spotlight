@@ -51,145 +51,337 @@
       </div>
     </header>
     <main id="main">
+      <svg class="icon-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><path d="M7.5 8.5h.01"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><path d="M16 14.5h.01"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.5 3 8 7.5 9.5 4.5-1.5 7.5-5 7.5-9.5V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20.5h18"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="3" y="6.5" width="18" height="11" rx="1.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 12h.01M17.5 12h.01"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M6.5 15h3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5M12 17.5h.01"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3v3h-7z"/><circle cx="6.5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M5 21V5l8-2v18"/><path d="M13 9h6v12M8.5 8h.01M8.5 12h.01M8.5 16h.01M16 13h.01M16 17h.01M3 21h18"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 4h6v3H9z"/><path d="M7 5.5H5.5v15h13v-15H17M9 12h6M9 16h4"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 16 16 3l5 5L8 21z"/><path d="m7.5 12.5 2.5 2.5M10.5 9.5l2.5 2.5M13.5 6.5 16 9"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><path d="M9 4 7 20M17 4l-2 16M4.5 9h16M3.5 15h16"/></symbol>
+  <symbol id="i-log" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12h.01"/></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><path d="M12 4 3 8.5l9 4.5 9-4.5z"/><path d="m3 13 9 4.5 9-4.5M3 17l9 4.5 9-4.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6.5-5.7 6.5-11a6.5 6.5 0 0 0-13 0c0 5.3 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-refund" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 0-2.6 5.9"/><path d="M20 5v5h-5"/></symbol>
+</svg>
       <section class="section page-hero">
         <div class="shell">
-          <p class="eyebrow">How to Pay &amp; Order</p>
-          <h1>A sample ordering workflow, start to finish.</h1>
-          <p class="page-hero-lead">This page demonstrates how a timber order could be placed and paid for. <strong>This is a student project for BUC3106 at MUBS. Payments and orders are not active.</strong> No form here collects real customer data or triggers a real purchase.</p>
+          <p class="eyebrow">How to pay &amp; order</p>
+          <h1>A sample order, start to finish.</h1>
+          <p class="page-hero-lead"><strong>Student project for BUC3106 at MUBS. Payments and orders are not active.</strong> No form here collects data. Every number and account is fictitious.</p>
+          <div class="catalogue-nav">
+            <a class="button button-outline" href="#order-steps"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-list"></use></svg> Steps</a>
+            <a class="button button-outline" href="#payment-methods"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-wallet"></use></svg> Payment</a>
+            <a class="button button-outline" href="#delivery-refunds"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-truck"></use></svg> Delivery &amp; refunds</a>
+          </div>
         </div>
       </section>
 
-      <section class="section order-steps" id="order-steps">
+      <section class="section section--tight section--panel" id="compare">
         <div class="shell">
-          <h2>Step-by-step sample ordering workflow</h2>
-          <ol class="steps-list">
-            <li class="step-card">
-              <p class="step-number">1</p>
-              <h3>Choose a product</h3>
-              <p>Browse the <a href="./products.html">Products</a> page and note the product code, timber type, and size you need. Confirm whether the entry is marked SAMPLE.</p>
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">Before you start</p>
+              <h2>Individual or business?</h2>
+            </div>
+          </div>
+          <div class="compare">
+            <div class="compare-col">
+              <div class="compare-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg></span>
+                <div>
+                  <p class="audience-tag">Individual</p>
+                  <h3>Homeowners and small projects</h3>
+                </div>
+              </div>
+              <dl class="spec-list">
+                <div>
+                  <dt>Order</dt>
+                  <dd>Single pieces or small quantities.</dd>
+                </div>
+                <div>
+                  <dt>Enquiry</dt>
+                  <dd>WhatsApp, with product code and quantity.</dd>
+                </div>
+                <div>
+                  <dt>Payment</dt>
+                  <dd>Mobile Money or cash on delivery.</dd>
+                </div>
+                <div>
+                  <dt>Timber</dt>
+                  <dd>Collect, or agree delivery.</dd>
+                </div>
+              </dl>
+            </div>
+            <div class="compare-col">
+              <div class="compare-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-building"></use></svg></span>
+                <div>
+                  <p class="audience-tag">Business</p>
+                  <h3>Contractors and companies</h3>
+                </div>
+              </div>
+              <dl class="spec-list">
+                <div>
+                  <dt>Order</dt>
+                  <dd>Bulk for sites and workshops.</dd>
+                </div>
+                <div>
+                  <dt>Enquiry</dt>
+                  <dd>Phone quotation or WhatsApp.</dd>
+                </div>
+                <div>
+                  <dt>Payment</dt>
+                  <dd>Same routes, plus bank transfer.</dd>
+                </div>
+                <div>
+                  <dt>Timber</dt>
+                  <dd>Delivery coordinated for larger loads.</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight section--sand" id="order-steps">
+        <div class="shell">
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">The process</p>
+              <h2>Five steps, in order.</h2>
+            </div>
+          </div>
+          <div class="process">
+            <ol class="order-steps-list" role="list">
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-box"></use></svg></span>
+                <div>
+                  <h3>Choose a product</h3>
+                  <p>Note the code, timber type and size. Check whether it is marked SAMPLE.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><span class="platform-icon platform-icon--whatsapp" aria-hidden="true"></span></span>
+                <div>
+                  <h3>Send an enquiry</h3>
+                  <p>Message on WhatsApp with the code and quantity. Businesses can request a quotation by phone.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tag"></use></svg></span>
+                <div>
+                  <h3>Agree price and quantity</h3>
+                  <p>Pricing is negotiable. Confirm collection or delivery.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-wallet"></use></svg></span>
+                <div>
+                  <h3>Pay</h3>
+                  <p>Mobile Money and bank transfer are paid first. Cash on delivery is agreed first and paid at handover.</p>
+                </div>
+              </li>
+              <li class="order-step">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg></span>
+                <div>
+                  <h3>Verify and confirm</h3>
+                  <p>Prepaid: funds are verified before preparation. Cash on delivery: total and address are confirmed. Confirmation comes before collection or delivery.</p>
+                </div>
+              </li>
+            </ol>
+            <aside class="checklist" aria-labelledby="checklist-title">
+              <p class="eyebrow">Reference list, not a form</p>
+              <h3 id="checklist-title">Have ready</h3>
+              <ul class="checklist-items">
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-hash"></use></svg></span>
+                  <span><strong>Product code</strong> e.g. NTW-101</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-log"></use></svg></span>
+                  <span><strong>Timber type</strong> Musambya or Kalitunsi</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-ruler"></use></svg></span>
+                  <span><strong>Size</strong> Catalogue sizes are SAMPLE</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-stack"></use></svg></span>
+                  <span><strong>Quantity</strong> Pieces, boards or bundles</span>
+                </li>
+                <li>
+                  <span class="icon-tile icon-tile--sm"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg></span>
+                  <span><strong>Collection or delivery</strong> With address, if delivered</span>
+                </li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight section--panel" id="payment-methods">
+        <div class="shell">
+          <div class="home-head">
+            <div>
+              <p class="eyebrow">Step 4 in detail</p>
+              <h2>Payment methods.</h2>
+            </div>
+            <p>All accounts and numbers are fictitious.</p>
+          </div>
+          <div class="methods">
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg></span>
+                <div>
+                  <h3>MTN Mobile Money</h3>
+                  <p class="method-type">Prepaid <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Choose Send Money in the Mobile Money menu.</li>
+                <li>Sample merchant number <code>0771 00 00 00</code>, agreed amount in UGX.</li>
+                <li>Send the transaction reference on WhatsApp.</li>
+              </ol>
+            </article>
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg></span>
+                <div>
+                  <h3>Airtel Money</h3>
+                  <p class="method-type">Prepaid <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Choose Send Money in the Airtel Money menu.</li>
+                <li>Sample merchant number <code>0750 00 00 00</code>, agreed amount in UGX.</li>
+                <li>Send the transaction reference on WhatsApp.</li>
+              </ol>
+            </article>
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bank"></use></svg></span>
+                <div>
+                  <h3>Bank transfer</h3>
+                  <p class="method-type">Prepaid &middot; business customers <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Request the sample details: &ldquo;Nimu Timber &amp; Woodworks (Demo)&rdquo;, <code>0000 1234 5678</code>, Demo Commercial Bank.</li>
+                <li>Transfer the invoice amount and keep the receipt.</li>
+                <li>Send the receipt and invoice number before delivery is scheduled.</li>
+              </ol>
+            </article>
+            <article class="method">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cash"></use></svg></span>
+                <div>
+                  <h3>Cash on delivery</h3>
+                  <p class="method-type">Pay on delivery <span class="status-badge status-badge--illustrative">Illustrative</span></p>
+                </div>
+              </div>
+              <ol class="method-steps">
+                <li>Confirm the address and total before dispatch.</li>
+                <li>Pay the driver in cash and get a signed delivery note.</li>
+                <li>Keep the note as proof.</li>
+              </ol>
+            </article>
+          </div>
+          <article class="method-proposed">
+            <div class="method-head">
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-card"></use></svg></span>
+              <div>
+                <h3>Card payment</h3>
+                <p class="method-type"><span class="status-badge status-badge--sample">Proposed, not active</span></p>
+              </div>
+            </div>
+            <p>For class discussion only. No gateway is connected and no card details should be entered.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section--tight section--sand" id="verification">
+        <div class="shell">
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">Step 5 in detail</p>
+              <h2>Prepaid or on delivery.</h2>
+            </div>
+          </div>
+          <div class="verify-grid">
+            <div class="verify-col">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg></span>
+                <h3>Mobile Money and bank transfer</h3>
+              </div>
+              <p>Confirmed only when the money shows in the business&rsquo;s own account or Mobile Money line. Timber is not prepared or released before.</p>
+              <p class="warning-note"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg> <span><strong>Warning:</strong> never trust a payment screenshot alone. Confirm the funds have arrived before releasing timber.</span></p>
+            </div>
+            <div class="verify-col">
+              <div class="method-head">
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cash"></use></svg></span>
+                <h3>Cash on delivery</h3>
+              </div>
+              <p>Total and address are agreed first. Payment is made at handover and recorded on a signed delivery note.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight section--panel" id="delivery-refunds">
+        <div class="shell">
+          <div class="home-head home-head--solo">
+            <div>
+              <p class="eyebrow">After confirmation</p>
+              <h2>Handover and refunds.</h2>
+            </div>
+          </div>
+          <ol class="handover" role="list">
+            <li>
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg></span>
+              <h3>Confirmed</h3>
+              <p>The business confirms the order and a collection or delivery date.</p>
             </li>
-            <li class="step-card">
-              <p class="step-number">2</p>
-              <h3>Send an enquiry</h3>
-              <p>Message the business on WhatsApp with the product code and quantity, or, for a business order, request a quotation by phone.</p>
+            <li>
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-box"></use></svg></span>
+              <h3>Prepared</h3>
+              <p>Timber is pulled from stock and cut to size if requested.</p>
             </li>
-            <li class="step-card">
-              <p class="step-number">3</p>
-              <h3>Agree the price and quantity</h3>
-              <p>Pricing is negotiable. The business confirms a final price, quantity, and whether the timber will be collected or delivered.</p>
-            </li>
-            <li class="step-card">
-              <p class="step-number">4</p>
-              <h3>Pay using a method below</h3>
-              <p>Choose Mobile Money, bank transfer, or cash on delivery. Card payment is shown as a proposed option only.</p>
-            </li>
-            <li class="step-card">
-              <p class="step-number">5</p>
-              <h3>Verify and confirm</h3>
-              <p>The business verifies the payment before preparing the order. The customer receives confirmation before collection or delivery.</p>
+            <li>
+              <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-truck"></use></svg></span>
+              <h3>Handed over</h3>
+              <p>Collected from the yard, or delivered and checked against the agreed quantity.</p>
             </li>
           </ol>
-        </div>
-      </section>
-
-      <section class="section payment-methods" id="payment-methods">
-        <div class="shell">
-          <h2>Payment methods</h2>
-          <p class="collection-intro">Every sample account, number and reference below is fictitious and created for this coursework demonstration only.</p>
-
-          <div class="payment-method">
-            <div class="payment-method-head">
-              <h3>MTN Mobile Money</h3>
-              <span class="status-badge status-badge--illustrative">Illustrative</span>
-            </div>
-            <ol class="payment-method-steps">
-              <li>Dial the Mobile Money menu and select Send Money.</li>
-              <li>Enter the sample merchant number <code>0771 00 00 00</code> and the agreed amount in UGX.</li>
-              <li>Send the transaction reference to the business on WhatsApp for verification.</li>
-            </ol>
-          </div>
-
-          <div class="payment-method">
-            <div class="payment-method-head">
-              <h3>Airtel Money</h3>
-              <span class="status-badge status-badge--illustrative">Illustrative</span>
-            </div>
-            <ol class="payment-method-steps">
-              <li>Open the Airtel Money menu and select Send Money.</li>
-              <li>Enter the sample merchant number <code>0750 00 00 00</code> and the agreed amount in UGX.</li>
-              <li>Send the transaction reference to the business on WhatsApp for verification.</li>
-            </ol>
-          </div>
-
-          <div class="payment-method">
-            <div class="payment-method-head">
-              <h3>Bank transfer &mdash; business customers</h3>
-              <span class="status-badge status-badge--illustrative">Illustrative</span>
-            </div>
-            <ol class="payment-method-steps">
-              <li>Request the sample bank details: account name &ldquo;Nimu Timber &amp; Woodworks (Demo)&rdquo;, account number <code>0000 1234 5678</code>, sample bank &ldquo;Demo Commercial Bank&rdquo;.</li>
-              <li>Transfer the agreed invoice amount and keep the bank-issued receipt.</li>
-              <li>Email or WhatsApp the receipt and invoice number for verification before delivery is scheduled.</li>
-            </ol>
-          </div>
-
-          <div class="payment-method">
-            <div class="payment-method-head">
-              <h3>Cash on delivery</h3>
-              <span class="status-badge status-badge--illustrative">Illustrative</span>
-            </div>
-            <ol class="payment-method-steps">
-              <li>Confirm the delivery address and the agreed total with the business before dispatch.</li>
-              <li>Pay the delivery driver in cash and request a signed delivery note.</li>
-              <li>Keep the delivery note as proof of payment and delivery.</li>
-            </ol>
-          </div>
-
-          <div class="payment-method payment-method--proposed">
-            <div class="payment-method-head">
-              <h3>Card payment</h3>
-              <span class="status-badge status-badge--sample">Proposed, not active</span>
-            </div>
-            <p>Card payment is included here only as a proposed future option for discussion in class. No card payment gateway is connected to this site, and no card details should ever be entered here.</p>
+          <div class="refund-note">
+            <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-refund"></use></svg></span>
+            <p>If a confirmed order cannot be fulfilled, the amount paid would be refunded by the same method once both sides agree.</p>
+            <a class="text-link" href="./policies.html#returns">Returns and refunds policy</a>
           </div>
         </div>
       </section>
 
-      <section class="section payment-verification">
-        <div class="shell">
-          <h2>How payment is verified</h2>
-          <p>In this sample workflow, the business treats a Mobile Money or bank transaction as confirmed only once the money is visible in its own account or Mobile Money line, not from the sender&rsquo;s message alone.</p>
-          <p class="warning-note"><strong>Warning:</strong> never trust a payment screenshot alone. Screenshots can be edited or sent in error. Always confirm the funds have actually arrived before releasing timber or scheduling delivery.</p>
-        </div>
-      </section>
-
-      <section class="section refunds">
-        <div class="shell">
-          <h2>Refunds, in brief</h2>
-          <p>If a confirmed order cannot be fulfilled as agreed &mdash; for example the stock is unavailable &mdash; the amount paid would be refunded through the same payment method used, once both sides agree on the issue. See the <a href="./policies.html#returns">Returns &amp; refunds</a> section on the Policies page for the full illustrative policy.</p>
-        </div>
-      </section>
-
-      <section class="section delivery-confirmation">
-        <div class="shell">
-          <h2>Delivery and order confirmation</h2>
-          <ol class="steps-list steps-list--compact">
-            <li class="step-card">
-              <p class="step-number">1</p>
-              <h3>Order confirmed</h3>
-              <p>Once payment is verified, the business confirms the order and a collection or delivery date.</p>
-            </li>
-            <li class="step-card">
-              <p class="step-number">2</p>
-              <h3>Timber prepared</h3>
-              <p>Timber is pulled from stock and, if requested, cut to size ahead of collection or delivery.</p>
-            </li>
-            <li class="step-card">
-              <p class="step-number">3</p>
-              <h3>Delivered or collected</h3>
-              <p>The customer collects from the yard, or the order is delivered and checked against the agreed quantity on arrival.</p>
-            </li>
-          </ol>
+      <section class="next-step" id="next-step">
+        <div class="shell next-step-inner">
+          <div>
+            <h2>Ready to pick your timber?</h2>
+            <p>Note a product code from the catalogue.</p>
+          </div>
+          <div class="next-step-actions">
+            <a class="button button-primary" href="./products.html">
+              Browse the sample catalogue
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
       </section>
     </main>

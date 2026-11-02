@@ -38,7 +38,7 @@ The brief asked for a nine-phase roadmap without naming phases. This is a propos
 | 3 | Home composition (product-led introduction) | **Complete, approved by owner** (see Phase 3 log) |
 | 4 | Products composition (indexed sample catalogue, eight entries) | **Complete, approved by owner** (see Phase 4 log) |
 | 5 | About composition (documentary portrait) | **Complete, approved by owner** (see Phase 5 log) |
-| 6 | Pay & Order composition (instructional sequence, disclosures) | Not started |
+| 6 | Pay & Order composition (order sheet, instruction-led) | **Complete, approved by owner** (see Phase 6 log) |
 | 7 | Policies composition (long-form reading) | Not started |
 | 8 | Cross-page pass: responsive (five widths), accessibility, CSS motion, image/performance, reduced motion | Not started |
 | 9 | Final audit against `CLAUDE.md` quality gate, preservation checklist, build + Worker preview, `COURSEWORK_GUIDE.md` update, handoff | Not started |
@@ -384,6 +384,88 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 4. Decide whether the ordering steps keep `#order-steps` and `#payment-methods` anchors (they are linked from Home, Products and About).
 5. Confirm commit timing (Phase 5 is uncommitted).
 
+
+## Phase 6 log — Pay & Order
+
+Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the original is untouched). Phase 5 was committed first as `15f5601`.
+
+### Contradictions found and how they were resolved
+- Step 5 and the verification text said funds must be verified before preparing or releasing timber, while cash on delivery has no money before dispatch. Now split: prepaid routes verify funds first; cash on delivery is agreed first and paid and recorded at handover.
+- The first delivery step opened "Once payment is verified". Now it covers both routes.
+- The five steps sat in an auto-fit grid (four plus one). Now one vertical ordered list.
+- The screenshot warning sat apart from verification. Now beside the prepaid rule.
+
+### Files changed
+- `pay.html` (`<main>` only), `src/style.css`, `COURSEWORK_GUIDE.md`, `DESIGN_CONTRACT.md` (section 23 and the Pay anchor row), this file, and `redesign-reference/pay-pay-*.png` (the older `round-pay-*` captures remain as before-state references).
+- Not touched: other pages, shared shell, `main.js`, `sites/nimu-capstone`, other sites, `worker/`, dependencies, prices, business contact details, policy commitments.
+
+### Reading journeys (walked by reading the final page, top to bottom)
+1. **Individual, cash on delivery.** Masthead states demonstration-only and inactive payments. The individual column says payment is Mobile Money or cash on delivery. Steps 1 to 3 are the same for everyone. Step 4 says cash on delivery is agreed in advance and paid at handover; step 5 says the business confirms the agreed total and delivery details. The reference list tells them what to send. The Cash on delivery row labels the route "Pay on delivery, agreed before dispatch" and gives the three actions. The verification section's cash-on-delivery column explains that no money arrives before dispatch, so the agreement comes first, and that payment is recorded on the signed delivery note. Handover: order confirmed once delivery details are agreed, timber prepared, delivered and checked on arrival; refund summary and returns link follow. No step contradicts this route.
+2. **Business, prepaid bank transfer.** The business column says quotation by phone or WhatsApp, the same routes plus bank transfer, delivery coordinated for larger loads. Steps 1 to 5 apply, with step 2 offering a phone quotation. The Bank transfer row is labelled "Prepaid, verified before delivery is scheduled" with the fictitious details. The prepaid verification column says funds must be visible in the business's own account before timber is prepared or released, with the screenshot warning directly beside it. Handover then follows with funds verified. No step contradicts this route.
+
+### Verification evidence
+Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`.
+- **No live behaviour:** 0 forms, 0 inputs, 0 buttons in `<main>`, 0 copy controls, 0 scripts; the page has no storage.
+- **Structure:** one `<h1>`; no duplicate ids; anchors `order-steps`, `payment-methods`, `delivery-refunds`, `verification`, `compare`, `next-step` exist. The sequence is an `<ol role="list">` of 5 items, stacked vertically with equal left edges, paired side by side with the checklist at 1280px.
+- **Methods:** four rows with the Illustrative badge and the route labels; one "Proposed, not active" card block, visually separate. Sample identifiers verified exactly: `0771 00 00 00`, `0750 00 00 00`, `0000 1234 5678`, "Demo Commercial Bank", "Nimu Timber & Woodworks (Demo)".
+- **Old contradictions:** "Once payment is verified" no longer appears; the cash-on-delivery column does not say funds are required before delivery; the demonstration disclosures and the banner are present.
+- **Links and anchors:** masthead buttons land on their sections (top 0); deep link `pay.html#payment-methods` lands (top 0); the returns link goes to `policies.html#returns`; the catalogue links go to `products.html`. Home choices, Products order links and the About links all land on the right Pay sections (top 0 after the smooth scroll settles).
+- **Layouts:** no horizontal overflow, broken images, failed requests or console errors at 1280, 768 and 390px on Pay (and on Home, Products, About and Policies after the shared CSS change). A 200% text-size test at 390px showed no clipping or overflow and no clamped text.
+- **Read visually:** full-page desktop render; phone and enlarged-text payment-methods crops. Not read image by image: the tablet and phone verification and handover sections and the tablet process crop.
+- **Rules:** `grep` finds no `border-top`, `border-bottom` or `<hr>` in the stylesheet or `pay.html`.
+- `npm run build`: see the completion run below.
+
+### Limitations and unresolved issues
+- Owner review pending; Safari, Firefox and Worker routing unchecked.
+- Owner questions raised (contract section 23 and the guide's confirmation list): any cash-on-delivery conditions such as a deposit or size limit, and whether paying in person at the yard is accepted. Neither is stated, so neither is shown.
+- Bank-transfer verification is labelled "before delivery is scheduled" (from the existing instructions) while the other prepaid routes say "before the order is prepared"; the verification column says both happen before timber is prepared or released.
+- Uncommitted.
+
+### Prerequisites for Phase 7 (Policies)
+1. Owner review of the Pay screenshots and decisions on the two open questions (or confirmation to leave them unstated).
+2. Policies composition direction: a long-form reading layout; confirm the five policies (`#delivery`, `#returns`, `#privacy`, `#terms`, `#communication`) and every educational and non-compliance disclaimer must stay; the banner links to `#privacy` and Pay links to `#returns`.
+3. Confirm the Delivery policy text can be left as written even though the Pay page now describes handover in more detail (the policy commits to nothing new).
+4. Confirm commit timing (Phase 6 is uncommitted).
+
 ## Current status
 
-Phases 1 to 5 are built and approved; Phases 1 to 4 are committed, Phase 5 is uncommitted. **Next: Phase 6 (Pay & Order).** All remaining phases are built in `sites/nimu-capstonev2` under the standing rules (rounded tokens, no horizontal rules, content never hanging, sectional feel).
+Phases 1 to 5 are approved and committed (Phase 5 as `15f5601`). Phase 6 is built and approved. A concise-copy and icon pass across Home, Products, About and Pay is approved. Phase 6 and that pass are uncommitted. **Next: Phase 7 (Policies).** All remaining phases are built in `sites/nimu-capstonev2` under the standing rules (rounded tokens, no horizontal rules, content never hanging, sectional feel).
+
+## Pay revision log — concise copy, icons, premium tiles
+
+Owner feedback after reviewing Phase 6: the page was too verbose, needed about 40% fewer words, icons and appropriate logos in each place, and did not feel premium.
+
+- **Words (main content, counted by script):** 981 before, 540 after, about 45% fewer. Section lead paragraphs were removed or cut to one line; step, method, verification and handover copy was tightened; every required disclosure (banner, "Payments and orders are not active", "No form here collects data", fictitious numbers, card "Proposed, not active", screenshot warning, returns link) and every sample identifier is retained.
+- **Icons:** a 20-symbol inline SVG set with 23 forest icon tiles on the page (contract section 24); WhatsApp logo reused from the existing asset. No new files or dependencies.
+- **Logos:** MTN, Airtel and bank logos were deliberately not drawn or added (see contract section 24); owner to supply official files if wanted.
+- **Premium treatment:** consistent tiles, numbered step badges, tidy method rows with route and Illustrative labels, a calmer masthead with three icon links; no new colours, shadows or rules.
+- **Fix during review:** icons in the reference list were dark on dark because a text-colour rule leaked into the tiles; scoped the selector.
+- **Verification:** 26 icons resolve to defined symbols (0 missing, 0 collapsed); 0 forms, inputs, buttons or scripts; all disclosures and sample identifiers asserted present; no duplicate ids; links unchanged; no overflow at 1280, 768 and 390px, including 200% text at 390px; `grep` finds no `border-top`, `border-bottom` or `<hr>`; `npm run build` passes. Read visually: full desktop render, steps and methods sections (desktop), steps section (phone). Not read image by image: tablet and enlarged-text crops, verification and handover sections on phone.
+- **Not yet done:** the same conciseness and icon pass for Home, Products, About and Policies (copy budget would apply there too).
+- Uncommitted.
+
+## Concise copy and icons pass — Home, Products, About
+
+Owner asked to apply the Pay treatment to all pages ("Apply to all"). Policies is not built yet, so it will follow when it is composed in Phase 7.
+
+- **Word counts (main content):** Home 308 to 180, Products 628 to 373, About 382 to 220; each at least 40% fewer. First draft was 34%, 25% and 36%; copy was tightened until each page met 40%.
+- **Icons:** the same 20-symbol inline SVG set and forest tiles as Pay; Home 8 icon references, Products 32, About 8. All resolve (0 missing, 0 collapsed). WhatsApp remains the only brand logo; MTN, Airtel and bank logos are still not used.
+- **Products integrity (script compare against the previous commit's page):** same 8 codes, same 8 price strings, same 8 images; 8 cards each with a status line, an order link to `pay.html#order-steps`, and a SAMPLE badge on every sample size and price (15 entry badges); the length-mismatch note retained.
+- **About claims:** "15 years" and "Seroma Ltd." occur only inside the "Not proof" note with the badge.
+- **Links and anchors:** unchanged and present (Home: top, main, featured, reasons, audience, order; Products: structural, furniture, bulk, next-step; About: audience, operations, values, next-step). Home's WhatsApp link, collection links and buyer links resolve.
+- **Interaction:** the order link's fill and arrow shift apply to the link only (arrow moves 4px on hover); card hover leaves the card unchanged (transform none).
+- **Layouts:** no overflow, broken images, failed requests or console errors at 1280, 768 and 390px on all five pages; 200% text at 390px on Products and About shows no overflow; `grep` finds no `border-top`, `border-bottom` or `<hr>` in the stylesheet.
+- **Read visually:** full desktop renders of Home, Products and About; phone Products structural section. Not read image by image: tablet and phone renders of Home and About, enlarged-text crops.
+- **Limitations:** owner review pending; Safari, Firefox and Worker routing unchecked; the lazy-loaded third product image appeared blank in one element crop (an element-screenshot artifact; full-page runs show 0 broken images).
+- Uncommitted.
+
+## nimu-timber overhaul log
+
+Owner asked for a one-go overhaul of the live one-page site in the v2 design direction, "don't reinvent stuff", and then to avoid oblong image placements. Done in source only; **not deployed**.
+
+- **Files changed:** `sites/nimu-timber/index.html`, `src/style.css`, `src/main.js`. Assets unchanged. Nothing else in `sites/` touched by this task.
+- **Preserved by script comparison against the previous commit:** all 7 external links (WhatsApp variants and TikTok), the 8 images with their alt text, every section anchor, and every sentence of copy. Only the decorative vertical hero caption was dropped. Main-content words 367 to 394 because of added labels (eyebrows, "See our timber", "(opens in a new tab)").
+- **Verification (Playwright against `npm run dev -- nimu-timber --port 5175`):** no overflow, broken images, failed requests or console errors at 1280, 768 and 390px; one `<h1>`, no duplicate ids; nav links exactly centred (offset 0); nav and hero links land on their sections; the FAQ accordion opens one item at a time with mouse and keyboard and closes the others; mobile menu hides links when closed, opens, closes on Escape and returns focus; reduced motion disables the hero animation and FAQ transition; no computed top-only or bottom-only borders (no rules); `npm run build` passes for all 7 sites. Read visually: full desktop render, phone services and material crops, tablet material crop. Not read image by image: tablet and phone full pages, phone hero and contact crops.
+- **Image fix during review:** the HTML `height` attributes were overriding the aspect ratios (slivers); fixed with `height:auto`, and the phone delivery photo was capped to a 4:3 thumbnail.
+- **Limitations:** this is the live business site, so owner review before any deploy is essential; Safari, Firefox and Worker routing unchecked; the "15 years" and "Seroma Ltd." credentials are the business's own existing claims and were kept as they were.
+- Uncommitted.

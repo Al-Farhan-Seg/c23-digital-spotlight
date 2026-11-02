@@ -25,10 +25,12 @@ The real site at `sites/nimu-timber/` was **not changed** by this work.
    what it supplies, how the yard stores, cuts and delivers timber (in the
    business's own words), how individual (B2C) and business (B2B) customers are
    served differently, and the values the business states for itself.
-4. **`pay.html` — How to Pay & Order.** A step-by-step sample ordering
-   workflow, MTN/Airtel Mobile Money, bank transfer, cash on delivery, a
-   proposed (inactive) card option, payment verification guidance, a
-   screenshot warning, refunds, and delivery/confirmation steps.
+4. **`pay.html` — How to Pay & Order.** A sample order sheet: individual and
+   business differences, one five-step ordering process beside a reference list
+   of what to have ready, MTN/Airtel Mobile Money, bank transfer and cash on
+   delivery as method rows, a proposed (inactive) card option, separate
+   verification rules for prepaid payments and cash on delivery (with the
+   screenshot warning), preparation and handover, and the refund summary.
 5. **`policies.html` — Policies.** Short educational examples covering
    delivery, returns & refunds, a privacy notice referencing Uganda's Data
    Protection and Privacy Act, 2019, terms of service, and customer
@@ -122,7 +124,10 @@ beyond the coursework presentation
 1. Confirm or correct the "15 years" and "Seroma Ltd." claims on `about.html`.
 2. Confirm real prices and standard sizes for each product line, to replace
    the SAMPLE values on `products.html`.
-3. Decide whether MTN/Airtel Mobile Money numbers and bank details shown on
+3. Confirm how cash on delivery works in practice (any deposit, order-size
+   limit or other condition) and whether paying in person at the yard is
+   accepted; the Pay page states neither.
+4. Decide whether MTN/Airtel Mobile Money numbers and bank details shown on
    `pay.html` should ever become real — if so, that is a business decision
    involving real financial risk and is outside the scope of this coursework
    demo.
@@ -147,8 +152,9 @@ beyond the coursework presentation
   not match exactly (7 ft is 84 in), so the page says the exact length is to be
   confirmed. Ask the owner whether 7 ft is nominal and 82–83 in the actual length,
   then update the wording and remove the note.
-- **Payment details:** open `pay.html` and look inside `.payment-method`
-  blocks under `id="payment-methods"`. Replace the sample numbers and
+- **Payment details:** open `pay.html` and look inside the `.method`
+  blocks under `id="payment-methods"` (card payment is the separate
+  `.method-proposed` block). The page has no form or payment control. Replace the sample numbers and
   account details only with details the business owner has approved for
   real use, and only once the group is ready to actually go live — this
   demo intentionally keeps them fictitious.
@@ -187,8 +193,10 @@ To remove the coursework site after the module is graded:
 - Open the Products page and point out the SAMPLE badges — explain *why*
   they exist (no confirmed price list from the owner) rather than hiding
   them.
-- Walk through the How to Pay & Order page step by step: ordering steps,
-  each payment method's 3 steps, the "never trust a screenshot alone"
+- Walk through the How to Pay & Order page: the demonstration-only status at
+  the top, the five steps, the reference list, each payment method's 3 steps,
+  why prepaid payments are verified before preparation while cash on delivery
+  is agreed first and paid at handover, the "never trust a screenshot alone"
   warning, and the required disclosure that payments are not active.
 - Open the Policies page and explain the privacy notice's reference to
   Uganda's Data Protection and Privacy Act, 2019, and that it is an
