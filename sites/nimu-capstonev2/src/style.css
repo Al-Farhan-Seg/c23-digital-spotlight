@@ -1244,22 +1244,95 @@ main > * + * {
   color:var(--bark);
   font-weight:600;
 }
+.policy-layout {
+  display:grid;
+  grid-template-columns:minmax(200px,280px) minmax(0,760px);
+  justify-content:center;
+  gap:clamp(24px,4vw,56px);
+  align-items:start;
+}
+.policy-toc {
+  position:sticky;
+  top:20px;
+  max-height:calc(100vh - 40px);
+  overflow:auto;
+  padding:22px;
+  background:var(--sand);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+}
+.policy-toc .eyebrow {
+  margin-bottom:12px;
+}
+.policy-toc ol {
+  display:grid;
+  gap:4px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.policy-toc a {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:var(--radius-sm);
+  font-size:.9rem;
+  font-weight:600;
+  text-decoration:none;
+}
+.policy-toc a:hover {
+  background:var(--paper);
+}
+.policy-doc {
+  display:grid;
+  gap:16px;
+}
 .policy-item {
-  max-width:70ch;
-  margin-bottom:46px;
+  scroll-margin-top:16px;
+  padding:clamp(22px,3vw,34px);
+  background:var(--sand);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
 }
-.policy-item:last-child {
-  margin-bottom:0;
+.policy-head {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:16px;
 }
-.policy-item h2 {
-  margin-bottom:14px;
+.policy-head h2 {
+  margin:0;
   font-size:clamp(1.8rem,3vw,2.4rem);
 }
-.policy-item p {
+.policy-badge {
+  margin:6px 0 0;
+}
+.policy-item > p {
+  max-width:70ch;
+  margin:0 0 14px;
   color:var(--muted);
 }
-.policy-item p + p {
-  margin-top:14px;
+.policy-item > p:last-child {
+  margin-bottom:0;
+}
+.policy-item .policy-lead {
+  color:var(--ink);
+  font-size:1.15rem;
+  font-weight:600;
+}
+.policy-item .policy-actual,.policy-item .policy-note {
+  padding:12px 16px;
+  background:var(--paper);
+  border-radius:var(--radius-sm);
+}
+.policy-item .policy-actual {
+  color:var(--ink);
+  font-size:.92rem;
+  font-weight:600;
+}
+.policy-item .policy-note {
+  font-size:.86rem;
 }
 .site-footer {
   padding-bottom:clamp(16px,2vw,24px);
@@ -1466,7 +1539,7 @@ main > * + * {
   }
 }
 @media (max-width:800px) {
-  .choices,.home-head,.customers,.values-row,.about-opening-grid,.ops-row,.compare,.process,.method,.method-proposed,.verify-grid,.handover {
+  .choices,.home-head,.customers,.values-row,.about-opening-grid,.ops-row,.compare,.process,.method,.method-proposed,.verify-grid,.handover,.policy-layout {
     grid-template-columns:1fr;
   }
   .collections {
@@ -1520,6 +1593,13 @@ main > * + * {
     flex-direction:column;
   }
 }
+@media (max-width:800px) {
+  .policy-toc {
+    position:static;
+    max-height:none;
+    overflow:visible;
+  }
+}
 @media (prefers-reduced-motion:reduce) {
   html {
     scroll-behavior:auto;
@@ -1529,5 +1609,50 @@ main > * + * {
   }
   .button,.nav-cta,.collection,.choice,.collection img,.collection-cue,.collection-cue span,.unit-link,.unit-link > [aria-hidden="true"] {
     transition:none;
+  }
+}
+@media print {
+  .coursework-banner,.skip-link,.site-header,.site-footer,.policy-toc,.next-step,.icon-tile {
+    display:none !important;
+  }
+  html,body {
+    background:#fff;
+    color:#000;
+  }
+  main > * + * {
+    margin-top:0;
+  }
+  .section,.page-hero,.section--panel {
+    margin:0;
+    padding:0 0 12pt;
+    background:none;
+    border:0;
+    border-radius:0;
+    color:#000;
+  }
+  .page-hero h1 {
+    font-size:24pt;
+    color:#000;
+  }
+  .eyebrow,.page-hero .eyebrow,.page-hero-lead,.policy-item > p,.policy-item .policy-lead,.policy-item .policy-actual,.policy-item .policy-note {
+    color:#000;
+  }
+  .policy-layout {
+    display:block;
+  }
+  .policy-item {
+    padding:0 0 14pt;
+    background:none;
+    border:0;
+    break-inside:avoid;
+  }
+  .policy-item .policy-actual,.policy-item .policy-note {
+    padding:0;
+    background:none;
+  }
+  .status-badge {
+    background:none;
+    border:1px solid #000;
+    color:#000;
   }
 }

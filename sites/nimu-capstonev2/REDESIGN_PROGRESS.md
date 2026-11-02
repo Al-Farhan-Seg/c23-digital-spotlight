@@ -39,7 +39,7 @@ The brief asked for a nine-phase roadmap without naming phases. This is a propos
 | 4 | Products composition (indexed sample catalogue, eight entries) | **Complete, approved by owner** (see Phase 4 log) |
 | 5 | About composition (documentary portrait) | **Complete, approved by owner** (see Phase 5 log) |
 | 6 | Pay & Order composition (order sheet, instruction-led) | **Complete, approved by owner** (see Phase 6 log) |
-| 7 | Policies composition (long-form reading) | Not started |
+| 7 | Policies composition (indexed document, print-ready) | **Complete, approved by owner** (see Phase 7 log) |
 | 8 | Cross-page pass: responsive (five widths), accessibility, CSS motion, image/performance, reduced motion | Not started |
 | 9 | Final audit against `CLAUDE.md` quality gate, preservation checklist, build + Worker preview, `COURSEWORK_GUIDE.md` update, handoff | Not started |
 
@@ -427,45 +427,44 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 3. Confirm the Delivery policy text can be left as written even though the Pay page now describes handover in more detail (the policy commits to nothing new).
 4. Confirm commit timing (Phase 6 is uncommitted).
 
+
+## Phase 7 log — Policies
+
+Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the original is untouched). The rounded system was applied in place of the brief's square geometry.
+
+### Files changed
+- `policies.html` (`<main>` only), `src/style.css` (policy layout, replaced old policy rules, new `@media print`), `DESIGN_CONTRACT.md` (section 27), this file, and `redesign-reference/policies-final-*.png`. Not touched: other pages, the shared shell, `main.js`, `sites/nimu-capstone`, other sites, infrastructure, dependencies.
+
+### Content preservation
+- All 21 sentences of the five original policies are present verbatim (script comparison against the previous commit). The only differences are the added leads, labels, notes and the privacy factual statement described in contract section 27.
+- Anchor inventory unchanged: `delivery`, `returns`, `privacy`, `terms`, `communication` (plus `main` and `next-step`); each of the five contents links resolves.
+- During review I restored the masthead's original qualification wording ("no legal compliance review"), after first shortening it to "no legal review".
+- Hypothetical practices are labelled Hypothetical and introduced with one verifiable statement (this demo's pages have no forms). No hosting, logging, analytics, third-party, retention or compliance facts were added.
+
+### Verification evidence
+Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`.
+- **Contents:** all five rail links land with their section 16px from the top (scroll margin). With JavaScript disabled (the `js` class was confirmed absent) the `#terms` link navigates and lands. The rail is sticky at 1280x720: 331px tall, top 20px, bottom 351px inside a 720px viewport, and there is no sticky header to obscure.
+- **Incoming links:** the banner link from Home reaches `policies.html#privacy`; Pay's returns link reaches `policies.html#returns`; the closing panel link reaches `pay.html#order-steps`; the footer back-to-top returns to scrollY 0.
+- **Structure:** one `<h1>`, then h2 only; no duplicate ids; all five policies open by default; no details, tabs or carousels.
+- **Widths:** rail 280px, column 760px, gutter 51px, paragraphs about 690px at 1280px. No overflow at 1280, 768 and 390px, nor at 200% text at 390px. On tablet and phone the rail is static and above the text. No overflow, broken images, failed requests or console errors on all five pages after the shared CSS change.
+- **Print:** under print emulation the banner, header, footer, rail and closing panel are hidden; the heading and all five policies (3,182 characters) remain with no background. A PDF was generated and the print render read (the eyebrow colour fix was applied after that render). No printed-page review in a real browser dialog.
+- **Rules:** `grep` finds no `border-top`, `border-bottom` or `<hr>`. `npm run build` passes for all 7 sites.
+- **Read visually:** full desktop render, phone policies column, print render. Not read image by image: tablet render, enlarged-text crop, PDF pages.
+- **Not performed:** legal review, screen-reader testing, Safari, Firefox, Worker routing.
+
+### Limitations and unresolved issues
+- Words 486 to 557 (policy text is exempt from the copy budget; additions are navigation, leads, labels and notes).
+- Open owner questions (contract section 27): whether the privacy notice should mention third-party font requests and hosting; whether the communication policy should carry its own qualifier.
+- Active-section highlighting was not added (optional).
+- Uncommitted.
+
+### Prerequisites for cross-site integration
+1. Owner review of the Policies screenshots and print behaviour.
+2. Decide the two open privacy questions.
+3. Decide when to promote `nimu-capstonev2` into `nimu-capstone` (steps are at the top of this file and in the contract); the `nimu-timber` overhaul already uses the same system.
+4. Run Phase 8 (cross-page responsive, accessibility, motion and performance pass) and Phase 9 (final audit) before promotion; the v2 pages still use some wide card crops against the no-oblong-images rule.
+5. Confirm commit timing (Phase 7 is uncommitted).
+
 ## Current status
 
-Phases 1 to 5 are approved and committed (Phase 5 as `15f5601`). Phase 6 is built and approved. A concise-copy and icon pass across Home, Products, About and Pay is approved. Phase 6 and that pass are uncommitted. **Next: Phase 7 (Policies).** All remaining phases are built in `sites/nimu-capstonev2` under the standing rules (rounded tokens, no horizontal rules, content never hanging, sectional feel).
-
-## Pay revision log — concise copy, icons, premium tiles
-
-Owner feedback after reviewing Phase 6: the page was too verbose, needed about 40% fewer words, icons and appropriate logos in each place, and did not feel premium.
-
-- **Words (main content, counted by script):** 981 before, 540 after, about 45% fewer. Section lead paragraphs were removed or cut to one line; step, method, verification and handover copy was tightened; every required disclosure (banner, "Payments and orders are not active", "No form here collects data", fictitious numbers, card "Proposed, not active", screenshot warning, returns link) and every sample identifier is retained.
-- **Icons:** a 20-symbol inline SVG set with 23 forest icon tiles on the page (contract section 24); WhatsApp logo reused from the existing asset. No new files or dependencies.
-- **Logos:** MTN, Airtel and bank logos were deliberately not drawn or added (see contract section 24); owner to supply official files if wanted.
-- **Premium treatment:** consistent tiles, numbered step badges, tidy method rows with route and Illustrative labels, a calmer masthead with three icon links; no new colours, shadows or rules.
-- **Fix during review:** icons in the reference list were dark on dark because a text-colour rule leaked into the tiles; scoped the selector.
-- **Verification:** 26 icons resolve to defined symbols (0 missing, 0 collapsed); 0 forms, inputs, buttons or scripts; all disclosures and sample identifiers asserted present; no duplicate ids; links unchanged; no overflow at 1280, 768 and 390px, including 200% text at 390px; `grep` finds no `border-top`, `border-bottom` or `<hr>`; `npm run build` passes. Read visually: full desktop render, steps and methods sections (desktop), steps section (phone). Not read image by image: tablet and enlarged-text crops, verification and handover sections on phone.
-- **Not yet done:** the same conciseness and icon pass for Home, Products, About and Policies (copy budget would apply there too).
-- Uncommitted.
-
-## Concise copy and icons pass — Home, Products, About
-
-Owner asked to apply the Pay treatment to all pages ("Apply to all"). Policies is not built yet, so it will follow when it is composed in Phase 7.
-
-- **Word counts (main content):** Home 308 to 180, Products 628 to 373, About 382 to 220; each at least 40% fewer. First draft was 34%, 25% and 36%; copy was tightened until each page met 40%.
-- **Icons:** the same 20-symbol inline SVG set and forest tiles as Pay; Home 8 icon references, Products 32, About 8. All resolve (0 missing, 0 collapsed). WhatsApp remains the only brand logo; MTN, Airtel and bank logos are still not used.
-- **Products integrity (script compare against the previous commit's page):** same 8 codes, same 8 price strings, same 8 images; 8 cards each with a status line, an order link to `pay.html#order-steps`, and a SAMPLE badge on every sample size and price (15 entry badges); the length-mismatch note retained.
-- **About claims:** "15 years" and "Seroma Ltd." occur only inside the "Not proof" note with the badge.
-- **Links and anchors:** unchanged and present (Home: top, main, featured, reasons, audience, order; Products: structural, furniture, bulk, next-step; About: audience, operations, values, next-step). Home's WhatsApp link, collection links and buyer links resolve.
-- **Interaction:** the order link's fill and arrow shift apply to the link only (arrow moves 4px on hover); card hover leaves the card unchanged (transform none).
-- **Layouts:** no overflow, broken images, failed requests or console errors at 1280, 768 and 390px on all five pages; 200% text at 390px on Products and About shows no overflow; `grep` finds no `border-top`, `border-bottom` or `<hr>` in the stylesheet.
-- **Read visually:** full desktop renders of Home, Products and About; phone Products structural section. Not read image by image: tablet and phone renders of Home and About, enlarged-text crops.
-- **Limitations:** owner review pending; Safari, Firefox and Worker routing unchecked; the lazy-loaded third product image appeared blank in one element crop (an element-screenshot artifact; full-page runs show 0 broken images).
-- Uncommitted.
-
-## nimu-timber overhaul log
-
-Owner asked for a one-go overhaul of the live one-page site in the v2 design direction, "don't reinvent stuff", and then to avoid oblong image placements. Done in source only; **not deployed**.
-
-- **Files changed:** `sites/nimu-timber/index.html`, `src/style.css`, `src/main.js`. Assets unchanged. Nothing else in `sites/` touched by this task.
-- **Preserved by script comparison against the previous commit:** all 7 external links (WhatsApp variants and TikTok), the 8 images with their alt text, every section anchor, and every sentence of copy. Only the decorative vertical hero caption was dropped. Main-content words 367 to 394 because of added labels (eyebrows, "See our timber", "(opens in a new tab)").
-- **Verification (Playwright against `npm run dev -- nimu-timber --port 5175`):** no overflow, broken images, failed requests or console errors at 1280, 768 and 390px; one `<h1>`, no duplicate ids; nav links exactly centred (offset 0); nav and hero links land on their sections; the FAQ accordion opens one item at a time with mouse and keyboard and closes the others; mobile menu hides links when closed, opens, closes on Escape and returns focus; reduced motion disables the hero animation and FAQ transition; no computed top-only or bottom-only borders (no rules); `npm run build` passes for all 7 sites. Read visually: full desktop render, phone services and material crops, tablet material crop. Not read image by image: tablet and phone full pages, phone hero and contact crops.
-- **Image fix during review:** the HTML `height` attributes were overriding the aspect ratios (slivers); fixed with `height:auto`, and the phone delivery photo was capped to a 4:3 thumbnail.
-- **Limitations:** this is the live business site, so owner review before any deploy is essential; Safari, Firefox and Worker routing unchecked; the "15 years" and "Seroma Ltd." credentials are the business's own existing claims and were kept as they were.
-- Uncommitted.
+Phases 1 to 7 are built. Phases 1 to 6 and the nimu-timber overhaul are approved and committed; Phase 7 is approved (uncommitted). **Next: Phase 8 (cross-page pass).** All remaining work stays in `sites/nimu-capstonev2` under the standing rules.
