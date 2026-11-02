@@ -40,7 +40,7 @@ The brief asked for a nine-phase roadmap without naming phases. This is a propos
 | 5 | About composition (documentary portrait) | **Complete, approved by owner** (see Phase 5 log) |
 | 6 | Pay & Order composition (order sheet, instruction-led) | **Complete, approved by owner** (see Phase 6 log) |
 | 7 | Policies composition (indexed document, print-ready) | **Complete, approved by owner** (see Phase 7 log) |
-| 8 | Cross-page pass: responsive (five widths), accessibility, CSS motion, image/performance, reduced motion | Not started |
+| 8 | Cross-page pass: responsive (seven widths), accessibility, CSS motion, image/performance, reduced motion | **Complete, approved by owner** (see Phase 8 log) |
 | 9 | Final audit against `CLAUDE.md` quality gate, preservation checklist, build + Worker preview, `COURSEWORK_GUIDE.md` update, handoff | Not started |
 
 ## Phase 1 log
@@ -465,6 +465,49 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 4. Run Phase 8 (cross-page responsive, accessibility, motion and performance pass) and Phase 9 (final audit) before promotion; the v2 pages still use some wide card crops against the no-oblong-images rule.
 5. Confirm commit timing (Phase 7 is uncommitted).
 
+
+## Phase 8 log — Responsive and interaction pass
+
+Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the original is untouched). No page narrative, price, claim, route or infrastructure changed.
+
+### Defect list (measured before editing)
+A script audited all five pages at 320, 390, 768, 800, 1024, 1440 and 1920px, plus 200% text at 320, 390 and 768px (overflow, header gaps, touch-target size, image aspect ratios, small text, sticky elements).
+- **No overflow** on any page at any width, including 200% text; **no header collisions** (centred links keep positive gaps from 961px up; the toggle shows at 960px and below).
+- **Oblong images (real defect):** Home supporting collection photos 1.9 to 2.3:1 and the lead photo 1.84:1 at tablet; Products card photos 1.8:1 on phones and up to 3.8:1 (664x180px) in single-column tablet cards, 2.65:1 at wide widths; About opening 2.56:1 and operations photos up to 3.5:1 at 768 and 800px.
+- **Small targets (real defect):** standalone text links about 26px tall on Home, About and Pay.
+- **Hover not gated:** all 19 hover effects applied on touch devices as well, and some had no keyboard equivalent.
+- **Reduced motion:** the rule listed selectors individually (incomplete by construction).
+- **Observed, not changed:** 11.8px labels (frozen type value); sticky policy rail (by design, fits the viewport); one Pay anchor at -1px.
+
+### Fixes (files: `src/style.css` only, plus DESIGN_CONTRACT.md section 28, this file, two reference screenshots)
+Listed in contract section 28: 4:3 photo ratios, horizontal product cards at 600 to 959px, About rows staying two-column to 560px, 44px text links, all hover effects moved into one fine-pointer media block with focus-visible equivalents, and a universal reduced-motion rule.
+
+### Verification (Playwright, headless Chromium, against `npm run dev -- nimu-capstonev2 --port 5174`)
+- **Re-audit, all five pages, same widths:** no overflow, no header gaps under 8px, no small targets, no oblong images; only the recorded 11.8px label size and the intentional sticky rail remain.
+- **Menu (390px, all five pages):** closed menu has 0 visible links; opens to 6 items; Escape closes it and returns focus to the toggle; resizing to 1200px closes an open menu; returning to 390px keeps it closed; 0 console errors.
+- **Keyboard (Products):** tab order is skip link, banner link, brand, nav links (current page excluded), CTA, masthead chips, then each "How to order" link; every stop shows a visible focus ring (forest on light surfaces, `#edc294` on dark).
+- **Hover gating:** on a desktop-pointer context the collection card's photo filter, border and arrow shift change on hover (arrow translates 4px); on a touch context the fine-pointer query is false and none of them change. Keyboard focus on an order link gives the same fill and 4px arrow shift in a touch context.
+- **Reduced motion:** scroll behaviour auto, hero animation none, hero fully visible, 0 elements with a non-zero transition duration.
+- **JavaScript disabled (all five pages):** 0 hidden text elements, all 5 nav links visible, toggle hidden.
+- **Anchors (1024x700):** the Pay, Products and Policies anchors land at the top; the Policies rail does not overlap its targets.
+- **Image loading and console:** 0 broken images, failed requests or console errors on all five pages at 1280, 768 and 390px (same checker as earlier phases); `grep` finds no `border-top`, `border-bottom` or `<hr>`; `npm run build` passes for all 7 sites.
+- **Visual comparison:** read the Home collections at 1440px and the Products structural section at 768px against earlier references (cards and photo ratios changed as intended; typography, colours and content unchanged). Not re-read image by image: the other pages' tablet and phone renders (their layouts did not change).
+
+### Not run or unavailable
+Safari, Firefox, real touch devices, screen-reader testing, Windows high-contrast mode, Lighthouse-style performance measurement, Worker routing.
+
+### Limitations
+- Labels at 11.8px remain (frozen value).
+- Product cards are taller on desktop now that photos are 4:3.
+- Uncommitted.
+
+### Prerequisites for Phase 9 (final audit)
+1. Owner review of the responsive and motion results, especially the horizontal product cards at tablet width and the taller 4:3 photos.
+2. Decide whether the 0.74rem labels should rise to 0.75rem (12px).
+3. The two open owner questions from earlier phases (privacy-notice third-party mention; cash-on-delivery conditions and in-person payment) and the unconfirmed claims (15 years, Seroma Ltd., prices, hours, length 7 ft versus 82 to 83 in).
+4. Plan for real-browser, Worker and performance checks (the DNS record for `nimu-capstonev2` and a deploy are needed for the Worker check).
+5. Commit timing (Phase 8 is uncommitted).
+
 ## Current status
 
-Phases 1 to 7 are built. Phases 1 to 6 and the nimu-timber overhaul are approved and committed; Phase 7 is approved (uncommitted). **Next: Phase 8 (cross-page pass).** All remaining work stays in `sites/nimu-capstonev2` under the standing rules.
+Phases 1 to 8 are built. Phases 1 to 7 are approved and committed; Phase 8 is approved. **Next: Phase 9 (final audit).**

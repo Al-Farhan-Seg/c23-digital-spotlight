@@ -443,3 +443,18 @@ The section 24 rules (copy budget, inline icon set, forest icon tiles, WhatsApp 
 **Classes added:** \`.policy-layout\`, \`.policy-toc\`, \`.policy-doc\`, \`.policy-item\`, \`.policy-head\`, \`.policy-badge\`, \`.policy-lead\`, \`.policy-actual\`, \`.policy-note\`. The old plain \`.policy-item\` rules were replaced. The Phase 7 brief mentioned "square geometry" and "no motion"; the rounded system (section 18) was applied and no motion was added. The standing 40% copy budget was not applied to the policy text itself, which is exempt (obligations stay verbatim); total page words went from 486 to 557 because of the contents list, leads, labels and notes.
 
 **New open owner questions.** (a) The site loads fonts from Google Fonts and is served by Cloudflare Workers, so visitor requests do reach third parties; should the privacy notice say so? It was left unstated because the brief forbids inventing hosting facts. (b) Should the communication policy carry a specific qualifier like the others?
+
+## 28. Responsive and interaction conventions (Phase 8)
+
+**Breakpoints in use (layout decisions, not visual tokens).** 960px (navigation collapse and policy/product three-column switch), 800px (most two-column layouts stack), 700px (two-up product and bulk grids), 600px (horizontal product cards, see below), 560px (About operations rows stack), 520px (phone adjustments). These dimensions are not tokens; the frozen tokens (colours, fonts, type sizes, radii, spacing values) were not changed in Phase 8.
+
+**Layout-only changes made in Phase 8.**
+- Product photographs use `aspect-ratio: 4 / 3` instead of fixed heights (previously 180 to 220px, which became 3.7:1 strips at tablet width). At 600 to 959px single-column product cards become horizontal cards (photo about 42% wide beside the text, DOM order unchanged).
+- Home collection photographs (supporting cards, and the lead card once stacked at 800px and below) use 4:3.
+- About: the opening photo is 4:3 once stacked; the operations rows stay two-column down to 560px (previously stacked at 800px, leaving 3.3:1 strips) and use 4:3 photos below that.
+- Standalone `.text-link` is a 44px-tall target (was about 26px).
+- Image rule restated: no placed image (outside the full-bleed hero) should render wider than about 1.8:1 or narrower than about 0.6:1.
+
+**Interaction vocabulary.** Feedback exists only on real actions: link underline thickness, a 4px arrow shift, a fill or colour swap on buttons and chips, and contained image emphasis (filter lightening inside the card). Durations are the existing 0.2s and 0.3s with specific-property transitions. Visual hover effects live in one `@media (hover:hover) and (pointer:fine)` block, so touch devices never get stuck hover states; every one of them has a `:focus-visible` equivalent outside that block so keyboard users get the same feedback. Hover never carries information. Essential content is visible without JavaScript (the hero entrance animation ends fully visible; navigation shows as a wrapping list). Under `prefers-reduced-motion: reduce` all animation and transitions are off and smooth scrolling is off. Not used: scroll-driven effects, loaders, parallax, cursor effects or repeated reveals.
+
+**Known and left unchanged.** Labels (eyebrows, badges, captions, codes) are 0.74rem (11.8px), marginally under 12px; this is a frozen type value and was recorded, not changed. A local anchor target can land at -1px because of sub-pixel margin rounding on Pay; harmless.
