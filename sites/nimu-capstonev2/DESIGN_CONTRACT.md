@@ -51,7 +51,7 @@ Built as five flat root-level HTML entries (picked up automatically by `scripts/
 |---|---|
 | `/` (`index.html`) | `#top` (now `<body id="top">` on every page; the target of every same-page "Back to top" link), `#main`, `#reasons`, `#featured`, `#audience`, `#order` |
 | `/products.html` | `#structural`, `#furniture`, `#bulk` (linked from Home featured cards) |
-| `/about.html` | `#audience` |
+| `/about.html` | `#audience`, `#operations`, `#values`, `#next-step` |
 | `/pay.html` | `#order-steps`, `#payment-methods` |
 | `/policies.html` | `#delivery`, `#returns`, `#privacy` (linked from the banner on every page), `#terms`, `#communication` |
 
@@ -371,3 +371,18 @@ Unused primitives updated to the system: `.spec-list` rows are tinted rounded ro
 **Open factual question (new).** The business-stated length is shown as "7 ft (approx. 82–83 in)". 7 ft is 84 in, so the two figures differ by 1 to 2 in. Whether 7 ft is a nominal length and 82–83 in the actual cut length, or the reverse, is unconfirmed. Do not "fix" the figures; ask the owner.
 
 **Classes added:** `.catalogue-nav`, `.catalogue-head`, `.product-grid` (`--two`, `--three`), `.product-card` (`--feature`), `.product-figure`, `.spec-note`, `.unit-link`, `.next-step`. `.spec-list` is now used. Removed: `.product-meta`, `.catalogue-note`, `.product-catalogue--alt`. The Phase 4 brief mentioned "square geometry"; the standing rounded system (section 18) was applied instead.
+
+## 22. About page (Phase 5)
+
+**Narrative.** "From the Bwaise yard." A documentary portrait of the supplier built only from copy and claims already on the site or in `COURSEWORK_GUIDE.md`. No timeline, team, customer logos, partnerships, testimonials, awards or statistics were added.
+
+**Sections.**
+1. Split opening on the forest page-hero surface: copy in 5 columns, landscape yard photograph in 7 (`timber-yard-1080.webp`, 1080px native, shown about 690px wide). DOM order is copy then photo, so stacking on narrow screens follows reading order with no CSS reordering.
+2. Operations spread (`#operations`, sand surface): three photograph-and-text rows (the timber, storage and cutting, bulk and delivery) using `logs-800`, `warehouse-timber-480` and `delivery-truck-512`, each with a visible caption. Framed as "as the business describes its own operations; none of this is independently certified".
+3. Customers (`#audience`, outlined panel): two compact columns (B2C and B2B) with plain links to the ordering steps and payment methods; no card-per-column.
+4. Values (`#values`, moss surface): three typographic statements, no boxes, labelled as the business's own words and unverified.
+5. Closing next-step panel: primary "Browse timber" button to `products.html`, secondary "How ordering works" link to `pay.html`.
+
+**Unconfirmed claims.** "15 years of experience" and "Seroma Ltd." no longer have a headline or credential treatment. They appear once, inside the values section's small note, worded as "Not presented as proof", with a "to be confirmed" badge, and the verification task stays in `COURSEWORK_GUIDE.md`. Phrases such as "business says" and "as the business describes" qualify the drying, durability and pricing statements.
+
+**Added to the system.** `.about-opening` (with `.about-opening-grid`, `.about-figure`, `.about-opening-note`), `.ops` / `.ops-row` / `.ops-figure` / `.ops-copy`, `.customers` / `.customer`, `.about-values` / `.values-row` / `.value` / `.values-note`, `.next-step-actions`. `.about-values` is a moss section surface (`--moss` with `--paper` text, 6.1:1) using the same inset and rounded rules as other surfaces. Removed as unused: `.section-intro`, `.audience-grid`, `.audience-card`, `.credentials`, `.about-grid`, `.about-body`, `.values-list`, `.about-caveat`. `.audience-tag` remains (Home and About use it). The Phase 5 brief mentioned "square geometry"; the standing rounded system (section 18) was applied.

@@ -21,8 +21,10 @@ The real site at `sites/nimu-timber/` was **not changed** by this work.
    three collections: Structural & Roofing Timber, Furniture & Workshop
    Timber, and Bulk & Contractor Supply. Each entry has a product code,
    timber type, description, size/quantity, price and an image.
-3. **`about.html` — About.** Who the business is, what it supplies, and how
-   individual (B2C) and business (B2B) customers are served differently.
+3. **`about.html` — About.** "From the Bwaise yard": who the business is and
+   what it supplies, how the yard stores, cuts and delivers timber (in the
+   business's own words), how individual (B2C) and business (B2B) customers are
+   served differently, and the values the business states for itself.
 4. **`pay.html` — How to Pay & Order.** A step-by-step sample ordering
    workflow, MTN/Airtel Mobile Money, bank transfer, cash on delivery, a
    proposed (inactive) card option, payment verification guidance, a
@@ -92,10 +94,11 @@ not as verified facts for a graded submission):**
   days, that it can be cut to size, that bulk supply and delivery are
   offered, and that the standard confirmed Musambya length is about 7 ft
   (82–83 in).
-- The "15 years of experience" and "Seroma Ltd." claims on the About page —
-  these come directly from the live site's own copy and are marked with a
-  "to be confirmed" badge here, because no independent evidence for them was
-  provided.
+- The "15 years of experience" and "Seroma Ltd." claims — these come directly
+  from the live site's own copy. On the About page they appear only in one small
+  note under "What it says it values", marked "to be confirmed" and explicitly
+  "not presented as proof", because no independent evidence for them was
+  provided. They are not shown as credentials or social proof.
 
 **Clearly marked as SAMPLE / illustrative, and must not be presented as
 real stock, prices or active payment details:**

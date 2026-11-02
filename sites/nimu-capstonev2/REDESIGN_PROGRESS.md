@@ -37,7 +37,7 @@ The brief asked for a nine-phase roadmap without naming phases. This is a propos
 | 2 | Shared visual foundation: in-flow header, navigation, footer, focus/hover states, shared primitives, dead CSS removal | **Complete** (see Phase 2 log) |
 | 3 | Home composition (product-led introduction) | **Complete, approved by owner** (see Phase 3 log) |
 | 4 | Products composition (indexed sample catalogue, eight entries) | **Complete, approved by owner** (see Phase 4 log) |
-| 5 | About composition (editorial) | Not started |
+| 5 | About composition (documentary portrait) | **Complete, approved by owner** (see Phase 5 log) |
 | 6 | Pay & Order composition (instructional sequence, disclosures) | Not started |
 | 7 | Policies composition (long-form reading) | Not started |
 | 8 | Cross-page pass: responsive (five widths), accessibility, CSS motion, image/performance, reduced motion | Not started |
@@ -337,6 +337,53 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 - **Manual steps still needed:** create the `nimu-capstonev2` DNS record in Cloudflare (proxied), then `npm run deploy`. Nothing was deployed or pushed as part of this move.
 - **Remote branch:** the earlier `redesign/nimu-capstone-ledger` remote branch was deleted at the owner's request; a local copy of that branch remains as a backup.
 
+
+## Phase 5 log — About
+
+Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; v2 is where all remaining phases are built, and the original is untouched).
+
+### Files changed
+- `about.html`: `<main>` replaced (head, header, footer, banner untouched).
+- `src/style.css`: About components added; dead About and inherited rules removed (listed in contract section 22).
+- `COURSEWORK_GUIDE.md`, `DESIGN_CONTRACT.md` (section 22 and the About anchor row), this file.
+- `redesign-reference/about-about-{desktop-1280,tablet-768,phone-390}.png` (old `round-about-*` captures remain as before-state references).
+- Not touched: other pages, shared shell, `main.js`, `sites/nimu-capstone`, other sites, `worker/`, dependencies, payment data.
+
+### Narrative and images
+Opening photo `timber-yard-1080.webp` (the largest, 1080px native, at roughly 690px); operations images `logs-800`, `warehouse-timber-480`, `delivery-truck-512` at 4/12 width (at or below native size). The opening photograph also serves as Home's hero image, cropped differently (colour-filtered here, grayscale there); no other yard photo is large enough for a 7-column slot.
+
+### Decisions
+1. Removed headline treatment of "15 years" and "Seroma Ltd." and kept them in one small "not presented as proof" note with a "to be confirmed" badge; verification task kept in the guide.
+2. Replaced equal cards with typography: photograph-and-text rows, two plain customer columns, three typographic values.
+3. Business statements are qualified in place ("the business says", "as the business describes", "not independently certified").
+4. Customer copy is the existing wording, shortened by removing the Home-duplicated segmentation intro; it links to the ordering guide instead of restating it.
+5. Moss surface for the values section so two dark forest/bark surfaces do not meet.
+
+### Verification evidence
+Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`.
+- No horizontal overflow, broken images, failed requests or console errors at 1280, 768 and 390px.
+- One `<h1>` ("From the Bwaise yard."), no duplicate ids, descriptive alt text on all four photographs; anchors `audience`, `operations`, `values`, `next-step`, `main`, `top` exist.
+- DOM order of the opening is copy then photograph; tab order follows the visual order (customer links, then "Browse timber", then "How ordering works", then the footer).
+- All four in-page links work (`pay.html#order-steps`, `pay.html#payment-methods`, `products.html`, `pay.html`).
+- Claim check by text search: "15 years" and "Seroma" occur once in `about.html`, inside `.values-note`, with the badge; the page has no `<strong>` proof treatment and no testimonial, award, timeline, team or statistic wording.
+- `grep` finds no `border-top`, `border-bottom` or `<hr>` in the stylesheet or `about.html`.
+- Read visually: full-page desktop render, phone opening, tablet operations section. Not read image by image: phone customers and values sections, tablet customers and values sections.
+- `npm run build` passed for all 7 sites.
+
+### Limitations and unresolved issues
+- Owner has not yet reviewed About; Safari, Firefox and Worker routing unchecked.
+- The customers panel is intentionally light (plain columns inside an outlined panel); the owner may want more weight.
+- Opening photograph repeats Home's hero image.
+- "15 years" and "Seroma Ltd." verification is still outstanding with the owner.
+- Uncommitted.
+
+### Prerequisites for Phase 6 (Pay & Order)
+1. Owner review of the About screenshots and any change requests.
+2. Pay composition direction: an instruction-led, step-by-step layout; confirm that the five steps, five payment methods, verification warning and refund summary stay, and keep every disclosure (banner, "payments not active", fictitious numbers, card "proposed, not active").
+3. Confirm the fictitious account and number strings stay exactly as they are.
+4. Decide whether the ordering steps keep `#order-steps` and `#payment-methods` anchors (they are linked from Home, Products and About).
+5. Confirm commit timing (Phase 5 is uncommitted).
+
 ## Current status
 
-Phases 1 to 4 (baseline, shared foundation, Home, Products) are complete and approved. **Next: Phase 5 (About).** All remaining phases are built in `sites/nimu-capstonev2` under the standing rules (rounded tokens, no horizontal rules, content never hanging, sectional feel).
+Phases 1 to 5 are built and approved; Phases 1 to 4 are committed, Phase 5 is uncommitted. **Next: Phase 6 (Pay & Order).** All remaining phases are built in `sites/nimu-capstonev2` under the standing rules (rounded tokens, no horizontal rules, content never hanging, sectional feel).
