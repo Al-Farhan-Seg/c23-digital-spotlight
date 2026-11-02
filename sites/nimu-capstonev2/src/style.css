@@ -706,7 +706,7 @@ main > * + * {
   color:var(--paper);
 }
 .about-values .eyebrow {
-  color:#e1ae7b;
+  color:var(--paper);
 }
 .about-values .home-head > p {
   color:#d8e1d7;

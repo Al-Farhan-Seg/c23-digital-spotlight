@@ -41,7 +41,7 @@ The brief asked for a nine-phase roadmap without naming phases. This is a propos
 | 6 | Pay & Order composition (order sheet, instruction-led) | **Complete, approved by owner** (see Phase 6 log) |
 | 7 | Policies composition (indexed document, print-ready) | **Complete, approved by owner** (see Phase 7 log) |
 | 8 | Cross-page pass: responsive (seven widths), accessibility, CSS motion, image/performance, reduced motion | **Complete, approved by owner** (see Phase 8 log) |
-| 9 | Final audit against `CLAUDE.md` quality gate, preservation checklist, build + Worker preview, `COURSEWORK_GUIDE.md` update, handoff | Not started |
+| 9 | Final audit against CLAUDE.md quality gate, preservation checklist, build + Worker preview, COURSEWORK_GUIDE.md update, handoff | **Complete locally, awaiting owner review** (see Phase 9 section) |
 
 ## Phase 1 log
 
@@ -520,6 +520,132 @@ Owner asked for 6-digit merchant codes and SVG logos for Airtel and MTN Mobile M
 - **Not verified:** that these Commons files match MTN's and Airtel's current official artwork.
 - Uncommitted.
 
+
+## Phase 9 — Final audit and handoff (local release-readiness review)
+
+Reviewed on 2026-11-02 in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; that original folder is untouched and the redesign is deliberately held in v2 for side-by-side comparison). This phase does not authorise publication; nothing was committed, pushed, merged or deployed, and no DNS or Worker configuration was changed.
+
+### 1. Baseline and final changed-file inventory
+
+- **Baseline:** `main` at `c104170` ("Test commit to verify git integration"), the commit recorded when this redesign started. Branch under review: `feature/nimu-capstonev2`, HEAD `28ad87a`, plus the uncommitted Phase 9 fixes listed in section 3.
+- **Commits since baseline (7):** `098840d` v2 setup and Phases 1 to 4 content; `15f5601` About; `bd26b20` Pay and the concise copy and icon pass; `848b8dc` `nimu-timber` overhaul; `d6551f8` Policies; `faafe72` responsive and interaction pass; `28ad87a` merchant codes and payment logos.
+- **Committed diff against `main` (69 files):**
+  - `sites/nimu-capstonev2/`: 65 new files: the five pages (`index.html`, `products.html`, `about.html`, `pay.html`, `policies.html`), `src/style.css`, `src/main.js`, `COURSEWORK_GUIDE.md`, `DESIGN_CONTRACT.md`, `REDESIGN_PROGRESS.md`, 14 files in `src/assets/` (photos, logo, favicon, WhatsApp and TikTok icons), 2 original payment-logo files in `src/assets/logos/`, and 39 reference screenshots in `redesign-reference/` (not part of the build).
+  - `sites/nimu-timber/`: 3 modified files (`index.html`, `src/style.css`, `src/main.js`), changed at the owner's explicit request; assets unchanged.
+  - `worker/index.js`: 1 line added (`'nimu-capstonev2.farhansegujja.com': 'nimu-capstonev2'`).
+- **Uncommitted (Phase 9 changes):** `COURSEWORK_GUIDE.md` (rewritten to the final structure), `REDESIGN_PROGRESS.md` (this section), `src/style.css` (one colour correction), and the five page files (banner landmark wrapper).
+- **Unexpected changes:** none. Everything outside the three areas above is identical to `main`; `sites/nimu-capstone/` and every other site are byte-identical to `main` (checked with `git diff main..HEAD`).
+
+### 2. Verification matrix
+
+PASS means the check ran and passed; the evidence column says what was run. "Lab" results are local measurements, not field data.
+
+| Gate | Result | Evidence |
+|---|---|---|
+| Five pages load, one h1, titles, nav lists the five pages in order | PASS | Playwright on all pages |
+| Current-page semantics | PASS | one `aria-current` span in the header and one link in the footer per page |
+| Internal links and fragments | PASS | 115 links across the five pages all resolve to an existing page and id |
+| Eight catalogue codes and eight illustrative prices | PASS | compared by script to `main`'s `products.html`: identical |
+| SAMPLE labels and qualification line on every entry; order links | PASS | all eight entries (15 sample badges), each with a status line and a link to `pay.html#order-steps` |
+| Three category anchors; five policy anchors | PASS | `structural`, `furniture`, `bulk`; `delivery`, `returns`, `privacy`, `terms`, `communication` |
+| Timber length mismatch not resolved | PASS | NTW-101 states "7 ft" and "82-83 in" differ and the exact length is to be confirmed |
+| Inactive-payment banner on every page | PASS | text and `#privacy` link on all five; now inside a labelled landmark |
+| MTN, Airtel, bank transfer, cash on delivery, proposed card | PASS | four Illustrative rows (MTN and Airtel with logos, 6-digit fictitious codes), card "Proposed, not active" in a separate block |
+| Prepaid vs cash-on-delivery wording | PASS | prepaid verified before preparation or release; cash on delivery agreed first and paid at handover; no blanket "payment before delivery" claim; screenshot warning beside the prepaid rule |
+| Same-page top links | PASS | `body#top` and `href="#top"` on every page; scroll returns to 0 |
+| No public maintenance instructions | PASS | text search of all five pages |
+| No invented proof, live checkout, active payment or data collection | PASS | no testimonial/award/rating/customer-count wording; "15 years" and "Seroma Ltd." only in the "Not proof" note; 0 forms, inputs or main buttons; only Google Fonts hosts contacted |
+| Local assets and broken requests | PASS | every asset referenced by the five built pages exists in `dist`; 0 failed requests and 0 console errors |
+| Menu: open, close, Escape, resize (390px, all pages) | PASS | focus returns to the toggle; open menu closes on resize |
+| Keyboard order and visible focus | PASS (Products tested) | every tab stop shows a ring (forest on light, `#edc294` on dark) |
+| Heading, landmark and list structure | PASS after fix | one h1, no skipped levels; header, main, footer and two labelled navs (plus the Policies contents nav, labelled by `aria-labelledby`); the banner was outside every landmark and was wrapped (section 3) |
+| Text contrast | PASS after fix | 515 text elements computed across five pages at 4.5:1 (3:1 for large text); 1 failure fixed (section 3). **Not measured:** text over photographs (hero, collection and about photos use a gradient wash; assessed visually only) |
+| Enlarged text and reflow | PASS | 200% text at 320, 390 and 768px: no overflow, no clipping |
+| Responsive audit | PASS | 320, 390, 768, 800, 1024, 1440, 1920px (plus 200% text): no overflow, no header collisions, no oblong images, no small targets; only the recorded 11.8px label size and the intentional sticky Policies rail |
+| Reduced motion | PASS | scroll behaviour auto, hero animation none, 0 elements with a transition |
+| Content without JavaScript | PASS | all five pages: 0 hidden text elements, navigation shown as a list |
+| Policies print output | PASS (emulated) | banner, header, footer, contents rail and closing panel hidden; all five policies and all qualifiers present; white background; PDF generated. Not checked in a real print dialog |
+| `npm run build` | PASS | 7 sites built |
+| Worker preview (representative hosts) | PASS | `wrangler dev --local-upstream <host>`: the new capstone, the original capstone, `nimu-timber` and `wrist-mode` each serve their own pages and assets (200); unknown host 404; `/x.html` redirects 307 to `/x` and resolves with assets 200 (same behaviour as the original capstone) |
+| Lab performance (see 2a) | PASS, with one note | Playwright harness, not Lighthouse |
+| Lint, typecheck, tests | NOT RUN | none configured (`package.json` scripts: dev, build, preview, deploy) |
+| Lighthouse | NOT RUN | not installed; no tool was added |
+| Screen reader (NVDA, JAWS, VoiceOver, Narrator) | NOT RUN | none available or driven; no screen-reader claim is made |
+| Safari, Firefox, real iOS or Android devices | NOT RUN | only headless Chromium was used (plus the owner's own phone view over Wi-Fi earlier) |
+| Field Core Web Vitals | NOT AVAILABLE | no field data exists for an unpublished site |
+| Image-file size gate (150 KB) | NOTE | `logs-800.webp` is 202 KB; it is an existing baseline asset unchanged from `main` (see 2a) |
+
+#### 2a. Lab performance (gzip, median of 3, cache disabled)
+
+Mobile profile: 390x844, 4x CPU slowdown, 1.6 Mbps, 150 ms latency. Desktop: 1350x940, no throttling. Fonts come from Google and are excluded from byte counts (cross-origin). v1 is the original `nimu-capstone` from `main`.
+
+| Profile | Page | Site | FCP ms | LCP ms | CLS | TBT ms | Weight KB |
+|---|---|---|---|---|---|---|---|
+| mobile | Home | v1 | 1420 | 2328 | 0.048 | 0 | 270 |
+| mobile | Home | v2 | 1696 | 1720 | 0.001 | 0 | 417 |
+| mobile | Products | v1 | 1888 | 1888 | 0 | 245 | 415 |
+| mobile | Products | v2 | 1680 | 1680 | 0.030 | 0 | 359 |
+| mobile | Pay | v1 | 1932 | 1932 | 0 | 751 | 17 |
+| mobile | Pay | v2 | 1820 | 1820 | 0 | 291 | 21 |
+| desktop | Home | v1 / v2 | 780 / 740 | 780 / 740 | 0.036 / 0.001 | 0 / 0 | 311 / 457 |
+| desktop | Products | v1 / v2 | 824 / 844 | 824 / 844 | 0.077 / 0.019 | 5 / 0 | 693 / 695 |
+| desktop | Pay | v1 / v2 | 716 / 860 | 716 / 860 | 0.059 / 0.023 | 0 / 0 | 17 / 21 |
+
+Reading: v2 is equal or better on LCP, CLS and blocking time at every point except desktop Pay FCP (+144 ms, 860 vs 716). Home is heavier by about 147 KB (417 vs 270 on mobile) because the larger collection photographs (notably `logs-800.webp`, 202 KB) now load near the top. Actionable item: resize or re-compress `logs-800.webp` (for example to about 640px wide) and consider a lighter lead image on Home; this needs an image tool that is not in the repository, so it was not done. These are lab numbers from one machine; they are not Lighthouse scores and not 75th-percentile field data.
+
+### 3. Defects found and fixed in this phase
+
+1. **Contrast (About):** the "In the business's words" eyebrow on the moss surface was `#e1ae7b` at 3.49:1 (12px text). It now uses `--paper` (about 6:1). One rule in `src/style.css`; rechecked: 0 contrast failures across all five pages.
+2. **Landmarks (all pages):** the demonstration banner (a bare paragraph) sat outside every landmark. It is now wrapped in `<aside aria-label="Demonstration notice">`; the banner's appearance did not change; the skip link remains first and outside landmarks by convention.
+3. Housekeeping from earlier in the session, already committed: stray backslashes in the records were removed.
+
+### 4. Remaining owner confirmations (none can be answered from the repository)
+
+Timber and business facts: whether 7 ft is nominal and 82-83 in the actual length of Musambya (NTW-101); whether "15 years" and "Seroma Ltd." are true; real prices, widths, thicknesses and bundle sizes; opening hours.
+Payment and policy facts: cash-on-delivery conditions (any deposit or limit) and whether in-person payment is accepted; the correct merchant-payment menu wording for MTN and Airtel (the steps still say "Choose Send Money"); whether the privacy notice should mention third-party font requests and Cloudflare hosting; whether the communication policy needs its own qualifier; whether the MTN and Airtel logos should be replaced with official brand files; permission position on using the logos at all beyond the coursework.
+Contact: the WhatsApp number and TikTok handle are carried over from the live site and need owner approval for this copy.
+
+### 5. Token and layout exceptions, and why they were authorised
+
+- **Geometry (owner directive):** the original identity specified square geometry; the owner instructed a rounded card system for cards, sections and CTAs, with new radius tokens `--radius-xs/sm/md/lg` (6, 10, 16, 24 px) and `--section-inset`. Status badges stay pills and logos stay circular. No shadows were added.
+- **No horizontal rules (owner directive):** every divider line was replaced by cards, tinted blocks and spacing; confirmed by search of the stylesheet and HTML.
+- **Image ratios (owner directive):** photographs use 4:3, 4:5 or 1:1 (hero excepted); no oblong strips.
+- **Concise copy (owner directive):** Pay, Home, Products and About were cut 40 to 45 percent; the Policies text is exempt because its obligations stay verbatim (the page grew from 486 to 557 words because of navigation, leads and labels).
+- **Layout-only breakpoints:** 960 (navigation and three-column switches), 800, 700, 600 (horizontal product cards), 560 (About rows), 520, 359 (merchant-code wrap). Not visual tokens.
+- **New, owner-approved additions:** inline icon set and forest icon tiles; MTN and Airtel logos (Wikimedia Commons, recoloured to paper on forest); `--focus` alias (forest on light, `#edc294` on dark); the sticky Policies contents rail; print stylesheet.
+- **Unchanged and noted:** labels at 0.74rem (about 11.8px) remain, just under 12px; recommendation is to raise them to 0.75rem if the owner agrees.
+- **Missing reference:** `docs/design-ledger.md` (named in `CLAUDE.md`) does not exist; `DESIGN_CONTRACT.md` served as the comparison record.
+
+### 6. Rollback and checkpoint guidance (preserves all work)
+
+- The original `sites/nimu-capstone/` is untouched, so nothing needs rolling back to keep the original live version safe.
+- Everything is on the local branch `feature/nimu-capstonev2` (7 commits above `main`) plus the uncommitted Phase 9 changes. Before any risky step, take a checkpoint without changing anything: `git tag nimu-capstonev2-checkpoint` (local, harmless) after committing the Phase 9 work.
+- To abandon v2 safely without losing history: `git switch main` leaves the branch and all commits intact; to drop only the Worker mapping, remove the one `nimu-capstonev2` line in `worker/index.js`.
+- Undo a single phase with `git revert <commit>` (creates a new commit; nothing is destroyed). Do not use `git reset --hard` or `git clean`; they would discard the uncommitted Phase 9 files.
+- The `nimu-timber` overhaul is its own commit (`848b8dc`) and can be reverted independently of the capstone work. It has not been deployed; the live `nimu-timber` site still runs `main`'s version until a deploy.
+
+### 7. Unresolved issues and recommendations
+
+- **Performance:** Home weight (see 2a). Recommended revisit: Phase 3 (Home) for a lighter lead image, or an asset-resizing step outside this repo.
+- **Contrast over photographs** was not measured on pixels; recommend a manual look at the hero and collection captions on a real phone in sunlight.
+- **Real-browser and assistive-technology checks are outstanding** (Safari, Firefox, iOS, Android, a screen reader).
+- **Third-party requests:** fonts load from Google; a self-hosted font option would remove that dependency but was out of scope.
+- **Artistic assessment:** no significant artistic or architectural problem remains open. The Home opening photograph is reused on About, and the About page is intentionally light; both are judgement calls for the owner.
+
+### 8. Local release-readiness recommendation
+
+**Ready for the owner's final review and for a supervised preview deployment to `nimu-capstonev2` only. Not ready to promote into `nimu-capstone`** until the owner confirmations in section 4 are answered, a real-browser and a screen-reader pass are done, and the lab results are compared with a real deployed measurement. No fabricated claim, active payment or data collection exists in the build. This is a readiness assessment, not a guarantee of any award.
+
+### 9. What the owner must supervise next (in order)
+
+1. Review the uncommitted Phase 9 diff (`git diff`) and the rewritten `COURSEWORK_GUIDE.md`; say "commit" to save it locally (no AI trailer).
+2. Answer the owner confirmations in section 4 (or decide to leave them flagged).
+3. Optionally create a local tag as a checkpoint (section 6).
+4. In Cloudflare, add the proxied `nimu-capstonev2` DNS record (manual), then run `npm run deploy` from this branch (this also publishes the restyled `nimu-timber`, so review that first; to keep `nimu-timber` as it is live, revert `848b8dc` before deploying).
+5. Open `https://nimu-capstonev2.farhansegujja.com/` and the original `https://nimu-capstone.farhansegujja.com/` and check all five pages on a real phone, in Safari and in Firefox, and with a screen reader or at least keyboard-only.
+6. Run PageSpeed Insights or Lighthouse on the deployed URL for mobile and desktop, and compare with section 2a.
+7. When the client approves, follow the promotion plan at the top of this file and in `COURSEWORK_GUIDE.md`.
+
 ## Current status
 
-Phases 1 to 8 are built, approved and committed. The payment-logo and merchant-code change above is uncommitted. **Next: Phase 9 (final audit).**
+Phases 1 to 9 are complete locally. Phases 1 to 8 are approved and committed; Phase 9 changes are uncommitted and awaiting the owner's review. No publication has occurred.
