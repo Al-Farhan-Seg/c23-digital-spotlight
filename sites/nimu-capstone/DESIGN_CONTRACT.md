@@ -1,8 +1,8 @@
 # Nimu Capstone — Design Contract
 
-> **This folder is `sites/nimu-capstonev2`, the redesign shown beside the original for comparison.** The original, unmodified site stays in `sites/nimu-capstone` (`nimu-capstone.farhansegujja.com`); this redesign is served at `nimu-capstonev2.farhansegujja.com`. Every remaining redesign phase is built here, never in `sites/nimu-capstone`.
+> **This folder is `sites/nimu-capstone`, the redesign shown beside the original for comparison.** The original, unmodified site stays in `sites/nimu-capstone` (`nimu-capstone.farhansegujja.com`); this redesign is served at `nimu-capstone.farhansegujja.com`. Every remaining redesign phase is built here, never in `sites/nimu-capstone`.
 >
-> **Promotion plan (after the client approves):** (1) copy this folder's contents over `sites/nimu-capstone/` (keep the folder name `nimu-capstone`); (2) delete `sites/nimu-capstonev2/`; (3) delete the `nimu-capstonev2.farhansegujja.com` line from `HOSTNAME_TO_SLUG` in `worker/index.js`; (4) remove the `nimu-capstonev2` DNS record in Cloudflare; (5) build and deploy. In the contract and progress records, read "`sites/nimu-capstonev2`" as the live `sites/nimu-capstone` after promotion.
+> **Promotion plan (after the client approves):** (1) copy this folder's contents over `sites/nimu-capstone/` (keep the folder name `nimu-capstone`); (2) delete `sites/nimu-capstone/`; (3) delete the `nimu-capstone.farhansegujja.com` line from `HOSTNAME_TO_SLUG` in `worker/index.js`; (4) remove the `nimu-capstone` DNS record in Cloudflare; (5) build and deploy. In the contract and progress records, read "`sites/nimu-capstone`" as the live `sites/nimu-capstone` after promotion.
 
 > **Standing owner directive (section 18):** the site uses a rounded card system for cards, sections and CTAs, and horizontal rules are not allowed anywhere. This overrides every "square" statement below.
 
@@ -12,7 +12,7 @@ This is a working contract for the "Bwaise Timber Ledger" redesign. It records w
 
 ## 1. Purpose, audience, boundaries
 
-**Purpose.** A five-page educational demonstration of an e-commerce presence for Nimu Timber & Woodworks, built for the MUBS BUC3106 E-Commerce Capstone (due 4 November 2026). Served at `nimu-capstonev2.farhansegujja.com`.
+**Purpose.** A five-page educational demonstration of an e-commerce presence for Nimu Timber & Woodworks, built for the MUBS BUC3106 E-Commerce Capstone (due 4 November 2026). Served at `nimu-capstone.farhansegujja.com`.
 
 **Audience.** Primary: the BUC3106 assessors and classmates who read the site. Secondary: it must still make sense to a real visitor, a homeowner, carpenter or contractor in Kampala, on a phone.
 
@@ -210,7 +210,7 @@ Rules going forward: CSS only; motion for feedback or hierarchy only, not specta
 
 ## 12. Source and infrastructure boundaries
 
-**May change (later phases):** files inside `sites/nimu-capstonev2/` — the five HTML files, `src/style.css`, `src/main.js`, `src/assets/`, and `COURSEWORK_GUIDE.md` if documentation needs to track changes.
+**May change (later phases):** files inside `sites/nimu-capstone/` — the five HTML files, `src/style.css`, `src/main.js`, `src/assets/`, and `COURSEWORK_GUIDE.md` if documentation needs to track changes.
 
 **Must not change without explicit permission:**
 - Any other `sites/<slug>/`, especially `sites/nimu-timber/` and the other launched participant sites.

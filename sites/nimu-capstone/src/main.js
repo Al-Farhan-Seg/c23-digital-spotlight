@@ -1,43 +1,34 @@
-// Mobile navigation toggle, shared by every page in this coursework demo
 const menuToggle = document.querySelector('#menuToggle');
 const siteNav = document.querySelector('#siteNav');
+const collapsedNav = window.matchMedia('(max-width: 960px)');
 
 if (menuToggle && siteNav) {
+  const setMenu = (isOpen) => {
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    siteNav.classList.toggle('is-open', isOpen);
+  };
+
   const closeMenu = (shouldRestoreFocus = false) => {
-    menuToggle.setAttribute('aria-expanded', 'false');
-    siteNav.classList.remove('is-open');
+    setMenu(false);
     if (shouldRestoreFocus) menuToggle.focus();
   };
 
   menuToggle.addEventListener('click', () => {
-    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    if (expanded) {
-      closeMenu();
-      return;
-    }
-    menuToggle.setAttribute('aria-expanded', 'true');
-    siteNav.classList.add('is-open');
+    setMenu(menuToggle.getAttribute('aria-expanded') !== 'true');
   });
+
   siteNav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
     closeMenu();
   }));
+
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') closeMenu(true);
   });
+
+  window.addEventListener('resize', () => {
+    if (!collapsedNav.matches && menuToggle.getAttribute('aria-expanded') === 'true') closeMenu();
+  });
 }
 
-// FAQ-style accordion toggle; only runs if a page actually has .faq-item buttons
-document.querySelectorAll('.faq-item button').forEach((button) => {
-  button.addEventListener('click', () => {
-    const answer = document.querySelector(`#${button.getAttribute('aria-controls')}`);
-    const willOpen = button.getAttribute('aria-expanded') !== 'true';
-    document.querySelectorAll('.faq-item button').forEach((item) => item.setAttribute('aria-expanded', 'false'));
-    document.querySelectorAll('.faq-answer').forEach((item) => item.classList.remove('is-open'));
-    button.setAttribute('aria-expanded', String(willOpen));
-    if (answer && willOpen) answer.classList.add('is-open');
-  });
-});
-
-// Keeps the footer copyright year current without hand-editing it
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();

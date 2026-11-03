@@ -1,8 +1,8 @@
 # Nimu Capstone — Redesign Progress
 
-> **This folder is `sites/nimu-capstonev2`, the redesign shown beside the original for comparison.** The original, unmodified site stays in `sites/nimu-capstone` (`nimu-capstone.farhansegujja.com`); this redesign is served at `nimu-capstonev2.farhansegujja.com`. Every remaining redesign phase is built here, never in `sites/nimu-capstone`.
+> **This folder is `sites/nimu-capstone`, the redesign shown beside the original for comparison.** The original, unmodified site stays in `sites/nimu-capstone` (`nimu-capstone.farhansegujja.com`); this redesign is served at `nimu-capstone.farhansegujja.com`. Every remaining redesign phase is built here, never in `sites/nimu-capstone`.
 >
-> **Promotion plan (after the client approves):** (1) copy this folder's contents over `sites/nimu-capstone/` (keep the folder name `nimu-capstone`); (2) delete `sites/nimu-capstonev2/`; (3) delete the `nimu-capstonev2.farhansegujja.com` line from `HOSTNAME_TO_SLUG` in `worker/index.js`; (4) remove the `nimu-capstonev2` DNS record in Cloudflare; (5) build and deploy. In the contract and progress records, read "`sites/nimu-capstonev2`" as the live `sites/nimu-capstone` after promotion.
+> **Promotion plan (after the client approves):** (1) copy this folder's contents over `sites/nimu-capstone/` (keep the folder name `nimu-capstone`); (2) delete `sites/nimu-capstone/`; (3) delete the `nimu-capstone.farhansegujja.com` line from `HOSTNAME_TO_SLUG` in `worker/index.js`; (4) remove the `nimu-capstone` DNS record in Cloudflare; (5) build and deploy. In the contract and progress records, read "`sites/nimu-capstone`" as the live `sites/nimu-capstone` after promotion.
 
 Companion to `DESIGN_CONTRACT.md`. Updated at the end of every phase.
 
@@ -23,7 +23,7 @@ Companion to `DESIGN_CONTRACT.md`. Updated at the end of every phase.
 
 Command: `npm run build` (existing `node_modules` and lockfile; nothing installed or added).
 
-Result: **passed**. `[build-all] done — built 6 site(s): c23, modestmuse, nimu-capstone, nimu-timber, nutking, wrist-mode`. No errors or failures reported. `nimu-capstone` emitted five HTML files, one CSS bundle (`main-*.css`), one JS bundle (`main-*.js`) and ten hashed images in `dist/nimu-capstonev2/` (the `dist/` folder is gitignored; `git status` was still clean after the build).
+Result: **passed**. `[build-all] done — built 6 site(s): c23, modestmuse, nimu-capstone, nimu-timber, nutking, wrist-mode`. No errors or failures reported. `nimu-capstone` emitted five HTML files, one CSS bundle (`main-*.css`), one JS bundle (`main-*.js`) and ten hashed images in `dist/nimu-capstone/` (the `dist/` folder is gitignored; `git status` was still clean after the build).
 
 Not run in Phase 1: `wrangler dev`/preview, browser smoke test, link check, contrast measurement, responsive screenshots, Lighthouse. Their baseline is therefore **unmeasured**, not "passing".
 
@@ -48,8 +48,8 @@ The brief asked for a nine-phase roadmap without naming phases. This is a propos
 ### Files changed
 
 Added (only these two):
-- `sites/nimu-capstonev2/DESIGN_CONTRACT.md`
-- `sites/nimu-capstonev2/REDESIGN_PROGRESS.md`
+- `sites/nimu-capstone/DESIGN_CONTRACT.md`
+- `sites/nimu-capstone/REDESIGN_PROGRESS.md`
 
 Modified: none. No HTML, CSS, JS, asset, config or Worker file was touched.
 
@@ -133,7 +133,7 @@ Inherited, unreferenced styling from the real site (services, material, FAQ, con
 
 ### Verification evidence
 
-Dev server: `npm run dev -- nimu-capstonev2 --port 5174` (verified in `scripts/dev.mjs`), inspected in the in-app browser, then stopped.
+Dev server: `npm run dev -- nimu-capstone --port 5174` (verified in `scripts/dev.mjs`), inspected in the in-app browser, then stopped.
 
 - **Nav transition:** at 1280px and 961px the brand and nav do not collide (gap 53px at 961px). No horizontal overflow (`scrollWidth` equals the viewport at 390 and 320px). At 960px the toggle appears and the nav is hidden.
 - **Mobile menu (390px):** toggle is 44x44px; closed menu has 0 visible links; open shows 6 items; Escape closes it and focus returns to the toggle; reopening works; panel sits within the gutters. Screenshot confirmed layout.
@@ -205,7 +205,7 @@ CSS only. Hover and keyboard focus on a collection or choice lightens the photo 
 
 ### Verification evidence
 
-Tools: Playwright (an existing devDependency, headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`, plus the in-app browser earlier. The dev server was stopped afterwards.
+Tools: Playwright (an existing devDependency, headless Chromium) against `npm run dev -- nimu-capstone --port 5174`, plus the in-app browser earlier. The dev server was stopped afterwards.
 
 - **Renders inspected:** full-page desktop (1280px) and phone (390px) screenshots read in full; tablet (768px) collection area and phone hero inspected as viewport captures.
 - **Overflow and assets (1280, 768, 390px):** no horizontal overflow, 0 broken images, no failed requests, no console errors, on Home and also on About, Products, Pay and Policies.
@@ -216,7 +216,7 @@ Tools: Playwright (an existing devDependency, headless Chromium) against `npm ru
 
 ### Screenshot locations
 
-`sites/nimu-capstonev2/redesign-reference/home-final-desktop-1280.png`, `home-final-tablet-768.png`, `home-final-phone-390.png` (final Home, full page; earlier phase3-* and iter-* captures were removed as superseded). The folder is not part of the Vite build (only HTML entries and referenced assets are emitted). Uncommitted.
+`sites/nimu-capstone/redesign-reference/home-final-desktop-1280.png`, `home-final-tablet-768.png`, `home-final-phone-390.png` (final Home, full page; earlier phase3-* and iter-* captures were removed as superseded). The folder is not part of the Vite build (only HTML entries and referenced assets are emitted). Uncommitted.
 
 ### Limitations and unresolved issues
 
@@ -306,7 +306,7 @@ Owner asked for a navbar like a supplied reference (floating rounded bar, active
 6. Replaced the public maintenance note with a next-step panel; maintenance steps remain in `COURSEWORK_GUIDE.md`.
 
 ### Verification evidence
-Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`.
+Playwright (headless Chromium) against `npm run dev -- nimu-capstone --port 5174`.
 - **Inventory (script, before = commit `6b29f0d`, after = working tree):** same 8 codes NTW-101, 102, 103, 201, 202, 203, 301, 302; identical 8 price strings (UGX 45,000 per plank; 52,000 per plank; 380,000 per bundle; 58,000 per board; 61,000 per board; 5,000 per cut; 2,100,000 per bundle; 2,450,000 per bundle, delivery included); same 8 images; 17 SAMPLE badges before and after.
 - **Links:** the three masthead chips land with their section at the top; all 8 "See how to order" links and the next-step button resolve to `pay.html#order-steps`; `products.html#furniture` deep link lands correctly. One `<h1>`, no duplicate ids, no missing alt text.
 - **Hover and focus:** hovering a card gives `transform: none` and default cursor; only the order link changes (forest fill, paper text) and shifts its arrow; keyboard focus shows a forest ring and the same arrow shift; under reduced motion transitions are 0s.
@@ -329,18 +329,18 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 3. Decide whether to reuse the unit-card and section-panel patterns or introduce a new editorial layout.
 4. Confirm commit timing (Phase 4 is uncommitted).
 
-## Relocation to `sites/nimu-capstonev2`
+## Relocation to `sites/nimu-capstone`
 
 - **Why:** the owner wants the original and the redesign live side by side so the client can compare, then promote the redesign into `nimu-capstone` once approved.
-- **What changed:** the clean branch `feature/nimu-capstonev2` was cut from `main`. `sites/nimu-capstone/` is byte-identical to `main` (verified with `git diff main`). The Phases 1 to 4 work moved to `sites/nimu-capstonev2/`. `worker/index.js` gained `'nimu-capstonev2.farhansegujja.com': 'nimu-capstonev2'`. Docs in this folder were re-pointed to the v2 paths and commands.
-- **Dev:** `npm run dev -- nimu-capstonev2 --port 5174`.
-- **Manual steps still needed:** create the `nimu-capstonev2` DNS record in Cloudflare (proxied), then `npm run deploy`. Nothing was deployed or pushed as part of this move.
+- **What changed:** the clean branch `feature/nimu-capstone` was cut from `main`. `sites/nimu-capstone/` is byte-identical to `main` (verified with `git diff main`). The Phases 1 to 4 work moved to `sites/nimu-capstone/`. `worker/index.js` gained `'nimu-capstone.farhansegujja.com': 'nimu-capstone'`. Docs in this folder were re-pointed to the v2 paths and commands.
+- **Dev:** `npm run dev -- nimu-capstone --port 5174`.
+- **Manual steps still needed:** create the `nimu-capstone` DNS record in Cloudflare (proxied), then `npm run deploy`. Nothing was deployed or pushed as part of this move.
 - **Remote branch:** the earlier `redesign/nimu-capstone-ledger` remote branch was deleted at the owner's request; a local copy of that branch remains as a backup.
 
 
 ## Phase 5 log — About
 
-Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; v2 is where all remaining phases are built, and the original is untouched).
+Built in `sites/nimu-capstone` (the brief said `sites/nimu-capstone`; v2 is where all remaining phases are built, and the original is untouched).
 
 ### Files changed
 - `about.html`: `<main>` replaced (head, header, footer, banner untouched).
@@ -360,7 +360,7 @@ Opening photo `timber-yard-1080.webp` (the largest, 1080px native, at roughly 69
 5. Moss surface for the values section so two dark forest/bark surfaces do not meet.
 
 ### Verification evidence
-Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`.
+Playwright (headless Chromium) against `npm run dev -- nimu-capstone --port 5174`.
 - No horizontal overflow, broken images, failed requests or console errors at 1280, 768 and 390px.
 - One `<h1>` ("From the Bwaise yard."), no duplicate ids, descriptive alt text on all four photographs; anchors `audience`, `operations`, `values`, `next-step`, `main`, `top` exist.
 - DOM order of the opening is copy then photograph; tab order follows the visual order (customer links, then "Browse timber", then "How ordering works", then the footer).
@@ -387,7 +387,7 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 
 ## Phase 6 log — Pay & Order
 
-Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the original is untouched). Phase 5 was committed first as `15f5601`.
+Built in `sites/nimu-capstone` (the brief said `sites/nimu-capstone`; the original is untouched). Phase 5 was committed first as `15f5601`.
 
 ### Contradictions found and how they were resolved
 - Step 5 and the verification text said funds must be verified before preparing or releasing timber, while cash on delivery has no money before dispatch. Now split: prepaid routes verify funds first; cash on delivery is agreed first and paid and recorded at handover.
@@ -404,7 +404,7 @@ Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the orig
 2. **Business, prepaid bank transfer.** The business column says quotation by phone or WhatsApp, the same routes plus bank transfer, delivery coordinated for larger loads. Steps 1 to 5 apply, with step 2 offering a phone quotation. The Bank transfer row is labelled "Prepaid, verified before delivery is scheduled" with the fictitious details. The prepaid verification column says funds must be visible in the business's own account before timber is prepared or released, with the screenshot warning directly beside it. Handover then follows with funds verified. No step contradicts this route.
 
 ### Verification evidence
-Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`.
+Playwright (headless Chromium) against `npm run dev -- nimu-capstone --port 5174`.
 - **No live behaviour:** 0 forms, 0 inputs, 0 buttons in `<main>`, 0 copy controls, 0 scripts; the page has no storage.
 - **Structure:** one `<h1>`; no duplicate ids; anchors `order-steps`, `payment-methods`, `delivery-refunds`, `verification`, `compare`, `next-step` exist. The sequence is an `<ol role="list">` of 5 items, stacked vertically with equal left edges, paired side by side with the checklist at 1280px.
 - **Methods:** four rows with the Illustrative badge and the route labels; one "Proposed, not active" card block, visually separate. Sample identifiers verified exactly: `0771 00 00 00`, `0750 00 00 00`, `0000 1234 5678`, "Demo Commercial Bank", "Nimu Timber & Woodworks (Demo)".
@@ -430,7 +430,7 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 
 ## Phase 7 log — Policies
 
-Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the original is untouched). The rounded system was applied in place of the brief's square geometry.
+Built in `sites/nimu-capstone` (the brief said `sites/nimu-capstone`; the original is untouched). The rounded system was applied in place of the brief's square geometry.
 
 ### Files changed
 - `policies.html` (`<main>` only), `src/style.css` (policy layout, replaced old policy rules, new `@media print`), `DESIGN_CONTRACT.md` (section 27), this file, and `redesign-reference/policies-final-*.png`. Not touched: other pages, the shared shell, `main.js`, `sites/nimu-capstone`, other sites, infrastructure, dependencies.
@@ -442,7 +442,7 @@ Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the orig
 - Hypothetical practices are labelled Hypothetical and introduced with one verifiable statement (this demo's pages have no forms). No hosting, logging, analytics, third-party, retention or compliance facts were added.
 
 ### Verification evidence
-Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 5174`.
+Playwright (headless Chromium) against `npm run dev -- nimu-capstone --port 5174`.
 - **Contents:** all five rail links land with their section 16px from the top (scroll margin). With JavaScript disabled (the `js` class was confirmed absent) the `#terms` link navigates and lands. The rail is sticky at 1280x720: 331px tall, top 20px, bottom 351px inside a 720px viewport, and there is no sticky header to obscure.
 - **Incoming links:** the banner link from Home reaches `policies.html#privacy`; Pay's returns link reaches `policies.html#returns`; the closing panel link reaches `pay.html#order-steps`; the footer back-to-top returns to scrollY 0.
 - **Structure:** one `<h1>`, then h2 only; no duplicate ids; all five policies open by default; no details, tabs or carousels.
@@ -461,14 +461,14 @@ Playwright (headless Chromium) against `npm run dev -- nimu-capstonev2 --port 51
 ### Prerequisites for cross-site integration
 1. Owner review of the Policies screenshots and print behaviour.
 2. Decide the two open privacy questions.
-3. Decide when to promote `nimu-capstonev2` into `nimu-capstone` (steps are at the top of this file and in the contract); the `nimu-timber` overhaul already uses the same system.
+3. Decide when to promote `nimu-capstone` into `nimu-capstone` (steps are at the top of this file and in the contract); the `nimu-timber` overhaul already uses the same system.
 4. Run Phase 8 (cross-page responsive, accessibility, motion and performance pass) and Phase 9 (final audit) before promotion; the v2 pages still use some wide card crops against the no-oblong-images rule.
 5. Confirm commit timing (Phase 7 is uncommitted).
 
 
 ## Phase 8 log — Responsive and interaction pass
 
-Built in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; the original is untouched). No page narrative, price, claim, route or infrastructure changed.
+Built in `sites/nimu-capstone` (the brief said `sites/nimu-capstone`; the original is untouched). No page narrative, price, claim, route or infrastructure changed.
 
 ### Defect list (measured before editing)
 A script audited all five pages at 320, 390, 768, 800, 1024, 1440 and 1920px, plus 200% text at 320, 390 and 768px (overflow, header gaps, touch-target size, image aspect ratios, small text, sticky elements).
@@ -482,7 +482,7 @@ A script audited all five pages at 320, 390, 768, 800, 1024, 1440 and 1920px, pl
 ### Fixes (files: `src/style.css` only, plus DESIGN_CONTRACT.md section 28, this file, two reference screenshots)
 Listed in contract section 28: 4:3 photo ratios, horizontal product cards at 600 to 959px, About rows staying two-column to 560px, 44px text links, all hover effects moved into one fine-pointer media block with focus-visible equivalents, and a universal reduced-motion rule.
 
-### Verification (Playwright, headless Chromium, against `npm run dev -- nimu-capstonev2 --port 5174`)
+### Verification (Playwright, headless Chromium, against `npm run dev -- nimu-capstone --port 5174`)
 - **Re-audit, all five pages, same widths:** no overflow, no header gaps under 8px, no small targets, no oblong images; only the recorded 11.8px label size and the intentional sticky rail remain.
 - **Menu (390px, all five pages):** closed menu has 0 visible links; opens to 6 items; Escape closes it and returns focus to the toggle; resizing to 1200px closes an open menu; returning to 390px keeps it closed; 0 console errors.
 - **Keyboard (Products):** tab order is skip link, banner link, brand, nav links (current page excluded), CTA, masthead chips, then each "How to order" link; every stop shows a visible focus ring (forest on light surfaces, `#edc294` on dark).
@@ -505,7 +505,7 @@ Safari, Firefox, real touch devices, screen-reader testing, Windows high-contras
 1. Owner review of the responsive and motion results, especially the horizontal product cards at tablet width and the taller 4:3 photos.
 2. Decide whether the 0.74rem labels should rise to 0.75rem (12px).
 3. The two open owner questions from earlier phases (privacy-notice third-party mention; cash-on-delivery conditions and in-person payment) and the unconfirmed claims (15 years, Seroma Ltd., prices, hours, length 7 ft versus 82 to 83 in).
-4. Plan for real-browser, Worker and performance checks (the DNS record for `nimu-capstonev2` and a deploy are needed for the Worker check).
+4. Plan for real-browser, Worker and performance checks (the DNS record for `nimu-capstone` and a deploy are needed for the Worker check).
 5. Commit timing (Phase 8 is uncommitted).
 
 
@@ -523,16 +523,16 @@ Owner asked for 6-digit merchant codes and SVG logos for Airtel and MTN Mobile M
 
 ## Phase 9 — Final audit and handoff (local release-readiness review)
 
-Reviewed on 2026-11-02 in `sites/nimu-capstonev2` (the brief said `sites/nimu-capstone`; that original folder is untouched and the redesign is deliberately held in v2 for side-by-side comparison). This phase does not authorise publication; nothing was committed, pushed, merged or deployed, and no DNS or Worker configuration was changed.
+Reviewed on 2026-11-02 in `sites/nimu-capstone` (the brief said `sites/nimu-capstone`; that original folder is untouched and the redesign is deliberately held in v2 for side-by-side comparison). This phase does not authorise publication; nothing was committed, pushed, merged or deployed, and no DNS or Worker configuration was changed.
 
 ### 1. Baseline and final changed-file inventory
 
-- **Baseline:** `main` at `c104170` ("Test commit to verify git integration"), the commit recorded when this redesign started. Branch under review: `feature/nimu-capstonev2`, HEAD `28ad87a`, plus the uncommitted Phase 9 fixes listed in section 3.
+- **Baseline:** `main` at `c104170` ("Test commit to verify git integration"), the commit recorded when this redesign started. Branch under review: `feature/nimu-capstone`, HEAD `28ad87a`, plus the uncommitted Phase 9 fixes listed in section 3.
 - **Commits since baseline (7):** `098840d` v2 setup and Phases 1 to 4 content; `15f5601` About; `bd26b20` Pay and the concise copy and icon pass; `848b8dc` `nimu-timber` overhaul; `d6551f8` Policies; `faafe72` responsive and interaction pass; `28ad87a` merchant codes and payment logos.
 - **Committed diff against `main` (69 files):**
-  - `sites/nimu-capstonev2/`: 65 new files: the five pages (`index.html`, `products.html`, `about.html`, `pay.html`, `policies.html`), `src/style.css`, `src/main.js`, `COURSEWORK_GUIDE.md`, `DESIGN_CONTRACT.md`, `REDESIGN_PROGRESS.md`, 14 files in `src/assets/` (photos, logo, favicon, WhatsApp and TikTok icons), 2 original payment-logo files in `src/assets/logos/`, and 39 reference screenshots in `redesign-reference/` (not part of the build).
+  - `sites/nimu-capstone/`: 65 new files: the five pages (`index.html`, `products.html`, `about.html`, `pay.html`, `policies.html`), `src/style.css`, `src/main.js`, `COURSEWORK_GUIDE.md`, `DESIGN_CONTRACT.md`, `REDESIGN_PROGRESS.md`, 14 files in `src/assets/` (photos, logo, favicon, WhatsApp and TikTok icons), 2 original payment-logo files in `src/assets/logos/`, and 39 reference screenshots in `redesign-reference/` (not part of the build).
   - `sites/nimu-timber/`: 3 modified files (`index.html`, `src/style.css`, `src/main.js`), changed at the owner's explicit request; assets unchanged.
-  - `worker/index.js`: 1 line added (`'nimu-capstonev2.farhansegujja.com': 'nimu-capstonev2'`).
+  - `worker/index.js`: 1 line added (`'nimu-capstone.farhansegujja.com': 'nimu-capstone'`).
 - **Uncommitted (Phase 9 changes):** `COURSEWORK_GUIDE.md` (rewritten to the final structure), `REDESIGN_PROGRESS.md` (this section), `src/style.css` (one colour correction), and the five page files (banner landmark wrapper).
 - **Unexpected changes:** none. Everything outside the three areas above is identical to `main`; `sites/nimu-capstone/` and every other site are byte-identical to `main` (checked with `git diff main..HEAD`).
 
@@ -619,8 +619,8 @@ Contact: the WhatsApp number and TikTok handle are carried over from the live si
 ### 6. Rollback and checkpoint guidance (preserves all work)
 
 - The original `sites/nimu-capstone/` is untouched, so nothing needs rolling back to keep the original live version safe.
-- Everything is on the local branch `feature/nimu-capstonev2` (7 commits above `main`) plus the uncommitted Phase 9 changes. Before any risky step, take a checkpoint without changing anything: `git tag nimu-capstonev2-checkpoint` (local, harmless) after committing the Phase 9 work.
-- To abandon v2 safely without losing history: `git switch main` leaves the branch and all commits intact; to drop only the Worker mapping, remove the one `nimu-capstonev2` line in `worker/index.js`.
+- Everything is on the local branch `feature/nimu-capstone` (7 commits above `main`) plus the uncommitted Phase 9 changes. Before any risky step, take a checkpoint without changing anything: `git tag nimu-capstone-checkpoint` (local, harmless) after committing the Phase 9 work.
+- To abandon v2 safely without losing history: `git switch main` leaves the branch and all commits intact; to drop only the Worker mapping, remove the one `nimu-capstone` line in `worker/index.js`.
 - Undo a single phase with `git revert <commit>` (creates a new commit; nothing is destroyed). Do not use `git reset --hard` or `git clean`; they would discard the uncommitted Phase 9 files.
 - The `nimu-timber` overhaul is its own commit (`848b8dc`) and can be reverted independently of the capstone work. It has not been deployed; the live `nimu-timber` site still runs `main`'s version until a deploy.
 
@@ -634,15 +634,15 @@ Contact: the WhatsApp number and TikTok handle are carried over from the live si
 
 ### 8. Local release-readiness recommendation
 
-**Ready for the owner's final review and for a supervised preview deployment to `nimu-capstonev2` only. Not ready to promote into `nimu-capstone`** until the owner confirmations in section 4 are answered, a real-browser and a screen-reader pass are done, and the lab results are compared with a real deployed measurement. No fabricated claim, active payment or data collection exists in the build. This is a readiness assessment, not a guarantee of any award.
+**Ready for the owner's final review and for a supervised preview deployment to `nimu-capstone` only. Not ready to promote into `nimu-capstone`** until the owner confirmations in section 4 are answered, a real-browser and a screen-reader pass are done, and the lab results are compared with a real deployed measurement. No fabricated claim, active payment or data collection exists in the build. This is a readiness assessment, not a guarantee of any award.
 
 ### 9. What the owner must supervise next (in order)
 
 1. Review the uncommitted Phase 9 diff (`git diff`) and the rewritten `COURSEWORK_GUIDE.md`; say "commit" to save it locally (no AI trailer).
 2. Answer the owner confirmations in section 4 (or decide to leave them flagged).
 3. Optionally create a local tag as a checkpoint (section 6).
-4. In Cloudflare, add the proxied `nimu-capstonev2` DNS record (manual), then run `npm run deploy` from this branch (this also publishes the restyled `nimu-timber`, so review that first; to keep `nimu-timber` as it is live, revert `848b8dc` before deploying).
-5. Open `https://nimu-capstonev2.farhansegujja.com/` and the original `https://nimu-capstone.farhansegujja.com/` and check all five pages on a real phone, in Safari and in Firefox, and with a screen reader or at least keyboard-only.
+4. In Cloudflare, add the proxied `nimu-capstone` DNS record (manual), then run `npm run deploy` from this branch (this also publishes the restyled `nimu-timber`, so review that first; to keep `nimu-timber` as it is live, revert `848b8dc` before deploying).
+5. Open `https://nimu-capstone.farhansegujja.com/` and the original `https://nimu-capstone.farhansegujja.com/` and check all five pages on a real phone, in Safari and in Firefox, and with a screen reader or at least keyboard-only.
 6. Run PageSpeed Insights or Lighthouse on the deployed URL for mobile and desktop, and compare with section 2a.
 7. When the client approves, follow the promotion plan at the top of this file and in `COURSEWORK_GUIDE.md`.
 
