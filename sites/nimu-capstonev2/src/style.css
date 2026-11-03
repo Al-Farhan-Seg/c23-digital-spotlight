@@ -808,13 +808,7 @@ main > * + * {
   margin-bottom:6px;
   font-size:1.3rem;
 }
-.product-type-label {
-  margin:0 0 10px;
-  color:var(--muted);
-  font-size:.82rem;
-  font-weight:600;
-}
-.product-body > p:not(.product-code):not(.product-type-label):not(.product-status) {
+.product-body > p:not(.product-code):not(.product-status) {
   margin-bottom:16px;
 }
 .product-body .spec-list {
